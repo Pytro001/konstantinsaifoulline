@@ -12,7 +12,7 @@
 .music-hero {
   position: relative;
   width: 100%;
-  min-height: 60vh;
+  min-height: 75vh;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -54,8 +54,8 @@
 
 /* Platforms */
 .music-links {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .music-platforms {
