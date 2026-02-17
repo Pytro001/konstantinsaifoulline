@@ -148,20 +148,6 @@ body::after {
 
 .hero-line {
   display: block;
-  opacity: 0;
-  transform: translateY(40px);
-  animation: fadeUp 1s ease forwards;
-}
-
-.hero-line:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .hero-subtitle {
@@ -171,8 +157,6 @@ body::after {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 3rem;
-  opacity: 0;
-  animation: fadeUp 1s ease 0.4s forwards;
 }
 
 .btn {
@@ -431,11 +415,26 @@ body::after {
   }
 
   .hero {
-    padding: 6rem 1.5rem 4rem;
+    min-height: auto;
+    padding: 6rem 1.5rem 3rem;
+    justify-content: flex-start;
+    padding-top: 8rem;
+  }
+
+  .hero-title {
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-subtitle {
+    margin-bottom: 2rem;
   }
 
   .section {
-    padding: 4rem 1.5rem;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .section-title {
+    margin-bottom: 2rem;
   }
 
   .timeline-item {
