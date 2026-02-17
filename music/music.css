@@ -1,0 +1,110 @@
+/* Music page — John Summit inspired, simplified */
+
+.nav-music {
+  justify-content: flex-end;
+}
+
+.nav-active {
+  color: var(--white) !important;
+}
+
+/* Hero */
+.music-hero {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.music-hero-image {
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/music-hero.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.music-hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 40%, transparent 70%);
+}
+
+.music-hero-overlay {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.music-title {
+  font-family: var(--font-headline);
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+/* Platforms */
+.music-links {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.music-platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.music-platform-link {
+  font-family: var(--font);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: var(--transition);
+}
+
+.music-platform-link:hover {
+  color: var(--white);
+  border-color: var(--white);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .music-hero {
+    min-height: 50vh;
+  }
+
+  .music-hero-overlay {
+    padding: 1.5rem;
+  }
+
+  .music-title {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .music-platforms {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .music-platform-link {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+}
