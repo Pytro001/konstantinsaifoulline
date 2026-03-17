@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
-      if (href === '#') return;
+      if (href === '#' || href.length < 2) return;
+      if (href.includes('://')) return; // skip dynamically set URLs (e.g. download links)
       e.preventDefault();
       const target = document.querySelector(href);
       if (target) {

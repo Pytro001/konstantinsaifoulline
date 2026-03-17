@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUGE Production GmbH</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #fff;
+      color: #000;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    .lang-toggle {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      gap: 0;
+    }
+    .lang-toggle a {
+      padding: 8px 16px;
+      color: #000;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+    .lang-toggle a:hover {
+      opacity: 0.8;
+    }
+    .lang-toggle a.active {
+      opacity: 1;
+      border-bottom: 2px solid #000;
+    }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+    h1 {
+      font-size: 48px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 48px;
+      line-height: 1.1;
+    }
+    .content {
+      font-size: 21px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+    .content p {
+      margin-bottom: 24px;
+    }
+    .content p:last-child {
+      margin-bottom: 0;
+    }
+    .lang-content {
+      display: none;
+    }
+    .lang-content.active {
+      display: block;
+    }
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+    footer a {
+      color: #000;
+      text-decoration: none;
+    }
+    footer a:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+  <nav class="lang-toggle">
+    <a href="#" class="active" data-lang="en">EN</a>
+    <a href="#" data-lang="de">DE</a>
+  </nav>
+
+  <main>
+    <h1>HUGE Production GmbH</h1>
+
+    <div id="en" class="lang-content active">
+      <div class="content">
+        <p>Development, production, marketing and distribution of digital content and formats, especially in the audiovisual media sector (e.g. podcasts, video productions, learning content).</p>
+        <p>In addition, we offer physical companion products (e.g. printed matter, technical accessories, merchandise), provided these are directly related to our digital offerings.</p>
+        <p>Beyond that, we provide services in media design, content strategy and brand communication.</p>
+      </div>
+    </div>
+
+    <div id="de" class="lang-content">
+      <div class="content">
+        <p>Entwicklung, Produktion, Vermarktung und Vertrieb insbesondere digitaler Inhalte und Formate, vor allem im Bereich audiovisueller Medien (z.B. Podcasts, Videoproduktionen, Lerninhalte).</p>
+        <p>Ergänzend dazu bietet sie physische Begleitprodukte an (z.B. Druckerzeugnisse, Technikzubehör, Merchandise), soweit diese in direktem Zusammenhang mit den digitalen Angeboten stehen.</p>
+        <p>Darüber hinaus erbringt die Gesellschaft in den Bereichen Mediengestaltung, Content-Strategie und Markenkommunikation.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.lang-toggle a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const lang = link.dataset.lang;
+        document.querySelectorAll('.lang-toggle a').forEach(a => a.classList.remove('active'));
+        document.querySelectorAll('.lang-content').forEach(c => c.classList.remove('active'));
+        link.classList.add('active');
+        document.getElementById(lang).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

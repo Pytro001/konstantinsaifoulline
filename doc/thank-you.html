@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You — Konstantin Saifoulline</title>
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../favicon.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="doc.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-links">
+      <a href="../#top">History</a>
+      <a href="../#bookshelf">Book Shelf</a>
+      <a href="../music/">Music</a>
+      <a href="index.html">Doc</a>
+    </div>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <main class="doc-page thank-you-page">
+    <section class="thank-you-hero">
+      <h1 class="doc-title">Thank You</h1>
+      <p class="thank-you-text" id="thankYouMessage">Verifying your purchase...</p>
+
+      <div id="downloadContainer" style="display: none;">
+        <a href="#" id="downloadBtn" class="doc-buy-btn" style="margin-bottom: 2rem;">Download PDF</a>
+      </div>
+
+      <div id="errorMessage" style="display: none; color: #ef4444; margin-bottom: 2rem;"></div>
+
+      <div class="notion-form" id="notionForm" style="display: none;">
+        <p class="notion-form-label">Enter the email you want added to the Notion page:</p>
+        <form id="emailForm" class="notion-email-form">
+          <input type="email" name="email" placeholder="your@email.com" required class="notion-email-input" autocomplete="email" id="emailInput">
+          <button type="submit" class="notion-submit-btn" id="emailSubmitBtn">Submit</button>
+        </form>
+        <p id="emailFormMessage" style="display: none; margin-top: 1rem;"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/konstantinsaifo/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.youtube.com/@konstantinsaifo" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://www.linkedin.com/in/konstantinsaifoulline/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://x.com/konstantinsaifo" target="_blank" rel="noopener noreferrer">X</a>
+    </div>
+    <p>© 2026 Konstantin Saifoulline · <a href="https://www.hugeconversations.com/impressum" target="_blank" rel="noopener noreferrer">Impressum</a> · <a href="https://www.hugeconversations.com/datenschutz" target="_blank" rel="noopener noreferrer">Datenschutz</a></p>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script>
+    (async function() {
+      const SUPABASE_URL = 'https://pjhprqoozwvftzuhgtdr.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqaHBycW9vend2ZnR6dWhndGRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzOTY4NTgsImV4cCI6MjA4ODk3Mjg1OH0.jmB5UQNyShOGZVm4Za9FH4lyoPFgdITtjyJ-11iO3co';
+
+      const params = new URLSearchParams(window.location.search);
+      const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, '') || '');
+      const sessionId = params.get('session_id') || params.get('checkout_session_id')
+        || hashParams.get('session_id') || hashParams.get('checkout_session_id');
+      const messageEl = document.getElementById('thankYouMessage');
+      const downloadContainer = document.getElementById('downloadContainer');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const errorEl = document.getElementById('errorMessage');
+      const notionForm = document.getElementById('notionForm');
+
+      if (!sessionId) {
+        messageEl.textContent = 'Invalid or expired link. Please complete your purchase to access the download.';
+        errorEl.style.display = 'block';
+        errorEl.textContent = 'No session ID found. Configure Stripe Payment Link success URL: .../thank-you.html?session_id={CHECKOUT_SESSION_ID} (see SUPABASE_SETUP.md)';
+        return;
+      }
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/verify-download?session_id=${encodeURIComponent(sessionId)}`, {
+          headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Verification failed');
+        }
+
+        messageEl.textContent = 'Your purchase was successful. Download the PDF below.';
+        downloadBtn.href = data.downloadUrl;
+        downloadBtn.setAttribute('download', 'how-to-manage-life.pdf');
+        downloadContainer.style.display = 'block';
+        notionForm.style.display = 'block';
+
+        const emailForm = document.getElementById('emailForm');
+        const emailInput = document.getElementById('emailInput');
+        const emailSubmitBtn = document.getElementById('emailSubmitBtn');
+        const emailFormMessage = document.getElementById('emailFormMessage');
+        emailForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = emailInput.value.trim();
+          if (!email) return;
+          emailSubmitBtn.disabled = true;
+          emailFormMessage.style.display = 'none';
+          try {
+            const saveRes = await fetch(`${SUPABASE_URL}/functions/v1/save-doc-email`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+              body: JSON.stringify({ email, session_id: sessionId })
+            });
+            const saveData = await saveRes.json();
+            if (saveRes.ok) {
+              emailInput.disabled = true;
+              emailSubmitBtn.disabled = true;
+              emailSubmitBtn.classList.add('submitted');
+            } else {
+              throw new Error(saveData.error || 'Failed to save');
+            }
+          } catch (saveErr) {
+            emailFormMessage.textContent = saveErr.message || 'Failed to save email. Please try again.';
+            emailFormMessage.style.color = '#ef4444';
+            emailFormMessage.style.display = 'block';
+            emailSubmitBtn.disabled = false;
+          }
+        });
+      } catch (err) {
+        messageEl.textContent = 'We were unable to verify your purchase.';
+        errorEl.style.display = 'block';
+        errorEl.textContent = err.message || 'Please contact support if you completed payment.';
+      }
+    })();
+  </script>
+</body>
+</html>

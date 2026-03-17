@@ -1,0 +1,11 @@
+[project]
+id = "pjhprqoozwvftzuhgtdr"
+
+[api]
+enabled = true
+port = 54321
+scheme = "http"
+
+[functions]
+verify-download = {}
+save-doc-email = {}
