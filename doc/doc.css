@@ -78,6 +78,13 @@
   border-color: var(--white);
 }
 
+.doc-refund-note {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
 .doc-buy-btn {
   font-family: var(--font);
   font-weight: 600;
