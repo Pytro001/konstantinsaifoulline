@@ -319,7 +319,8 @@ body::after {
 }
 
 .bookshelf-content.open {
-  max-height: 2000px;
+  /* Tall enough for full list on mobile (single column) + desktop */
+  max-height: 12000px;
 }
 
 .books-grid {
