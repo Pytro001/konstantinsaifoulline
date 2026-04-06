@@ -39,6 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const isOpen = bookshelfContent.classList.toggle('open');
       bookshelfToggle.classList.toggle('open', isOpen);
       bookshelfToggle.querySelector('.toggle-text').textContent = isOpen ? 'Hide Books' : 'View Books';
+      if (isOpen) {
+        document.querySelectorAll('.bookshelf-section .book-item').forEach((el) => {
+          el.classList.add('visible');
+        });
+      }
     });
   }
 

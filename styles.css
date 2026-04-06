@@ -320,7 +320,7 @@ body::after {
 
 .bookshelf-content.open {
   /* Tall enough for full list on mobile (single column) + desktop */
-  max-height: 12000px;
+  max-height: 20000px;
 }
 
 .books-grid {
@@ -330,11 +330,14 @@ body::after {
 }
 
 .book-item {
+  min-width: 0;
   padding: 1.25rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 0.95rem;
   color: var(--gray-400);
   transition: var(--transition);
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .book-item:hover {
