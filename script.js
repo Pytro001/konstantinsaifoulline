@@ -31,22 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Book shelf toggle
-  const bookshelfToggle = document.getElementById('bookshelfToggle');
-  const bookshelfContent = document.getElementById('bookshelfContent');
-  if (bookshelfToggle && bookshelfContent) {
-    bookshelfToggle.addEventListener('click', () => {
-      const isOpen = bookshelfContent.classList.toggle('open');
-      bookshelfToggle.classList.toggle('open', isOpen);
-      bookshelfToggle.querySelector('.toggle-text').textContent = isOpen ? 'Hide Books' : 'View Books';
-      if (isOpen) {
-        document.querySelectorAll('.bookshelf-section .book-item').forEach((el) => {
-          el.classList.add('visible');
-        });
-      }
-    });
-  }
-
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

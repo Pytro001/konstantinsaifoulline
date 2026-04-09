@@ -28,6 +28,7 @@
 
   <main>
     <section id="top" class="hero">
+      <canvas id="heroGlobe" class="hero-globe" aria-hidden="true"></canvas>
       <h1 class="hero-title">
         <span class="hero-line">Konstantin</span>
         <span class="hero-line">Saifoulline</span>
@@ -85,10 +86,6 @@
 
     <section id="bookshelf" class="section bookshelf-section">
       <h2 class="section-title">Book Shelf</h2>
-      <button class="bookshelf-toggle" id="bookshelfToggle">
-        <span class="toggle-text">View Books</span>
-        <span class="toggle-arrow">↓</span>
-      </button>
       <div class="bookshelf-content" id="bookshelfContent">
         <div class="books-grid">
           <div class="book-item">Explore/Create by Richard Garriott</div>
@@ -182,5 +179,6 @@
   </footer>
 
   <script src="script.js"></script>
+  <script type="module" src="hero-globe.js"></script>
 </body>
 </html>
