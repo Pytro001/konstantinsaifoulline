@@ -94,6 +94,11 @@
   margin-bottom: 1.25rem;
 }
 
+.releases-heading--music {
+  margin-top: clamp(1.5rem, 4vw, 2.75rem);
+  margin-bottom: 1.5rem;
+}
+
 .releases-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -210,7 +215,7 @@
 }
 
 .music-platforms--above-preview {
-  margin-bottom: 1.75rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 .music-platform-link {
@@ -264,8 +269,13 @@
     margin-bottom: 1rem;
   }
 
+  .releases-heading--music {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
   .music-platforms--above-preview {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .music-platforms {
