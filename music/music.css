@@ -78,18 +78,18 @@
 /* YouTube preview — below hero (no overlap with title) */
 .music-preview {
   margin-top: 0;
-  margin-bottom: clamp(3rem, 6vw, 5rem);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
 .music-preview-frame {
   position: relative;
   width: 100%;
-  max-width: 1200px;
+  max-width: min(720px, 92vw);
   margin: 0 auto;
   aspect-ratio: 16 / 9;
   border-radius: 2px;
   overflow: hidden;
-  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.55);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: var(--gray-900);
 }
@@ -109,7 +109,7 @@
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--white);
-  margin-bottom: 3rem;
+  margin-bottom: 1.25rem;
 }
 
 .releases-grid {
@@ -219,19 +219,16 @@
 }
 
 /* ── Platform Links ── */
-.music-platforms-section {
-  padding: 2rem 2rem 5rem;
-  max-width: 1280px;
-  margin: 0 auto;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
 .music-platforms {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  padding-top: 2rem;
+  padding-top: 0;
+}
+
+.music-platforms--above-preview {
+  margin-bottom: 1.75rem;
 }
 
 .music-platform-link {
@@ -290,11 +287,11 @@
   }
 
   .releases-heading {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
-  .music-platforms-section {
-    padding: 1.5rem 1.5rem 3rem;
+  .music-platforms--above-preview {
+    margin-bottom: 1.5rem;
   }
 
   .music-platforms {
