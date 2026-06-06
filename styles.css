@@ -286,12 +286,6 @@ body::after {
   cursor: pointer;
   color: inherit;
   font-family: var(--font);
-  opacity: 0.4;
-  transition: opacity 0.15s ease, transform 0.15s ease;
-}
-
-.book-card.is-active {
-  opacity: 1;
 }
 
 .book-cover-wrap {
@@ -303,14 +297,10 @@ body::after {
   transition: border-color var(--transition), transform var(--transition);
 }
 
-.book-card.is-active .book-cover-wrap {
-  border-color: rgba(255, 255, 255, 0.45);
-  transform: translateY(-4px);
-}
-
 .book-card:hover .book-cover-wrap,
 .book-card:focus-visible .book-cover-wrap {
   border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-4px);
 }
 
 .book-cover-wrap img {
@@ -329,7 +319,6 @@ body::after {
   transition: color var(--transition);
 }
 
-.book-card.is-active .book-card-title,
 .book-card:hover .book-card-title,
 .book-card:focus-visible .book-card-title {
   color: var(--white);

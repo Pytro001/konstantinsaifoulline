@@ -128,21 +128,28 @@ function initBookshelf() {
     return card.offsetWidth + gap;
   };
 
-  const syncCarouselPadding = () => {
-    const card = carousel.querySelector('.book-card');
-    if (!card) return;
-    const half = card.offsetWidth / 2;
-    carousel.style.paddingLeft = `calc(50% - ${half}px)`;
-    carousel.style.paddingRight = `calc(50% - ${half}px)`;
+  const getMaxTranslate = () => {
+    const cards = carousel.querySelectorAll('.book-card');
+    if (!cards.length || !carouselViewport) return 0;
+    const lastCard = cards[cards.length - 1];
+    const totalWidth = lastCard.offsetLeft + lastCard.offsetWidth;
+    return Math.max(0, totalWidth - carouselViewport.offsetWidth);
+  };
+
+  const getMaxIndex = () => {
+    const step = getCardStep();
+    if (!step) return 0;
+    return Math.max(0, Math.ceil(getMaxTranslate() / step));
   };
 
   const updateCarousel = (animate = true) => {
-    currentIndex = Math.max(0, Math.min(currentIndex, books.length - 1));
+    const step = getCardStep();
+    const maxIndex = getMaxIndex();
+    const maxTranslate = getMaxTranslate();
+    currentIndex = Math.max(0, Math.min(currentIndex, maxIndex));
+    const translate = Math.min(currentIndex * step, maxTranslate);
     carousel.classList.toggle('no-transition', !animate);
-    carousel.style.transform = `translateX(-${currentIndex * getCardStep()}px)`;
-    carousel.querySelectorAll('.book-card').forEach((card, index) => {
-      card.classList.toggle('is-active', index === currentIndex);
-    });
+    carousel.style.transform = `translateX(-${translate}px)`;
     counter.textContent = `${currentIndex + 1} / ${books.length}`;
     if (!animate) {
       requestAnimationFrame(() => carousel.classList.remove('no-transition'));
@@ -178,10 +185,7 @@ function initBookshelf() {
     if (e.key === 'Escape' && !modal.hidden) closeBookModal();
   });
 
-  window.addEventListener('resize', () => {
-    syncCarouselPadding();
-    updateCarousel(false);
-  });
+  window.addEventListener('resize', () => updateCarousel(false));
 
   const handleVerticalSwipe = (deltaY) => {
     if (!modal.hidden) return;
@@ -238,6 +242,5 @@ function initBookshelf() {
     handleVerticalSwipe(deltaY);
   });
 
-  syncCarouselPadding();
   updateCarousel(false);
 }
