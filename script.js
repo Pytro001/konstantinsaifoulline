@@ -64,19 +64,29 @@ function initHistoryText() {
     });
   });
 
-  const words = document.querySelectorAll('.history-word');
+  const words = [...document.querySelectorAll('.history-word')];
+  const readingLine = () => window.innerHeight * 0.72;
+
   const updateWords = () => {
-    const triggerY = window.innerHeight * 0.72;
-    words.forEach((word) => {
+    const line = readingLine();
+    let lastLitIndex = -1;
+
+    words.forEach((word, index) => {
       const rect = word.getBoundingClientRect();
-      const isLit = rect.top < triggerY && rect.bottom > window.innerHeight * 0.12;
-      word.classList.toggle('is-lit', isLit);
+      const wordMid = rect.top + rect.height / 2;
+      if (wordMid <= line && rect.bottom > 0 && rect.top < window.innerHeight) {
+        lastLitIndex = index;
+      }
+    });
+
+    words.forEach((word, index) => {
+      word.classList.toggle('is-lit', index <= lastLitIndex);
     });
   };
 
   window.addEventListener('scroll', updateWords, { passive: true });
   window.addEventListener('resize', updateWords);
-  updateWords();
+  requestAnimationFrame(updateWords);
 }
 
 function initBookshelf() {
@@ -101,8 +111,8 @@ function initBookshelf() {
   let touchStartY = 0;
   let touchStartX = 0;
   let touchAccumY = 0;
-  const SWIPE_THRESHOLD = 24;
-  const WHEEL_COOLDOWN_MS = 450;
+  const SWIPE_THRESHOLD = 16;
+  const WHEEL_COOLDOWN_MS = 110;
 
   const coverUrl = (book, ext = 'jpg') => `assets/books/${book.id}.${ext}`;
 
@@ -139,28 +149,90 @@ function initBookshelf() {
     carousel.appendChild(card);
   });
 
-  const getCardStep = () => {
-    const card = carousel.querySelector('.book-card');
-    if (!card) return 0;
-    const gap = parseFloat(getComputedStyle(carousel).gap) || 20;
-    return card.offsetWidth + gap;
-  };
-
   const syncCarouselPadding = () => {
     const card = carousel.querySelector('.book-card');
     if (!card) return;
     const half = card.offsetWidth / 2;
-    carousel.style.paddingLeft = `calc(50% - ${half}px)`;
+    carousel.style.paddingLeft = '0';
     carousel.style.paddingRight = `calc(50% - ${half}px)`;
+  };
+
+  const getMaxTranslate = () => {
+    const cards = carousel.querySelectorAll('.book-card');
+    if (!cards.length || !carouselViewport) return 0;
+    const lastCard = cards[cards.length - 1];
+    const viewportWidth = carouselViewport.offsetWidth;
+    const lastCenter = lastCard.offsetLeft + lastCard.offsetWidth / 2;
+    return Math.max(0, lastCenter - viewportWidth / 2);
+  };
+
+  const getTranslateForIndex = (index) => {
+    if (index === 0) return 0;
+    const cards = carousel.querySelectorAll('.book-card');
+    const card = cards[index];
+    if (!card || !carouselViewport) return 0;
+    const viewportWidth = carouselViewport.offsetWidth;
+    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+    const target = cardCenter - viewportWidth / 2;
+    return Math.min(Math.max(0, target), getMaxTranslate());
+  };
+
+  const getActiveBookIndex = () => {
+    const viewportRect = carouselViewport.getBoundingClientRect();
+    const viewportCenterX = viewportRect.left + viewportRect.width / 2;
+    const cards = carousel.querySelectorAll('.book-card');
+    let activeIndex = 0;
+    let minDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const rect = card.getBoundingClientRect();
+      const cardCenterX = rect.left + rect.width / 2;
+      const distance = Math.abs(cardCenterX - viewportCenterX);
+      if (distance < minDistance) {
+        minDistance = distance;
+        activeIndex = index;
+      }
+    });
+
+    return activeIndex;
+  };
+
+  const getRightmostVisibleBookIndex = () => {
+    const viewportRect = carouselViewport.getBoundingClientRect();
+    const cards = carousel.querySelectorAll('.book-card');
+    let rightmost = 0;
+
+    cards.forEach((card, index) => {
+      const rect = card.getBoundingClientRect();
+      if (rect.left < viewportRect.right && rect.right > viewportRect.left) {
+        rightmost = index;
+      }
+    });
+
+    return rightmost;
+  };
+
+  const updateCounter = () => {
+    const centered = getActiveBookIndex();
+    const rightmost = getRightmostVisibleBookIndex();
+    const value = rightmost === books.length - 1
+      ? books.length
+      : Math.max(centered + 1, currentIndex + 1);
+    counter.textContent = `${value} / ${books.length}`;
   };
 
   const updateCarousel = (animate = true) => {
     currentIndex = Math.max(0, Math.min(currentIndex, books.length - 1));
     carousel.classList.toggle('no-transition', !animate);
-    carousel.style.transform = `translateX(-${currentIndex * getCardStep()}px)`;
-    counter.textContent = `${currentIndex + 1} / ${books.length}`;
+    carousel.style.transform = `translateX(-${getTranslateForIndex(currentIndex)}px)`;
+    carousel.querySelectorAll('.book-card').forEach((card, index) => {
+      card.classList.toggle('is-active', index === currentIndex && currentIndex > 0);
+    });
+    updateCounter();
     if (!animate) {
       requestAnimationFrame(() => carousel.classList.remove('no-transition'));
+    } else {
+      carousel.addEventListener('transitionend', updateCounter, { once: true });
     }
   };
 

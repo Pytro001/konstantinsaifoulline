@@ -210,14 +210,14 @@ body::after {
 .history-text p {
   width: 100%;
   text-align: left;
-  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
-  line-height: 1.9;
+  font-size: clamp(0.95rem, 1.8vw, 1.12rem);
+  line-height: 1.85;
   font-weight: 300;
 }
 
 .history-word {
-  color: var(--gray-500);
-  transition: color 0.35s ease;
+  color: var(--gray-600);
+  transition: color 0.2s ease;
 }
 
 .history-word.is-lit {
@@ -225,10 +225,6 @@ body::after {
 }
 
 /* Book Shelf */
-.bookshelf-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
 .bookshelf-section .section-title {
   margin-bottom: 2rem;
 }
@@ -260,7 +256,7 @@ body::after {
   display: flex;
   gap: 1.25rem;
   will-change: transform;
-  transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.14s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .books-carousel.no-transition {
@@ -285,13 +281,14 @@ body::after {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: var(--gray-900);
-  transition: border-color var(--transition), transform var(--transition);
+  transform: scale(1);
+  transform-origin: center top;
+  transition: border-color 0.22s ease, transform 0.22s ease;
 }
 
-.book-card:hover .book-cover-wrap,
-.book-card:focus-visible .book-cover-wrap {
-  border-color: rgba(255, 255, 255, 0.35);
-  transform: translateY(-4px);
+.book-card.is-active .book-cover-wrap {
+  transform: scale(1.06);
+  border-color: rgba(255, 255, 255, 0.32);
 }
 
 .book-cover-wrap img {
@@ -310,8 +307,7 @@ body::after {
   transition: color var(--transition);
 }
 
-.book-card:hover .book-card-title,
-.book-card:focus-visible .book-card-title {
+.book-card.is-active .book-card-title {
   color: var(--white);
 }
 
@@ -514,8 +510,8 @@ body::after {
   }
 
   .history-text p {
-    font-size: 1.1rem;
-    line-height: 1.85;
+    font-size: 0.92rem;
+    line-height: 1.8;
   }
 
   .book-card {
