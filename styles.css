@@ -280,46 +280,8 @@ body::after {
   margin-bottom: 2rem;
 }
 
-.bookshelf-toggle {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: none;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--white);
-  padding: 1.25rem 2rem;
-  font-family: var(--font);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: var(--transition);
-  margin-bottom: 2rem;
-}
-
-.bookshelf-toggle:hover {
-  border-color: var(--white);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.toggle-arrow {
-  transition: transform var(--transition);
-  font-size: 1.25rem;
-}
-
-.bookshelf-toggle.open .toggle-arrow {
-  transform: rotate(180deg);
-}
-
 .bookshelf-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.bookshelf-content.open {
-  max-height: 90vh;
+  display: block;
 }
 
 .bookshelf-hint {
@@ -345,7 +307,7 @@ body::after {
   display: flex;
   gap: 1.25rem;
   will-change: transform;
-  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .books-carousel.no-transition {

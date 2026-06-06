@@ -83,8 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initBookshelf() {
-  const bookshelfToggle = document.getElementById('bookshelfToggle');
-  const bookshelfContent = document.getElementById('bookshelfContent');
   const carouselViewport = document.getElementById('booksCarouselViewport');
   const carousel = document.getElementById('booksCarousel');
   const counter = document.getElementById('booksCarouselCounter');
@@ -97,7 +95,7 @@ function initBookshelf() {
   const modalNotes = document.getElementById('bookModalNotes');
 
   const books = window.BOOKS;
-  if (!bookshelfToggle || !bookshelfContent || !carousel || !counter || !books?.length) {
+  if (!carousel || !counter || !books?.length) {
     return;
   }
 
@@ -106,7 +104,8 @@ function initBookshelf() {
   let touchStartY = 0;
   let touchStartX = 0;
   let touchAccumY = 0;
-  const SWIPE_THRESHOLD = 36;
+  const SWIPE_THRESHOLD = 18;
+  const WHEEL_COOLDOWN_MS = 60;
 
   const coverUrl = (book, ext = 'jpg') => `assets/books/${book.id}.${ext}`;
 
@@ -187,35 +186,25 @@ function initBookshelf() {
     if (e.key === 'Escape' && !modal.hidden) closeBookModal();
   });
 
-  bookshelfToggle.addEventListener('click', () => {
-    const isOpen = bookshelfContent.classList.toggle('open');
-    bookshelfToggle.classList.toggle('open', isOpen);
-    bookshelfToggle.querySelector('.toggle-text').textContent = isOpen ? 'Hide Books' : 'View Books';
-    if (isOpen) {
-      currentIndex = 0;
-      updateCarousel(false);
-    }
-  });
-
   window.addEventListener('resize', () => updateCarousel(false));
 
   const handleVerticalSwipe = (deltaY) => {
-    if (!bookshelfContent.classList.contains('open') || !modal.hidden) return;
+    if (!modal.hidden) return;
     if (deltaY > SWIPE_THRESHOLD) stepCarousel(1);
     else if (deltaY < -SWIPE_THRESHOLD) stepCarousel(-1);
   };
 
   carouselViewport?.addEventListener('wheel', (e) => {
-    if (!bookshelfContent.classList.contains('open') || !modal.hidden) return;
+    if (!modal.hidden) return;
     if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
     e.preventDefault();
     if (wheelCooldown) return;
     wheelCooldown = true;
-    if (e.deltaY > 0) stepCarousel(1);
-    else if (e.deltaY < 0) stepCarousel(-1);
+    const steps = Math.max(1, Math.min(4, Math.round(Math.abs(e.deltaY) / 35)));
+    stepCarousel(e.deltaY > 0 ? steps : -steps);
     setTimeout(() => {
       wheelCooldown = false;
-    }, 320);
+    }, WHEEL_COOLDOWN_MS);
   }, { passive: false });
 
   carouselViewport?.addEventListener('touchstart', (e) => {
@@ -226,7 +215,7 @@ function initBookshelf() {
   }, { passive: true });
 
   carouselViewport?.addEventListener('touchmove', (e) => {
-    if (!bookshelfContent.classList.contains('open') || !modal.hidden) return;
+    if (!modal.hidden) return;
     const dy = e.touches[0].clientY - touchStartY;
     const dx = e.touches[0].clientX - touchStartX;
     if (Math.abs(dy) > Math.abs(dx)) {

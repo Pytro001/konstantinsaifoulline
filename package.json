@@ -5,6 +5,7 @@
   "scripts": {
     "start": "npx serve -p 3000",
     "dev": "npx serve -p 3000",
-    "fetch-covers": "node scripts/fetch-covers.mjs"
+    "fetch-covers": "node scripts/fetch-covers.mjs",
+    "crop-covers": "node scripts/crop-covers.mjs"
   }
 }
