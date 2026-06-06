@@ -111,13 +111,13 @@ body::after {
 
 /* Hero */
 .hero {
-  min-height: 100vh;
+  min-height: 72vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 4rem 2rem;
+  padding: 5rem 2rem 2rem;
   position: relative;
   overflow: hidden;
 }
@@ -155,7 +155,7 @@ body::after {
   font-weight: 200;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 3rem;
+  margin-bottom: 0;
 }
 
 .btn {
@@ -184,7 +184,7 @@ body::after {
 
 /* Sections */
 .section {
-  padding: 6rem 2rem;
+  padding: 2.5rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -194,17 +194,26 @@ body::after {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 400;
   letter-spacing: -0.02em;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   text-transform: uppercase;
   color: var(--white);
 }
 
 /* History */
+.history-section {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.history-section .section-title {
+  margin-bottom: 1.25rem;
+}
+
 .history-text {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.25rem;
 }
 
 .history-text p {
@@ -225,8 +234,12 @@ body::after {
 }
 
 /* Book Shelf */
+.bookshelf-section {
+  padding-top: 1.5rem;
+}
+
 .bookshelf-section .section-title {
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
 }
 
 .bookshelf-content {
