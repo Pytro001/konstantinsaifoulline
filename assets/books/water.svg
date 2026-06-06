@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="960" viewBox="0 0 540 960">
+  <rect width="540" height="960" fill="#171717"/>
+  <rect x="24" y="24" width="492" height="912" fill="none" stroke="#404040" stroke-width="2"/>
+  <text x="270" y="420" fill="#d4d4d4" font-family="Arial, sans-serif" font-size="26" text-anchor="middle">Water</text>
+  <text x="270" y="470" fill="#737373" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">Giulio Boccaletti</text>
+</svg>

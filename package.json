@@ -4,6 +4,7 @@
   "description": "Personal website of Konstantin Saifoulline",
   "scripts": {
     "start": "npx serve -p 3000",
-    "dev": "npx serve -p 3000"
+    "dev": "npx serve -p 3000",
+    "fetch-covers": "node scripts/fetch-covers.mjs"
   }
 }

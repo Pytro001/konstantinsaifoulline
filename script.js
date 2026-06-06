@@ -1,7 +1,6 @@
 // Konstantin Saifoulline - Website Interactions
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Nav scroll effect
   const nav = document.querySelector('.nav');
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -13,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', handleScroll);
   handleScroll();
 
-  // Mobile nav toggle
   const navToggle = document.querySelector('.nav-toggle');
   const navLinks = document.querySelector('.nav-links');
   if (navToggle && navLinks) {
@@ -22,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       navLinks.classList.toggle('open');
       document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
     });
-    navLinks.querySelectorAll('a').forEach(link => {
+    navLinks.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
         navToggle.classList.remove('open');
         navLinks.classList.remove('open');
@@ -31,28 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Book shelf toggle
-  const bookshelfToggle = document.getElementById('bookshelfToggle');
-  const bookshelfContent = document.getElementById('bookshelfContent');
-  if (bookshelfToggle && bookshelfContent) {
-    bookshelfToggle.addEventListener('click', () => {
-      const isOpen = bookshelfContent.classList.toggle('open');
-      bookshelfToggle.classList.toggle('open', isOpen);
-      bookshelfToggle.querySelector('.toggle-text').textContent = isOpen ? 'Hide Books' : 'View Books';
-      if (isOpen) {
-        document.querySelectorAll('.bookshelf-section .book-item').forEach((el) => {
-          el.classList.add('visible');
-        });
-      }
-    });
-  }
+  initBookshelf();
 
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
       if (href === '#' || href.length < 2) return;
-      if (href.includes('://')) return; // skip dynamically set URLs (e.g. download links)
+      if (href.includes('://')) return;
       e.preventDefault();
       const target = document.querySelector(href);
       if (target) {
@@ -61,32 +44,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Intersection Observer for fade-in animations
   const observerOptions = {
     threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    rootMargin: '0px 0px -50px 0px',
   };
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
       }
     });
   }, observerOptions);
 
-  document.querySelectorAll('.timeline-item, .book-item').forEach(el => {
+  document.querySelectorAll('.timeline-item').forEach((el) => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     observer.observe(el);
   });
 
-  // Add visible class styles
   const style = document.createElement('style');
   style.textContent = `
-    .timeline-item.visible,
-    .book-item.visible {
+    .timeline-item.visible {
       opacity: 1 !important;
       transform: translateY(0) !important;
     }
@@ -101,3 +81,178 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
   document.head.appendChild(style);
 });
+
+function initBookshelf() {
+  const bookshelfToggle = document.getElementById('bookshelfToggle');
+  const bookshelfContent = document.getElementById('bookshelfContent');
+  const carouselViewport = document.getElementById('booksCarouselViewport');
+  const carousel = document.getElementById('booksCarousel');
+  const counter = document.getElementById('booksCarouselCounter');
+  const modal = document.getElementById('bookModal');
+  const modalBackdrop = document.getElementById('bookModalBackdrop');
+  const modalClose = document.getElementById('bookModalClose');
+  const modalCover = document.getElementById('bookModalCover');
+  const modalTitle = document.getElementById('bookModalTitle');
+  const modalAuthor = document.getElementById('bookModalAuthor');
+  const modalNotes = document.getElementById('bookModalNotes');
+
+  const books = window.BOOKS;
+  if (!bookshelfToggle || !bookshelfContent || !carousel || !counter || !books?.length) {
+    return;
+  }
+
+  let currentIndex = 0;
+  let wheelCooldown = false;
+  let touchStartY = 0;
+  let touchStartX = 0;
+  let touchAccumY = 0;
+  const SWIPE_THRESHOLD = 36;
+
+  const coverUrl = (book, ext = 'jpg') => `assets/books/${book.id}.${ext}`;
+
+  const setCoverImage = (img, book) => {
+    img.alt = `${book.title} cover`;
+    img.src = coverUrl(book, 'jpg');
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = coverUrl(book, 'svg');
+    };
+  };
+
+  books.forEach((book) => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'book-card';
+    card.setAttribute('aria-label', `${book.title} by ${book.author}`);
+
+    const coverWrap = document.createElement('div');
+    coverWrap.className = 'book-cover-wrap';
+
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    setCoverImage(img, book);
+
+    const title = document.createElement('span');
+    title.className = 'book-card-title';
+    title.textContent = book.title;
+
+    coverWrap.appendChild(img);
+    card.appendChild(coverWrap);
+    card.appendChild(title);
+    card.addEventListener('click', () => openBookModal(book));
+    carousel.appendChild(card);
+  });
+
+  const getCardStep = () => {
+    const card = carousel.querySelector('.book-card');
+    if (!card) return 0;
+    const gap = parseFloat(getComputedStyle(carousel).gap) || 20;
+    return card.offsetWidth + gap;
+  };
+
+  const updateCarousel = (animate = true) => {
+    currentIndex = Math.max(0, Math.min(currentIndex, books.length - 1));
+    carousel.classList.toggle('no-transition', !animate);
+    carousel.style.transform = `translateX(-${currentIndex * getCardStep()}px)`;
+    counter.textContent = `${currentIndex + 1} / ${books.length}`;
+    if (!animate) {
+      requestAnimationFrame(() => carousel.classList.remove('no-transition'));
+    }
+  };
+
+  const stepCarousel = (direction) => {
+    currentIndex += direction;
+    updateCarousel(true);
+  };
+
+  const openBookModal = (book) => {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    modalTitle.textContent = book.title;
+    modalAuthor.textContent = `by ${book.author}`;
+    modalNotes.textContent = book.notes || '';
+    setCoverImage(modalCover, book);
+  };
+
+  const closeBookModal = () => {
+    modal.hidden = true;
+    if (!document.querySelector('.nav-links.open')) {
+      document.body.style.overflow = '';
+    }
+  };
+
+  modalClose?.addEventListener('click', closeBookModal);
+  modalBackdrop?.addEventListener('click', closeBookModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hidden) closeBookModal();
+  });
+
+  bookshelfToggle.addEventListener('click', () => {
+    const isOpen = bookshelfContent.classList.toggle('open');
+    bookshelfToggle.classList.toggle('open', isOpen);
+    bookshelfToggle.querySelector('.toggle-text').textContent = isOpen ? 'Hide Books' : 'View Books';
+    if (isOpen) {
+      currentIndex = 0;
+      updateCarousel(false);
+    }
+  });
+
+  window.addEventListener('resize', () => updateCarousel(false));
+
+  const handleVerticalSwipe = (deltaY) => {
+    if (!bookshelfContent.classList.contains('open') || !modal.hidden) return;
+    if (deltaY > SWIPE_THRESHOLD) stepCarousel(1);
+    else if (deltaY < -SWIPE_THRESHOLD) stepCarousel(-1);
+  };
+
+  carouselViewport?.addEventListener('wheel', (e) => {
+    if (!bookshelfContent.classList.contains('open') || !modal.hidden) return;
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    e.preventDefault();
+    if (wheelCooldown) return;
+    wheelCooldown = true;
+    if (e.deltaY > 0) stepCarousel(1);
+    else if (e.deltaY < 0) stepCarousel(-1);
+    setTimeout(() => {
+      wheelCooldown = false;
+    }, 320);
+  }, { passive: false });
+
+  carouselViewport?.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
+    touchAccumY = 0;
+    carouselViewport.classList.add('is-dragging');
+  }, { passive: true });
+
+  carouselViewport?.addEventListener('touchmove', (e) => {
+    if (!bookshelfContent.classList.contains('open') || !modal.hidden) return;
+    const dy = e.touches[0].clientY - touchStartY;
+    const dx = e.touches[0].clientX - touchStartX;
+    if (Math.abs(dy) > Math.abs(dx)) {
+      e.preventDefault();
+      touchAccumY = dy;
+    }
+  }, { passive: false });
+
+  carouselViewport?.addEventListener('touchend', () => {
+    carouselViewport.classList.remove('is-dragging');
+    handleVerticalSwipe(touchAccumY);
+    touchAccumY = 0;
+  });
+
+  let dragStartY = 0;
+  carouselViewport?.addEventListener('mousedown', (e) => {
+    dragStartY = e.clientY;
+    carouselViewport.classList.add('is-dragging');
+  });
+
+  window.addEventListener('mouseup', (e) => {
+    if (!carouselViewport.classList.contains('is-dragging')) return;
+    carouselViewport.classList.remove('is-dragging');
+    const deltaY = e.clientY - dragStartY;
+    handleVerticalSwipe(deltaY);
+  });
+
+  updateCarousel(false);
+}
