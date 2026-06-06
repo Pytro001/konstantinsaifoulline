@@ -200,30 +200,37 @@ body::after {
 }
 
 /* History */
+.history-section {
+  text-align: center;
+}
+
+.history-section .section-title {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .history-text {
-  max-width: 42rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
+  align-items: center;
 }
 
 .history-text p {
-  color: var(--gray-400);
-  font-size: 1.05rem;
-  line-height: 1.85;
+  width: 100%;
+  max-width: 56rem;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--gray-500);
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  line-height: 1.9;
   font-weight: 300;
+  transition: color 0.55s ease;
 }
 
-.history-text a {
+.history-text p.is-lit {
   color: var(--white);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  transition: border-color var(--transition), color var(--transition);
-}
-
-.history-text a:hover {
-  color: var(--gray-200);
-  border-bottom-color: var(--white);
 }
 
 /* Book Shelf */
@@ -527,7 +534,8 @@ body::after {
   }
 
   .history-text p {
-    font-size: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.85;
   }
 
   .book-card {

@@ -44,35 +44,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px',
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+  const historyParagraphs = document.querySelectorAll('.history-text p');
+  if (historyParagraphs.length) {
+    const historyObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('is-lit', entry.isIntersecting);
+      });
+    }, {
+      threshold: 0.45,
+      rootMargin: '-12% 0px -12% 0px',
     });
-  }, observerOptions);
 
-  const historyText = document.querySelector('.history-text');
-  if (historyText) {
-    historyText.style.opacity = '0';
-    historyText.style.transform = 'translateY(20px)';
-    historyText.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(historyText);
+    historyParagraphs.forEach((paragraph) => {
+      historyObserver.observe(paragraph);
+    });
   }
-
-  const style = document.createElement('style');
-  style.textContent = `
-    .history-text.visible {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-    }
-  `;
-  document.head.appendChild(style);
 });
 
 function initBookshelf() {
