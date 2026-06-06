@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  initHistoryText();
   initBookshelf();
 
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -43,23 +44,40 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
-  const historyParagraphs = document.querySelectorAll('.history-text p');
-  if (historyParagraphs.length) {
-    const historyObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle('is-lit', entry.isIntersecting);
-      });
-    }, {
-      threshold: 0.45,
-      rootMargin: '-12% 0px -12% 0px',
-    });
-
-    historyParagraphs.forEach((paragraph) => {
-      historyObserver.observe(paragraph);
-    });
-  }
 });
+
+function initHistoryText() {
+  const paragraphs = document.querySelectorAll('.history-text p');
+  if (!paragraphs.length) return;
+
+  paragraphs.forEach((paragraph) => {
+    const words = paragraph.textContent.trim().split(/\s+/);
+    paragraph.textContent = '';
+    words.forEach((word, index) => {
+      const span = document.createElement('span');
+      span.className = 'history-word';
+      span.textContent = word;
+      paragraph.appendChild(span);
+      if (index < words.length - 1) {
+        paragraph.appendChild(document.createTextNode(' '));
+      }
+    });
+  });
+
+  const words = document.querySelectorAll('.history-word');
+  const updateWords = () => {
+    const triggerY = window.innerHeight * 0.72;
+    words.forEach((word) => {
+      const rect = word.getBoundingClientRect();
+      const isLit = rect.top < triggerY && rect.bottom > window.innerHeight * 0.12;
+      word.classList.toggle('is-lit', isLit);
+    });
+  };
+
+  window.addEventListener('scroll', updateWords, { passive: true });
+  window.addEventListener('resize', updateWords);
+  updateWords();
+}
 
 function initBookshelf() {
   const carouselViewport = document.getElementById('booksCarouselViewport');
@@ -83,8 +101,8 @@ function initBookshelf() {
   let touchStartY = 0;
   let touchStartX = 0;
   let touchAccumY = 0;
-  const SWIPE_THRESHOLD = 18;
-  const WHEEL_COOLDOWN_MS = 60;
+  const SWIPE_THRESHOLD = 24;
+  const WHEEL_COOLDOWN_MS = 450;
 
   const coverUrl = (book, ext = 'jpg') => `assets/books/${book.id}.${ext}`;
 
@@ -128,28 +146,18 @@ function initBookshelf() {
     return card.offsetWidth + gap;
   };
 
-  const getMaxTranslate = () => {
-    const cards = carousel.querySelectorAll('.book-card');
-    if (!cards.length || !carouselViewport) return 0;
-    const lastCard = cards[cards.length - 1];
-    const totalWidth = lastCard.offsetLeft + lastCard.offsetWidth;
-    return Math.max(0, totalWidth - carouselViewport.offsetWidth);
-  };
-
-  const getMaxIndex = () => {
-    const step = getCardStep();
-    if (!step) return 0;
-    return Math.max(0, Math.ceil(getMaxTranslate() / step));
+  const syncCarouselPadding = () => {
+    const card = carousel.querySelector('.book-card');
+    if (!card) return;
+    const half = card.offsetWidth / 2;
+    carousel.style.paddingLeft = `calc(50% - ${half}px)`;
+    carousel.style.paddingRight = `calc(50% - ${half}px)`;
   };
 
   const updateCarousel = (animate = true) => {
-    const step = getCardStep();
-    const maxIndex = getMaxIndex();
-    const maxTranslate = getMaxTranslate();
-    currentIndex = Math.max(0, Math.min(currentIndex, maxIndex));
-    const translate = Math.min(currentIndex * step, maxTranslate);
+    currentIndex = Math.max(0, Math.min(currentIndex, books.length - 1));
     carousel.classList.toggle('no-transition', !animate);
-    carousel.style.transform = `translateX(-${translate}px)`;
+    carousel.style.transform = `translateX(-${currentIndex * getCardStep()}px)`;
     counter.textContent = `${currentIndex + 1} / ${books.length}`;
     if (!animate) {
       requestAnimationFrame(() => carousel.classList.remove('no-transition'));
@@ -185,7 +193,10 @@ function initBookshelf() {
     if (e.key === 'Escape' && !modal.hidden) closeBookModal();
   });
 
-  window.addEventListener('resize', () => updateCarousel(false));
+  window.addEventListener('resize', () => {
+    syncCarouselPadding();
+    updateCarousel(false);
+  });
 
   const handleVerticalSwipe = (deltaY) => {
     if (!modal.hidden) return;
@@ -199,8 +210,7 @@ function initBookshelf() {
     e.preventDefault();
     if (wheelCooldown) return;
     wheelCooldown = true;
-    const steps = Math.max(1, Math.min(4, Math.round(Math.abs(e.deltaY) / 35)));
-    stepCarousel(e.deltaY > 0 ? steps : -steps);
+    stepCarousel(e.deltaY > 0 ? 1 : -1);
     setTimeout(() => {
       wheelCooldown = false;
     }, WHEEL_COOLDOWN_MS);
@@ -242,5 +252,6 @@ function initBookshelf() {
     handleVerticalSwipe(deltaY);
   });
 
+  syncCarouselPadding();
   updateCarousel(false);
 }
