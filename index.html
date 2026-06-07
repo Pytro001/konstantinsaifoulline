@@ -3,287 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Pytro booking, press, music statistics, tour dates, and media highlights.">
-  <title>Pytro</title>
-  <link rel="icon" type="image/png" href="assets/pytro/infinity-icon.png">
-  <link rel="apple-touch-icon" href="assets/pytro/infinity-icon.png">
+  <title>Konstantin Saifoulline</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="site-header">
-    <a class="site-logo" href="#top">PYTRO</a>
-    <nav class="site-nav" aria-label="Primary navigation">
-      <a href="#shows">Tour</a>
-      <a href="#press">Press</a>
-      <a href="#booking">Booking</a>
-      <a href="#reactions">Reactions</a>
-    </nav>
-    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">
+  <nav class="nav">
+    <div class="nav-links">
+      <a href="#bookshelf">Book Shelf</a>
+      <a href="https://pytromusic.com" target="_blank" rel="noopener noreferrer">Music</a>
+      <a href="doc/">Doc</a>
+    </div>
+    <button class="nav-toggle" aria-label="Menu">
       <span></span>
       <span></span>
       <span></span>
     </button>
-  </header>
+  </nav>
 
-  <main id="top">
-    <section class="hero" aria-label="Pytro booking homepage">
-      <video class="hero-video" src="assets/pytro/bootshaus.mp4" autoplay muted loop playsinline poster="assets/pytro/pytro-stage.png" aria-hidden="true"></video>
-      <div class="hero-inner">
-        <div class="hero-actions">
-          <a class="btn btn-fill btn-light" href="#booking">Book Pytro</a>
-          <a class="btn btn-outline btn-light" href="https://open.spotify.com/artist/5yfH3SYskc4FoTAYzjQcGr?si=_EsO5MSUReGJ9cGeavxcsw" target="_blank" rel="noopener noreferrer">Listen on Spotify</a>
-        </div>
-      </div>
+  <main>
+    <section id="top" class="hero">
+      <h1 class="hero-title">
+        <span class="hero-line">Konstantin</span>
+        <span class="hero-line">Saifoulline</span>
+      </h1>
     </section>
 
-    <section id="numbers" class="panel-section numbers-section">
-      <div class="panel-head panel-head-plain">
-        <h2>Numbers</h2>
-      </div>
-      <div class="stats-grid">
-        <div class="stat">
-          <span class="stat-label">Spotify</span>
-          <strong>110K</strong>
-          <span class="stat-note">monthly listeners</span>
+    <section id="bookshelf" class="section bookshelf-section">
+      <h2 class="section-title">Book Shelf</h2>
+      <div class="bookshelf-content" id="bookshelfContent">
+        <p class="bookshelf-hint">Swipe down to browse books →</p>
+        <div class="books-carousel-viewport" id="booksCarouselViewport">
+          <div class="books-carousel" id="booksCarousel" aria-label="Book covers"></div>
         </div>
-        <div class="stat">
-          <span class="stat-label">Spotify</span>
-          <strong>1.3M</strong>
-          <span class="stat-note">total listeners</span>
-        </div>
-        <div class="stat">
-          <span class="stat-label">SoundCloud</span>
-          <strong>5.12M</strong>
-          <span class="stat-note">total streams</span>
-        </div>
-        <div class="stat">
-          <span class="stat-label">Instagram</span>
-          <strong>62K</strong>
-          <span class="stat-note">followers</span>
-        </div>
-        <div class="stat">
-          <span class="stat-label">Instagram</span>
-          <strong>10M</strong>
-          <span class="stat-note">monthly views</span>
-        </div>
-        <div class="stat">
-          <span class="stat-label">YouTube</span>
-          <strong>4.8M</strong>
-          <span class="stat-note">total views</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="socials" class="panel-section social-section">
-      <div class="social-bar">
-        <a class="social-link" href="https://www.instagram.com/konstantinsaifo/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
-          <span>Instagram</span>
-        </a>
-        <a class="social-link" href="https://x.com/konstantinsaifo" target="_blank" rel="noopener noreferrer" aria-label="X">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
-          <span>X</span>
-        </a>
-        <a class="social-link" href="https://open.spotify.com/artist/5yfH3SYskc4FoTAYzjQcGr?si=_EsO5MSUReGJ9cGeavxcsw" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
-          </svg>
-          <span>Spotify</span>
-        </a>
-        <a class="social-link" href="https://www.youtube.com/@pytromusic" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.872.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-          </svg>
-          <span>YouTube</span>
-        </a>
-        <a class="social-link" href="https://soundcloud.com/pytromusic" target="_blank" rel="noopener noreferrer" aria-label="SoundCloud">
-          <img src="assets/pytro/soundcloud-icon.png" alt="" aria-hidden="true" class="social-img">
-          <span>SoundCloud</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="gallery-section" aria-label="Pytro image gallery">
-      <img src="assets/pytro/pytro-headshot.png" alt="Pytro portrait" loading="lazy">
-      <img src="assets/pytro/pytro-croatia.png" alt="Pytro performing at a festival in Croatia" loading="lazy">
-      <img src="assets/pytro/pytro-stage.png" alt="Pytro performing on stage in front of a crowd" loading="lazy">
-    </section>
-
-    <section id="shows" class="panel-section tour-section">
-      <div class="tour-layout">
-        <aside class="tour-sidebar">
-          <h2>Tour</h2>
-          <p class="sidebar-note">Upcoming dates</p>
-        </aside>
-        <div class="tour-content tour-content-flush">
-          <div class="tour-list" id="tourList" aria-live="polite">
-            <p class="empty-state">No upcoming dates announced yet.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel-section past-section">
-      <div class="tour-layout">
-        <aside class="tour-sidebar">
-          <h2>Past</h2>
-          <p class="sidebar-note">Highlights</p>
-        </aside>
-        <div class="tour-content tour-content-flush">
-          <div class="tour-list tour-list-plain">
-            <article class="tour-date tour-date-past">
-              <div class="tour-date-when">
-                <span class="tour-day">15</span>
-                <span class="tour-month">MAR '25</span>
-              </div>
-              <div class="tour-date-info">
-                <h3>CENKGO Tour</h3>
-                <p>Croatia and Germany</p>
-              </div>
-            </article>
-            <article class="tour-date tour-date-past">
-              <div class="tour-date-when">
-                <span class="tour-day">08</span>
-                <span class="tour-month">NOV '24</span>
-              </div>
-              <div class="tour-date-info">
-                <h3>Bootshaus Mainstage</h3>
-                <p>Cologne, Germany</p>
-              </div>
-            </article>
-            <article class="tour-date tour-date-past">
-              <div class="tour-date-when">
-                <span class="tour-day">12</span>
-                <span class="tour-month">AUG '24</span>
-              </div>
-              <div class="tour-date-info">
-                <h3>OARKAND Berlin</h3>
-                <p>Berlin, Germany</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="press" class="panel-section press-section">
-      <div class="tour-layout">
-        <aside class="tour-sidebar">
-          <h2>Press</h2>
-          <p class="sidebar-note">About Pytro</p>
-        </aside>
-        <div class="tour-content press-copy">
-          <p>At 15, Pytro started releasing music and quickly turned early momentum into live shows. Within six months he played 30 club shows across Germany and released remixes that reached up to a million streams on SoundCloud.</p>
-          <p>At 16 he released "Somebody to Love" with MATTN and Klaas. The record reached 100,000 Spotify streams in a single day, and the next night he played Bootshaus Cologne, ranked among the best clubs in the world.</p>
-          <p>In 2023 he began posting remixes on TikTok. "Blonde Chaya" with Niklas Dee went viral, earned Gold status through Universal Music, and passed 100 million streams.</p>
-          <p>Since 2024 he plays shows across Europe and the United States bringing fast house and techno beats to the clubs and collaborating with Influencers on shows.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="booking" class="panel-section join-section">
-      <div class="tour-layout">
-        <aside class="tour-sidebar">
-          <h2>Booking</h2>
-          <p class="sidebar-note">Get in touch</p>
-        </aside>
-        <div class="tour-content join-panel">
-          <p>For club bookings, festival slots, collaborations, and press requests, reach out on Instagram, X or Email.</p>
-          <div class="join-links">
-            <a class="btn btn-fill" href="https://www.instagram.com/konstantinsaifo/" target="_blank" rel="noopener noreferrer">Instagram</a>
-            <a class="btn btn-outline" href="https://x.com/konstantinsaifo" target="_blank" rel="noopener noreferrer">X</a>
-            <button class="btn btn-outline" id="emailRevealBtn" type="button">Email</button>
-          </div>
-          <p class="email-reveal" id="emailReveal" hidden>invite@konstantinsaifoulline.com</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="reactions" class="panel-section">
-      <div class="tour-layout">
-        <aside class="tour-sidebar">
-          <h2>Reactions</h2>
-          <p class="sidebar-note">Remix clips online hitting more than one million views</p>
-          <p class="sidebar-cta">Click to listen</p>
-        </aside>
-        <div class="tour-content reaction-scroll-wrap">
-          <div class="reaction-scroll" aria-label="Swipe through reaction videos">
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-bxtmusic.mp4" muted loop playsinline></video>
-              <span class="reaction-views">820K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-joelweyer.mp4" muted loop playsinline></video>
-              <span class="reaction-views">340K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-matwaymusic.mp4" muted loop playsinline></video>
-              <span class="reaction-views">1.1M</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-techno-mike.mp4" muted loop playsinline></video>
-              <span class="reaction-views">470K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-vicic7.mp4" muted loop playsinline></video>
-              <span class="reaction-views">650K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-amazing.mp4" muted loop playsinline></video>
-              <span class="reaction-views">210K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-snap1.mp4" muted loop playsinline></video>
-              <span class="reaction-views">580K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-snap2.mp4" muted loop playsinline></video>
-              <span class="reaction-views">160K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-snap3.mp4" muted loop playsinline></video>
-              <span class="reaction-views">390K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-snap4.mp4" muted loop playsinline></video>
-              <span class="reaction-views">290K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-snap5.mp4" muted loop playsinline></video>
-              <span class="reaction-views">730K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-snap6.mp4" muted loop playsinline></video>
-              <span class="reaction-views">440K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-snap7.mp4" muted loop playsinline></video>
-              <span class="reaction-views">120K</span>
-            </div>
-            <div class="reaction-item">
-              <video src="assets/pytro/reaction-snap8.mp4" muted loop playsinline></video>
-              <span class="reaction-views">510K</span>
-            </div>
-          </div>
-        </div>
+        <p class="books-carousel-counter" id="booksCarouselCounter" aria-live="polite"></p>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <a href="#top">PYTRO</a>
-      <p class="footer-copy">&copy; 2026 Pytro. All rights reserved.</p>
+  <div class="book-modal" id="bookModal" hidden>
+    <div class="book-modal-backdrop" id="bookModalBackdrop"></div>
+    <div class="book-modal-panel" role="dialog" aria-modal="true" aria-labelledby="bookModalTitle">
+      <button type="button" class="book-modal-close" id="bookModalClose" aria-label="Close">×</button>
+      <div class="book-modal-cover-wrap">
+        <img class="book-modal-cover" id="bookModalCover" alt="">
+      </div>
+      <h3 class="book-modal-title" id="bookModalTitle"></h3>
+      <p class="book-modal-author" id="bookModalAuthor"></p>
+      <div class="book-modal-notes" id="bookModalNotes"></div>
     </div>
-  </footer>
+  </div>
 
+  <script src="books.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
