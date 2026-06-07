@@ -1,3 +1,13 @@
 {
-  "cleanUrls": false
+  "cleanUrls": false,
+  "directoryListing": false,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/k9d3", "destination": "/admin/index.html" },
+    { "source": "/k9d3/", "destination": "/admin/index.html" }
+  ],
+  "redirects": [
+    { "source": "/admin",   "destination": "/", "type": 301 },
+    { "source": "/admin/",  "destination": "/", "type": 301 }
+  ]
 }

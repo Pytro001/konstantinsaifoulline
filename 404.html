@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>404 — Pytro</title>
+  <link rel="icon" type="image/png" href="assets/pytro/infinity-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #eceae4; --black: #000; --muted: #5a5a5a; --line: #000; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--black);
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 1rem clamp(1rem, 4vw, 2.5rem);
+      border-bottom: 1px solid var(--line);
+    }
+    header a {
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: inherit;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(2rem, 8vw, 6rem) clamp(1rem, 4vw, 2.5rem);
+      border-bottom: 1px solid var(--line);
+    }
+    .code {
+      font-size: clamp(6rem, 22vw, 14rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+    }
+    .message {
+      margin-top: 1.5rem;
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 28rem;
+      line-height: 1.55;
+    }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--line);
+      background: var(--black);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .back:hover { opacity: 0.8; }
+    footer {
+      padding: 1.25rem clamp(1rem, 4vw, 2.5rem);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/">PYTRO</a>
+  </header>
+  <main>
+    <p class="code">404</p>
+    <p class="message">This page doesn't exist.</p>
+    <a class="back" href="/">Get back</a>
+  </main>
+  <footer>&copy; 2026 Pytro</footer>
+</body>
+</html>

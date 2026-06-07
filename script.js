@@ -1,328 +1,460 @@
-// Konstantin Saifoulline - Website Interactions
+const TOUR_STORAGE_KEY = 'pytroTourDates';
+const ADMIN_SESSION_KEY = 'pytroAdminUnlocked';
+const ADMIN_PASSWORD = '0351ghhe';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const nav = document.querySelector('.nav');
-  const handleScroll = () => {
-    if (window.scrollY > 50) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
+  initNavigation();
+  initSmoothAnchors();
+  renderTourDates();
+  initReactionVideos();
+  initEmailReveal();
+  initAdmin();
+
+  window.addEventListener('storage', (event) => {
+    if (event.key === TOUR_STORAGE_KEY) {
+      renderTourDates();
+      renderAdminDates();
     }
-  };
-  window.addEventListener('scroll', handleScroll);
-  handleScroll();
-
-  const navToggle = document.querySelector('.nav-toggle');
-  const navLinks = document.querySelector('.nav-links');
-  if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => {
-      navToggle.classList.toggle('open');
-      navLinks.classList.toggle('open');
-      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
-    });
-    navLinks.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        navToggle.classList.remove('open');
-        navLinks.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-
-  initHistoryText();
-  initBookshelf();
-
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-      if (href === '#' || href.length < 2) return;
-      if (href.includes('://')) return;
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
   });
 });
 
-function initHistoryText() {
-  const paragraphs = document.querySelectorAll('.history-text p');
-  if (!paragraphs.length) return;
+function initNavigation() {
+  const nav = document.querySelector('.site-header') || document.querySelector('.nav');
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.site-nav') || document.querySelector('.nav-links');
 
-  paragraphs.forEach((paragraph) => {
-    const words = paragraph.textContent.trim().split(/\s+/);
-    paragraph.textContent = '';
-    words.forEach((word, index) => {
-      const span = document.createElement('span');
-      span.className = 'history-word';
-      span.textContent = word;
-      paragraph.appendChild(span);
-      if (index < words.length - 1) {
-        paragraph.appendChild(document.createTextNode(' '));
-      }
-    });
-  });
-
-  const words = [...document.querySelectorAll('.history-word')];
-  const readingLine = () => window.innerHeight * 0.58;
-
-  const updateWords = () => {
-    const line = readingLine();
-    let lastLitIndex = -1;
-
-    words.forEach((word, index) => {
-      const rect = word.getBoundingClientRect();
-      if (rect.top < line && rect.bottom > 0) {
-        lastLitIndex = index;
-      }
-    });
-
-    words.forEach((word, index) => {
-      word.classList.toggle('is-lit', index <= lastLitIndex);
-    });
+  const handleScroll = () => {
+    nav?.classList.toggle('scrolled', window.scrollY > 50);
   };
 
-  window.addEventListener('scroll', updateWords, { passive: true });
-  window.addEventListener('resize', updateWords);
-  requestAnimationFrame(updateWords);
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  if (!navToggle || !navLinks) return;
+
+  const setMenuOpen = (isOpen) => {
+    navToggle.classList.toggle('open', isOpen);
+    navLinks.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  };
+
+  navToggle.addEventListener('click', () => {
+    setMenuOpen(!navLinks.classList.contains('open'));
+  });
+
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setMenuOpen(false));
+  });
 }
 
-function initBookshelf() {
-  const carouselViewport = document.getElementById('booksCarouselViewport');
-  const carousel = document.getElementById('booksCarousel');
-  const counter = document.getElementById('booksCarouselCounter');
-  const modal = document.getElementById('bookModal');
-  const modalBackdrop = document.getElementById('bookModalBackdrop');
-  const modalClose = document.getElementById('bookModalClose');
-  const modalCover = document.getElementById('bookModalCover');
-  const modalTitle = document.getElementById('bookModalTitle');
-  const modalAuthor = document.getElementById('bookModalAuthor');
-  const modalNotes = document.getElementById('bookModalNotes');
+function initSmoothAnchors() {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (event) => {
+      const href = anchor.getAttribute('href');
+      if (!href || href === '#') return;
 
-  const books = window.BOOKS;
-  if (!carousel || !counter || !books?.length) {
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      event.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+}
+
+function getStoredTourDates() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(TOUR_STORAGE_KEY) || '[]');
+    return Array.isArray(parsed) ? parsed.sort(sortTourDates) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveTourDates(dates) {
+  localStorage.setItem(TOUR_STORAGE_KEY, JSON.stringify([...dates].sort(sortTourDates)));
+}
+
+function sortTourDates(a, b) {
+  const dateA = a.date || '';
+  const dateB = b.date || '';
+  if (dateA !== dateB) return dateA.localeCompare(dateB);
+  return (a.city || '').localeCompare(b.city || '');
+}
+
+function formatDate(dateValue) {
+  if (!dateValue) return 'TBA';
+  const date = new Date(`${dateValue}T12:00:00`);
+  if (Number.isNaN(date.getTime())) return dateValue;
+  return new Intl.DateTimeFormat('en', {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+  }).format(date);
+}
+
+function parseTourDateParts(dateValue) {
+  if (!dateValue) return { day: '—', month: 'TBA' };
+  const date = new Date(`${dateValue}T12:00:00`);
+  if (Number.isNaN(date.getTime())) return { day: '—', month: dateValue };
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+  const year = String(date.getFullYear()).slice(-2);
+  return { day, month: `${month} '${year}` };
+}
+
+function renderTourDates() {
+  const tourList = document.getElementById('tourList');
+  if (!tourList) return;
+
+  const dates = getStoredTourDates();
+  tourList.replaceChildren();
+
+  if (!dates.length) {
+    const empty = document.createElement('p');
+    empty.className = 'empty-state';
+    empty.textContent = 'No upcoming dates announced yet.';
+    tourList.appendChild(empty);
     return;
   }
 
-  let currentIndex = 0;
-  let wheelCooldown = false;
-  let touchStartY = 0;
-  let touchStartX = 0;
-  let touchAccumY = 0;
-  const SWIPE_THRESHOLD = 16;
-  const WHEEL_COOLDOWN_MS = 110;
+  dates.forEach((show) => {
+    const row = document.createElement('article');
+    row.className = 'tour-date';
 
-  const coverUrl = (book, ext = 'jpg') => `assets/books/${book.id}.${ext}`;
+    const { day, month } = parseTourDateParts(show.date);
+    const when = document.createElement('div');
+    when.className = 'tour-date-when';
+    const dayEl = document.createElement('span');
+    dayEl.className = 'tour-day';
+    dayEl.textContent = day;
+    const monthEl = document.createElement('span');
+    monthEl.className = 'tour-month';
+    monthEl.textContent = month;
+    when.append(dayEl, monthEl);
 
-  const setCoverImage = (img, book) => {
-    img.alt = `${book.title} cover`;
-    img.src = coverUrl(book, 'jpg');
-    img.onerror = () => {
-      img.onerror = null;
-      img.src = coverUrl(book, 'svg');
-    };
-  };
+    const details = document.createElement('div');
+    details.className = 'tour-date-info';
+    const title = document.createElement('h3');
+    title.textContent = [show.city, show.country].filter(Boolean).join(', ').toUpperCase();
+    const venue = document.createElement('p');
+    venue.textContent = show.venue || '';
+    details.append(title, venue);
 
-  books.forEach((book) => {
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.className = 'book-card';
-    card.setAttribute('aria-label', `${book.title} by ${book.author}`);
-
-    const coverWrap = document.createElement('div');
-    coverWrap.className = 'book-cover-wrap';
-
-    const img = document.createElement('img');
-    img.loading = 'lazy';
-    setCoverImage(img, book);
-
-    const title = document.createElement('span');
-    title.className = 'book-card-title';
-    title.textContent = book.title;
-
-    coverWrap.appendChild(img);
-    card.appendChild(coverWrap);
-    card.appendChild(title);
-    card.addEventListener('click', () => openBookModal(book));
-    carousel.appendChild(card);
-  });
-
-  const syncCarouselPadding = () => {
-    const card = carousel.querySelector('.book-card');
-    if (!card) return;
-    const half = card.offsetWidth / 2;
-    carousel.style.paddingLeft = '0';
-    carousel.style.paddingRight = `calc(50% - ${half}px)`;
-  };
-
-  const getMaxTranslate = () => {
-    const cards = carousel.querySelectorAll('.book-card');
-    if (!cards.length || !carouselViewport) return 0;
-    const lastCard = cards[cards.length - 1];
-    const viewportWidth = carouselViewport.offsetWidth;
-    const lastCenter = lastCard.offsetLeft + lastCard.offsetWidth / 2;
-    return Math.max(0, lastCenter - viewportWidth / 2);
-  };
-
-  const getTranslateForIndex = (index) => {
-    if (index === 0) return 0;
-    const cards = carousel.querySelectorAll('.book-card');
-    const card = cards[index];
-    if (!card || !carouselViewport) return 0;
-    const viewportWidth = carouselViewport.offsetWidth;
-    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-    const target = cardCenter - viewportWidth / 2;
-    return Math.min(Math.max(0, target), getMaxTranslate());
-  };
-
-  const getActiveBookIndex = () => {
-    const viewportRect = carouselViewport.getBoundingClientRect();
-    const viewportCenterX = viewportRect.left + viewportRect.width / 2;
-    const cards = carousel.querySelectorAll('.book-card');
-    let activeIndex = 0;
-    let minDistance = Infinity;
-
-    cards.forEach((card, index) => {
-      const rect = card.getBoundingClientRect();
-      const cardCenterX = rect.left + rect.width / 2;
-      const distance = Math.abs(cardCenterX - viewportCenterX);
-      if (distance < minDistance) {
-        minDistance = distance;
-        activeIndex = index;
-      }
-    });
-
-    return activeIndex;
-  };
-
-  const getRightmostVisibleBookIndex = () => {
-    const viewportRect = carouselViewport.getBoundingClientRect();
-    const cards = carousel.querySelectorAll('.book-card');
-    let rightmost = 0;
-
-    cards.forEach((card, index) => {
-      const rect = card.getBoundingClientRect();
-      if (rect.left < viewportRect.right && rect.right > viewportRect.left) {
-        rightmost = index;
-      }
-    });
-
-    return rightmost;
-  };
-
-  const updateCounter = () => {
-    const centered = getActiveBookIndex();
-    const rightmost = getRightmostVisibleBookIndex();
-    const value = rightmost === books.length - 1
-      ? books.length
-      : Math.max(centered + 1, currentIndex + 1);
-    counter.textContent = `${value} / ${books.length}`;
-  };
-
-  const updateCarousel = (animate = true) => {
-    currentIndex = Math.max(0, Math.min(currentIndex, books.length - 1));
-    carousel.classList.toggle('no-transition', !animate);
-    carousel.style.transform = `translateX(-${getTranslateForIndex(currentIndex)}px)`;
-    carousel.querySelectorAll('.book-card').forEach((card, index) => {
-      card.classList.toggle('is-active', index === currentIndex && currentIndex > 0);
-    });
-    updateCounter();
-    if (!animate) {
-      requestAnimationFrame(() => carousel.classList.remove('no-transition'));
-    } else {
-      carousel.addEventListener('transitionend', updateCounter, { once: true });
+    const action = show.ticketUrl ? document.createElement('a') : document.createElement('span');
+    action.className = show.ticketUrl ? 'btn tour-tickets' : 'muted';
+    action.textContent = show.ticketUrl ? 'Tickets ↗' : 'Info soon';
+    if (show.ticketUrl) {
+      action.href = show.ticketUrl;
+      action.target = '_blank';
+      action.rel = 'noopener noreferrer';
     }
-  };
 
-  const stepCarousel = (direction) => {
-    currentIndex += direction;
-    updateCarousel(true);
-  };
+    row.append(when, details, action);
+    tourList.appendChild(row);
+  });
+}
 
-  const openBookModal = (book) => {
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
-    modalTitle.textContent = book.title;
-    modalAuthor.textContent = `by ${book.author}`;
-    const notes = book.notes?.trim() || '';
-    modalNotes.textContent = notes;
-    modalNotes.hidden = !notes;
-    setCoverImage(modalCover, book);
-  };
+function initReactionVideos() {
+  const scroll = document.querySelector('.reaction-scroll');
+  if (!scroll) return;
 
-  const closeBookModal = () => {
-    modal.hidden = true;
-    if (!document.querySelector('.nav-links.open')) {
-      document.body.style.overflow = '';
-    }
-  };
+  const originals = [...scroll.querySelectorAll('.reaction-item')];
+  if (!originals.length) return;
 
-  modalClose?.addEventListener('click', closeBookModal);
-  modalBackdrop?.addEventListener('click', closeBookModal);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.hidden) closeBookModal();
+  // Append one clone set so the loop looks seamless
+  originals.forEach((item) => {
+    const clone = item.cloneNode(true);
+    clone.dataset.clone = '1';
+    scroll.appendChild(clone);
   });
 
-  window.addEventListener('resize', () => {
-    syncCarouselPadding();
-    updateCarousel(false);
+  const allVideos = () => [...scroll.querySelectorAll('video')];
+
+  allVideos().forEach((v) => {
+    v.muted = true;
+    v.loop = true;
+    v.play().catch(() => {});
   });
 
-  const handleVerticalSwipe = (deltaY) => {
-    if (!modal.hidden) return;
-    if (deltaY > SWIPE_THRESHOLD) stepCarousel(1);
-    else if (deltaY < -SWIPE_THRESHOLD) stepCarousel(-1);
+  const muteAll = () => {
+    allVideos().forEach((v) => {
+      v.muted = true;
+      v.classList.remove('is-unmuted');
+    });
   };
 
-  carouselViewport?.addEventListener('wheel', (e) => {
-    if (!modal.hidden) return;
-    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
-    e.preventDefault();
-    if (wheelCooldown) return;
-    wheelCooldown = true;
-    stepCarousel(e.deltaY > 0 ? 1 : -1);
-    setTimeout(() => {
-      wheelCooldown = false;
-    }, WHEEL_COOLDOWN_MS);
-  }, { passive: false });
+  // Width of one set — measured from where the clones begin
+  let setWidth = 0;
+  const measureSet = () => {
+    const firstClone = scroll.querySelector('[data-clone]');
+    setWidth = firstClone ? firstClone.offsetLeft : scroll.scrollWidth / 2;
+  };
+  requestAnimationFrame(() => requestAnimationFrame(measureSet));
+  window.addEventListener('resize', measureSet);
 
-  carouselViewport?.addEventListener('touchstart', (e) => {
-    touchStartY = e.touches[0].clientY;
-    touchStartX = e.touches[0].clientX;
-    touchAccumY = 0;
-    carouselViewport.classList.add('is-dragging');
+  // Seamless jump when the clone set is reached
+  scroll.addEventListener('scroll', () => {
+    if (!setWidth) return;
+    if (scroll.scrollLeft >= setWidth) scroll.scrollLeft -= setWidth;
   }, { passive: true });
 
-  carouselViewport?.addEventListener('touchmove', (e) => {
-    if (!modal.hidden) return;
-    const dy = e.touches[0].clientY - touchStartY;
-    const dx = e.touches[0].clientX - touchStartX;
-    if (Math.abs(dy) > Math.abs(dx)) {
-      e.preventDefault();
-      touchAccumY = dy;
+  // Vertical trackpad/wheel → horizontal scroll
+  scroll.addEventListener('wheel', (event) => {
+    const vertical = Math.abs(event.deltaY) >= Math.abs(event.deltaX);
+    if (vertical && event.deltaY !== 0) {
+      event.preventDefault();
+      scroll.scrollLeft += event.deltaY;
     }
   }, { passive: false });
 
-  carouselViewport?.addEventListener('touchend', () => {
-    carouselViewport.classList.remove('is-dragging');
-    handleVerticalSwipe(touchAccumY);
-    touchAccumY = 0;
+  // Drag-to-scroll (document-level so clicks on child videos are preserved)
+  let startX = 0, startScroll = 0, active = false, dragMoved = 0;
+
+  scroll.addEventListener('mousedown', (e) => {
+    active = true;
+    dragMoved = 0;
+    startX = e.clientX;
+    startScroll = scroll.scrollLeft;
   });
 
-  let dragStartY = 0;
-  carouselViewport?.addEventListener('mousedown', (e) => {
-    dragStartY = e.clientY;
-    carouselViewport.classList.add('is-dragging');
+  document.addEventListener('mousemove', (e) => {
+    if (!active) return;
+    const dx = e.clientX - startX;
+    dragMoved = Math.abs(dx);
+    if (dragMoved > 4) scroll.classList.add('is-dragging');
+    scroll.scrollLeft = startScroll - dx;
   });
 
-  window.addEventListener('mouseup', (e) => {
-    if (!carouselViewport.classList.contains('is-dragging')) return;
-    carouselViewport.classList.remove('is-dragging');
-    const deltaY = e.clientY - dragStartY;
-    handleVerticalSwipe(deltaY);
+  document.addEventListener('mouseup', () => {
+    if (!active) return;
+    active = false;
+    scroll.classList.remove('is-dragging');
   });
 
-  syncCarouselPadding();
-  updateCarousel(false);
+  scroll.addEventListener('touchstart', (e) => {
+    dragMoved = 0;
+    startX = e.touches[0].clientX;
+    startScroll = scroll.scrollLeft;
+  }, { passive: true });
+
+  scroll.addEventListener('touchmove', (e) => {
+    const dx = e.touches[0].clientX - startX;
+    dragMoved = Math.abs(dx);
+    scroll.scrollLeft = startScroll - dx;
+  }, { passive: true });
+
+  // Click-to-toggle sound — event delegation works on originals and clones
+  scroll.addEventListener('click', (e) => {
+    if (dragMoved > 8) return;
+    const item = e.target.closest('.reaction-item');
+    if (!item) return;
+    const video = item.querySelector('video');
+    if (!video) return;
+    const wasMuted = video.muted;
+    muteAll();
+    if (wasMuted) {
+      video.muted = false;
+      video.classList.add('is-unmuted');
+    }
+  });
+}
+
+function initEmailReveal() {
+  const btn = document.getElementById('emailRevealBtn');
+  const reveal = document.getElementById('emailReveal');
+  if (!btn || !reveal) return;
+
+  btn.addEventListener('click', () => {
+    const isHidden = reveal.hidden;
+    reveal.hidden = !isHidden;
+    btn.textContent = isHidden ? 'Hide Email' : 'Email';
+  });
+}
+
+const LOCK_KEY = 'pk_g';
+const MAX_ATTEMPTS = 5;
+const LOCKOUT_MS = 15 * 60 * 1000;
+
+function getLockState() {
+  try { return JSON.parse(localStorage.getItem(LOCK_KEY) || '{}'); } catch { return {}; }
+}
+
+function setLockState(state) {
+  try { localStorage.setItem(LOCK_KEY, JSON.stringify(state)); } catch {}
+}
+
+function isLockedOut() {
+  const s = getLockState();
+  return s.until && Date.now() < s.until;
+}
+
+function lockoutMinutesLeft() {
+  const s = getLockState();
+  return s.until ? Math.ceil((s.until - Date.now()) / 60000) : 0;
+}
+
+function recordFailedAttempt() {
+  const s = getLockState();
+  if (s.until && Date.now() >= s.until) {
+    setLockState({});
+    return MAX_ATTEMPTS - 1;
+  }
+  const attempts = (s.attempts || 0) + 1;
+  if (attempts >= MAX_ATTEMPTS) {
+    setLockState({ attempts, until: Date.now() + LOCKOUT_MS });
+    return 0;
+  }
+  setLockState({ attempts });
+  return MAX_ATTEMPTS - attempts;
+}
+
+function clearLockState() {
+  try { localStorage.removeItem(LOCK_KEY); } catch {}
+}
+
+function initAdmin() {
+  const loginForm = document.getElementById('adminLoginForm');
+  const passwordInput = document.getElementById('adminPassword');
+  const loginCard = document.getElementById('adminLoginCard');
+  const adminPanel = document.getElementById('adminPanel');
+  const loginMessage = document.getElementById('adminMessage');
+  const panelMessage = document.getElementById('adminPanelMessage');
+  const dateForm = document.getElementById('tourDateForm');
+  const logoutButton = document.getElementById('adminLogout');
+
+  if (!loginForm || !passwordInput || !loginCard || !adminPanel) return;
+
+  const showPanel = () => {
+    loginCard.hidden = true;
+    adminPanel.hidden = false;
+    renderAdminDates();
+  };
+
+  const showLogin = (msg = '') => {
+    loginCard.hidden = false;
+    adminPanel.hidden = true;
+    if (loginMessage && msg) loginMessage.textContent = msg;
+  };
+
+  const showLockout = () => {
+    const mins = lockoutMinutesLeft();
+    if (loginMessage) loginMessage.textContent = `Too many failed attempts. Try again in ${mins} minute${mins !== 1 ? 's' : ''}.`;
+    if (passwordInput) passwordInput.disabled = true;
+    const btn = loginForm.querySelector('button[type="submit"]');
+    if (btn) btn.disabled = true;
+  };
+
+  if (sessionStorage.getItem(ADMIN_SESSION_KEY) === 'true') {
+    showPanel();
+  } else {
+    showLogin();
+    if (isLockedOut()) showLockout();
+  }
+
+  loginForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (isLockedOut()) { showLockout(); return; }
+
+    if (passwordInput.value === ADMIN_PASSWORD) {
+      clearLockState();
+      sessionStorage.setItem(ADMIN_SESSION_KEY, 'true');
+      passwordInput.value = '';
+      if (loginMessage) loginMessage.textContent = '';
+      if (panelMessage) panelMessage.textContent = '';
+      showPanel();
+      return;
+    }
+
+    const remaining = recordFailedAttempt();
+    if (remaining <= 0) {
+      showLockout();
+    } else {
+      if (loginMessage) loginMessage.textContent = `Wrong password. ${remaining} attempt${remaining !== 1 ? 's' : ''} left.`;
+    }
+    passwordInput.value = '';
+  });
+
+  logoutButton?.addEventListener('click', () => {
+    sessionStorage.removeItem(ADMIN_SESSION_KEY);
+    showLogin();
+    if (passwordInput) passwordInput.disabled = false;
+    const btn = loginForm.querySelector('button[type="submit"]');
+    if (btn) btn.disabled = false;
+  });
+
+  dateForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(dateForm);
+    const show = {
+      id: window.crypto?.randomUUID?.() || String(Date.now()),
+      date: String(formData.get('date') || '').trim(),
+      city: String(formData.get('city') || '').trim(),
+      venue: String(formData.get('venue') || '').trim(),
+      country: String(formData.get('country') || '').trim(),
+      ticketUrl: String(formData.get('ticketUrl') || '').trim(),
+      note: String(formData.get('note') || '').trim(),
+    };
+
+    if (!show.date || !show.city || !show.venue) {
+      if (panelMessage) panelMessage.textContent = 'Date, city, and venue are required.';
+      return;
+    }
+
+    saveTourDates([...getStoredTourDates(), show]);
+    dateForm.reset();
+    if (panelMessage) panelMessage.textContent = 'Tour date saved.';
+    renderTourDates();
+    renderAdminDates();
+  });
+
+  document.getElementById('adminDateList')?.addEventListener('click', (event) => {
+    const deleteButton = event.target.closest('[data-delete-id]');
+    if (!deleteButton) return;
+
+    const id = deleteButton.getAttribute('data-delete-id');
+    saveTourDates(getStoredTourDates().filter((show) => show.id !== id));
+    if (panelMessage) panelMessage.textContent = 'Tour date deleted.';
+    renderTourDates();
+    renderAdminDates();
+  });
+}
+
+function renderAdminDates() {
+  const list = document.getElementById('adminDateList');
+  if (!list) return;
+
+  const dates = getStoredTourDates();
+  list.replaceChildren();
+
+  if (!dates.length) {
+    const empty = document.createElement('p');
+    empty.className = 'empty-state';
+    empty.textContent = 'No upcoming dates saved yet.';
+    list.appendChild(empty);
+    return;
+  }
+
+  dates.forEach((show) => {
+    const row = document.createElement('article');
+    row.className = 'admin-date-row';
+
+    const details = document.createElement('div');
+    const title = document.createElement('h3');
+    title.textContent = `${formatDate(show.date)} · ${[show.city, show.country].filter(Boolean).join(', ')}`;
+    const venue = document.createElement('p');
+    venue.className = 'muted';
+    venue.textContent = [show.venue, show.note].filter(Boolean).join(' · ');
+    details.append(title, venue);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.type = 'button';
+    deleteButton.className = 'button button-danger';
+    deleteButton.dataset.deleteId = show.id;
+    deleteButton.textContent = 'Delete';
+
+    row.append(details, deleteButton);
+    list.appendChild(row);
+  });
 }

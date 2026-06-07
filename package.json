@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Personal website of Konstantin Saifoulline",
   "scripts": {
-    "start": "npx serve -p 3000",
-    "dev": "npx serve -p 3000",
+    "start": "npx serve -l 3000",
+    "dev": "npx serve -l 3000",
     "fetch-covers": "node scripts/fetch-covers.mjs",
     "crop-covers": "node scripts/crop-covers.mjs"
   }
