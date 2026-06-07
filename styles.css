@@ -35,6 +35,7 @@ html {
 
 body {
   font-family: var(--font);
+  font-size: 0.9rem;
   background: var(--black);
   color: var(--white);
   line-height: 1.6;
@@ -81,7 +82,7 @@ body::after {
   font-family: var(--font);
   color: var(--gray-400);
   text-decoration: none;
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -111,13 +112,13 @@ body::after {
 
 /* Hero */
 .hero {
-  min-height: 72vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 5rem 2rem 2rem;
+  padding: 5rem 2rem 3rem;
   position: relative;
   overflow: hidden;
 }
@@ -136,26 +137,17 @@ body::after {
 
 .hero-title {
   font-family: var(--font-headline);
-  font-size: clamp(2rem, 8vw, 5rem);
+  font-size: clamp(1.75rem, 7vw, 4.25rem);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 0.95;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
   position: relative;
   text-transform: uppercase;
 }
 
 .hero-line {
   display: block;
-}
-
-.hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  color: var(--gray-400);
-  font-weight: 200;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 0;
 }
 
 .btn {
@@ -191,7 +183,7 @@ body::after {
 
 .section-title {
   font-family: var(--font-headline);
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 400;
   letter-spacing: -0.02em;
   margin-bottom: 2rem;
@@ -201,7 +193,7 @@ body::after {
 
 /* History */
 .history-section {
-  padding-top: 1.5rem;
+  padding-top: 3rem;
   padding-bottom: 2rem;
 }
 
@@ -219,14 +211,14 @@ body::after {
 .history-text p {
   width: 100%;
   text-align: left;
-  font-size: clamp(0.95rem, 1.8vw, 1.12rem);
-  line-height: 1.85;
+  font-size: clamp(0.8rem, 1.5vw, 0.92rem);
+  line-height: 1.8;
   font-weight: 300;
 }
 
 .history-word {
-  color: var(--gray-600);
-  transition: color 0.2s ease;
+  color: var(--gray-500);
+  transition: color 0.15s ease;
 }
 
 .history-word.is-lit {
@@ -236,6 +228,7 @@ body::after {
 /* Book Shelf */
 .bookshelf-section {
   padding-top: 1.5rem;
+  padding-bottom: 4rem;
 }
 
 .bookshelf-section .section-title {
@@ -497,18 +490,9 @@ body::after {
   }
 
   .hero {
-    min-height: auto;
-    padding: 6rem 1.5rem 3rem;
-    justify-content: flex-start;
-    padding-top: 8rem;
-  }
-
-  .hero-title {
-    margin-bottom: 1.25rem;
-  }
-
-  .hero-subtitle {
-    margin-bottom: 2rem;
+    min-height: 100vh;
+    padding: 5rem 1.5rem 3rem;
+    justify-content: center;
   }
 
   .section {
@@ -520,8 +504,8 @@ body::after {
   }
 
   .history-text p {
-    font-size: 0.92rem;
-    line-height: 1.8;
+    font-size: 0.8rem;
+    line-height: 1.75;
   }
 
   .book-card {
@@ -531,11 +515,6 @@ body::after {
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
   }
-
-.footer-socials {
-  flex-direction: column;
-  gap: 0.75rem;
-}
 }

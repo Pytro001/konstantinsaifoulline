@@ -65,7 +65,7 @@ function initHistoryText() {
   });
 
   const words = [...document.querySelectorAll('.history-word')];
-  const readingLine = () => window.innerHeight * 0.72;
+  const readingLine = () => window.innerHeight * 0.58;
 
   const updateWords = () => {
     const line = readingLine();
@@ -73,8 +73,7 @@ function initHistoryText() {
 
     words.forEach((word, index) => {
       const rect = word.getBoundingClientRect();
-      const wordMid = rect.top + rect.height / 2;
-      if (wordMid <= line && rect.bottom > 0 && rect.top < window.innerHeight) {
+      if (rect.top < line && rect.bottom > 0) {
         lastLitIndex = index;
       }
     });
