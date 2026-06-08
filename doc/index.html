@@ -38,10 +38,29 @@
         <p>In addition I wrote down sources such as books, YouTube videos and documents that will make you discover things on your own and form your own way of thinking.</p>
         <p>This is what I would have wished for myself when I started out on my journey and I hope it will help you no matter what stage you are in the game.</p>
       </div>
-      <a href="../assets/how-to-manage-life.pdf" download="how-to-manage-life.pdf" class="doc-download-btn">Download</a>
+      <a href="#" id="docDownloadBtn" class="doc-download-btn" download="how-to-manage-life.pdf">Download</a>
     </section>
   </main>
 
   <script src="../script.js"></script>
+  <script>
+    (async function () {
+      const SUPABASE_URL = 'https://pjhprqoozwvftzuhgtdr.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqaHBycW9vend2ZnR6dWhndGRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzOTY4NTgsImV4cCI6MjA4ODk3Mjg1OH0.jmB5UQNyShOGZVm4Za9FH4lyoPFgdITtjyJ-11iO3co';
+      const btn = document.getElementById('docDownloadBtn');
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/verify-download`, {
+          headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+        });
+        const data = await res.json();
+        if (data.downloadUrl) {
+          btn.href = data.downloadUrl;
+        }
+      } catch (_) {
+        // keep href="#" — button still visible, URL generation silently failed
+      }
+    })();
+  </script>
 </body>
 </html>

@@ -15,13 +15,35 @@ Deno.serve(async (req) => {
     const url = new URL(req.url)
     const sessionId = url.searchParams.get('session_id')
 
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+    const bucketName = Deno.env.get('DOC_BUCKET_NAME') ?? 'documents'
+    const filePath = Deno.env.get('DOC_FILE_PATH') ?? 'how-to-manage-life.pdf'
+    const expiresIn = 900 // 15 minutes
+
+    // No session_id means free download — skip Stripe verification
     if (!sessionId) {
+      const { data, error } = await supabase.storage
+        .from(bucketName)
+        .createSignedUrl(filePath, expiresIn)
+
+      if (error) {
+        console.error('Storage error:', error)
+        return new Response(
+          JSON.stringify({ error: 'Failed to generate download link' }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
       return new Response(
-        JSON.stringify({ error: 'Missing session_id' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ downloadUrl: data.signedUrl }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
+    // Legacy paid path — verify Stripe session
     const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
     if (!stripeSecretKey) {
       return new Response(
@@ -39,14 +61,6 @@ Deno.serve(async (req) => {
         { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
-
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
-
-    const bucketName = Deno.env.get('DOC_BUCKET_NAME') ?? 'documents'
-    const filePath = Deno.env.get('DOC_FILE_PATH') ?? 'how-to-manage-life.pdf'
-    const expiresIn = 900 // 15 minutes
 
     const { data, error } = await supabase.storage
       .from(bucketName)
