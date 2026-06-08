@@ -67,12 +67,15 @@ function initBookshelf() {
   let touchStartY = 0;
   let touchStartX = 0;
   let touchAccumY = 0;
+  let touchAccumX = 0;
+  let swipeAxis = null; // 'v' vertical | 'h' horizontal — locked after first 6px
 
   // Track recent touch points for velocity calculation
   let recentTouchY = [];
   let recentTouchT = [];
 
   const SWIPE_THRESHOLD = 16;
+  const AXIS_LOCK_PX = 6;
   const WHEEL_COOLDOWN_MS = 110;
 
   const coverUrl = (book, ext = 'jpg') => `assets/books/${book.id}.${ext}`;
@@ -203,13 +206,9 @@ function initBookshelf() {
     updateCarousel(false);
   });
 
-  const handleVerticalSwipe = (deltaY, velocityAbs) => {
+  const handleSwipe = (forward, velocityAbs) => {
     if (!modal.hidden) return;
-    if (deltaY > SWIPE_THRESHOLD) {
-      launchMomentum(1, velocityAbs);
-    } else if (deltaY < -SWIPE_THRESHOLD) {
-      launchMomentum(-1, velocityAbs);
-    }
+    launchMomentum(forward ? 1 : -1, velocityAbs);
   };
 
   carouselViewport?.addEventListener('wheel', (e) => {
@@ -228,6 +227,8 @@ function initBookshelf() {
     touchStartY = e.touches[0].clientY;
     touchStartX = e.touches[0].clientX;
     touchAccumY = 0;
+    touchAccumX = 0;
+    swipeAxis = null;
     recentTouchY = [e.touches[0].clientY];
     recentTouchT = [Date.now()];
     carouselViewport.classList.add('is-dragging');
@@ -237,10 +238,16 @@ function initBookshelf() {
     if (!modal.hidden) return;
     const dy = e.touches[0].clientY - touchStartY;
     const dx = e.touches[0].clientX - touchStartX;
-    if (Math.abs(dy) > Math.abs(dx)) {
+
+    // Lock swipe axis after the first AXIS_LOCK_PX of movement
+    if (!swipeAxis && (Math.abs(dx) > AXIS_LOCK_PX || Math.abs(dy) > AXIS_LOCK_PX)) {
+      swipeAxis = Math.abs(dx) >= Math.abs(dy) ? 'h' : 'v';
+    }
+
+    if (swipeAxis) {
       e.preventDefault();
       touchAccumY = dy;
-      // Keep only the last 5 touch points for velocity
+      touchAccumX = dx;
       recentTouchY.push(e.touches[0].clientY);
       recentTouchT.push(Date.now());
       if (recentTouchY.length > 5) {
@@ -256,11 +263,19 @@ function initBookshelf() {
     let velocityAbs = 0;
     if (recentTouchT.length >= 2) {
       const dt = recentTouchT[recentTouchT.length - 1] - recentTouchT[0];
-      const dy = Math.abs(recentTouchY[recentTouchY.length - 1] - recentTouchY[0]);
-      velocityAbs = dt > 0 ? dy / dt : 0;
+      const dp = Math.abs(recentTouchY[recentTouchY.length - 1] - recentTouchY[0]);
+      velocityAbs = dt > 0 ? dp / dt : 0;
     }
-    handleVerticalSwipe(touchAccumY, velocityAbs);
+    if (swipeAxis === 'h' && Math.abs(touchAccumX) > SWIPE_THRESHOLD) {
+      // Swipe left = forward, swipe right = backward
+      handleSwipe(touchAccumX < 0, velocityAbs);
+    } else if (swipeAxis === 'v' && Math.abs(touchAccumY) > SWIPE_THRESHOLD) {
+      // Swipe down = forward, swipe up = backward
+      handleSwipe(touchAccumY > 0, velocityAbs);
+    }
     touchAccumY = 0;
+    touchAccumX = 0;
+    swipeAxis = null;
     recentTouchY = [];
     recentTouchT = [];
   });
@@ -275,8 +290,7 @@ function initBookshelf() {
     if (!carouselViewport.classList.contains('is-dragging')) return;
     carouselViewport.classList.remove('is-dragging');
     const deltaY = e.clientY - dragStartY;
-    // Mouse drag uses a fixed modest velocity
-    handleVerticalSwipe(deltaY, 0.3);
+    if (Math.abs(deltaY) > SWIPE_THRESHOLD) handleSwipe(deltaY > 0, 0.3);
   });
 
   syncCarouselPadding();
