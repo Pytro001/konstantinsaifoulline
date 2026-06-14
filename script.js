@@ -124,30 +124,21 @@ function initBookshelf() {
     carousel.appendChild(card);
   });
 
-  // Centre padding so the first and last covers can rest in the middle.
-  const syncCarouselPadding = () => {
-    const card = carousel.querySelector('.book-card');
-    if (!card || !carouselViewport) return;
-    const side = Math.max(0, (carouselViewport.offsetWidth - card.offsetWidth) / 2);
-    carousel.style.paddingLeft = `${side}px`;
-    carousel.style.paddingRight = `${side}px`;
-  };
-
-  // Highlight the centred cover + update the counter from the live scroll position.
+  // Highlight the left-most cover + update the counter from the live scroll
+  // position. Books run flush from the left edge to the right edge.
   let activeRaf = 0;
   const updateActive = () => {
     activeRaf = 0;
     const all = carousel.querySelectorAll('.book-card');
     if (!all.length) return;
-    const centre = carouselViewport.scrollLeft + carouselViewport.offsetWidth / 2;
+    const left = carouselViewport.scrollLeft;
     let best = 0;
     let bestDist = Infinity;
     all.forEach((card, i) => {
-      const c = card.offsetLeft + card.offsetWidth / 2;
-      const d = Math.abs(c - centre);
+      const d = Math.abs(card.offsetLeft - left);
       if (d < bestDist) { bestDist = d; best = i; }
     });
-    all.forEach((card, i) => card.classList.toggle('is-active', i === best && best > 0));
+    all.forEach((card, i) => card.classList.toggle('is-active', i === best));
     counter.textContent = `${best + 1} / ${books.length}`;
   };
   const queueUpdate = () => {
@@ -199,11 +190,7 @@ function initBookshelf() {
     if (e.key === 'Escape' && !modal.hidden) closeBookModal();
   });
 
-  window.addEventListener('resize', () => {
-    syncCarouselPadding();
-    queueUpdate();
-  });
+  window.addEventListener('resize', queueUpdate);
 
-  syncCarouselPadding();
   updateActive();
 }
