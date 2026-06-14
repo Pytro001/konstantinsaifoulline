@@ -1,4 +1,11 @@
+// ⚠️ CONVENTION FOR ADDING BOOKS (agents: follow this exactly):
+//  • ADD NEW BOOKS AT THE TOP of this array (index 0), so they appear first.
+//  • Use ONLY the SHORT title the user gives — never the full subtitle.
+//  • Keep the same { id, title, author, notes } shape as every other entry so
+//    the card title renders in the same gray as the rest (no special styling).
+//  • The cover lives at assets/books/<id>.jpg.
 const BOOKS = [
+  { id: 'the-optimist', title: 'Sam Altman', author: 'Keach Hagey', notes: '' },
   { id: 'our-oriental-heritage', title: 'The Story of Civilization Our Oriental Heritage', author: 'Will Durant', notes: '' },
   { id: 'the-case-for-space', title: 'The case for space', author: 'Robert Zubrin', notes: '' },
   { id: 'spacefarers', title: 'Spacefarers', author: 'Christopher Wanjek', notes: '' },

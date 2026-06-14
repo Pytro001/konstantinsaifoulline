@@ -40,6 +40,7 @@ const SEARCH_OVERRIDES = {
   'titan': { title: 'Titan', author: 'Ron Chernow' },
   'wizard': { title: 'Wizard', author: 'Marc Seifer' },
   'that-will-never-work': { title: 'That Will Never Work', author: 'Marc Randolph' },
+  'the-optimist': { title: 'The Optimist Sam Altman OpenAI', author: 'Keach Hagey' },
 };
 
 function sleep(ms) {

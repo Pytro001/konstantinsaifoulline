@@ -225,6 +225,7 @@ body::after {
   color: var(--white);
 }
 
+/* Globe — Library in orbit */
 /* Book Shelf */
 .bookshelf-section {
   padding-top: 1.5rem;
@@ -248,10 +249,18 @@ body::after {
 }
 
 .books-carousel-viewport {
-  overflow: hidden;
-  touch-action: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
   cursor: grab;
   padding: 0.5rem 0 1.5rem;
+  scrollbar-width: none; /* Firefox */
+}
+
+.books-carousel-viewport::-webkit-scrollbar {
+  display: none; /* Safari / Chrome */
 }
 
 .books-carousel-viewport.is-dragging {
@@ -261,12 +270,7 @@ body::after {
 .books-carousel {
   display: flex;
   gap: 1.25rem;
-  will-change: transform;
-  transition: transform 0.14s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.books-carousel.no-transition {
-  transition: none;
+  width: max-content;
 }
 
 .book-card {
