@@ -124,20 +124,20 @@ function initBookshelf() {
     carousel.appendChild(card);
   });
 
-  // Highlight the left-most cover + update the counter from the live scroll
-  // position. Books run flush from the left edge to the right edge.
+  // Map scroll progress across the whole strip so the counter reaches both
+  // ends: 1 / N at the far left, N / N at the far right. (Tracking the
+  // left-most card alone caps early, since the last covers can never reach
+  // the left edge once you're scrolled all the way over.)
   let activeRaf = 0;
   const updateActive = () => {
     activeRaf = 0;
     const all = carousel.querySelectorAll('.book-card');
     if (!all.length) return;
-    const left = carouselViewport.scrollLeft;
-    let best = 0;
-    let bestDist = Infinity;
-    all.forEach((card, i) => {
-      const d = Math.abs(card.offsetLeft - left);
-      if (d < bestDist) { bestDist = d; best = i; }
-    });
+    const maxScroll = carouselViewport.scrollWidth - carouselViewport.clientWidth;
+    const progress = maxScroll > 0
+      ? Math.min(Math.max(carouselViewport.scrollLeft / maxScroll, 0), 1)
+      : 0;
+    const best = Math.round(progress * (all.length - 1));
     all.forEach((card, i) => card.classList.toggle('is-active', i === best));
     counter.textContent = `${best + 1} / ${books.length}`;
   };
