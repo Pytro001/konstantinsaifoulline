@@ -29,26 +29,23 @@ html, body {
 .wall {
   position: fixed;
   inset: 0;
-  display: grid;
-  gap: 4px;
-  padding: 4px;
+  overflow: hidden;
   background: var(--bg);
   touch-action: none;
   z-index: 1;
 }
 
 .tile {
-  position: relative;
+  position: absolute;
   margin: 0;
   padding: 0;
   border: none;
   background: #0b0b0e;
-  border-radius: 18%;
+  border-radius: 24%;
   overflow: hidden;
   cursor: pointer;
   transform-origin: center;
-  will-change: transform, filter;
-  filter: brightness(0.58);
+  filter: brightness(0.46);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   outline: none;
   -webkit-tap-highlight-color: transparent;
@@ -69,24 +66,34 @@ html, body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(155deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 44%);
   mix-blend-mode: screen;
   pointer-events: none;
 }
 
-.tile.is-empty {
-  cursor: default;
-  background: #0a0a0d;
-  filter: brightness(0.4);
+/* Light that follows the focus and lifts the covers near it out of the dark */
+.focus-light {
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.4) 24%,
+    rgba(255, 255, 255, 0.12) 46%,
+    rgba(255, 255, 255, 0) 66%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 40;
+  will-change: transform, opacity;
 }
-.tile.is-empty img { opacity: 0; }
 
 .vignette {
   position: fixed;
   inset: 0;
-  z-index: 2;
+  z-index: 42;
   pointer-events: none;
-  background: radial-gradient(120% 120% at 50% 45%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.55) 100%);
+  background: radial-gradient(130% 130% at 50% 45%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.65) 100%);
 }
 
 /* ---- Top bar ---- */
@@ -100,7 +107,6 @@ html, body {
   z-index: 1100;
   pointer-events: none;
 }
-.top-bar-right { display: flex; gap: 0.6rem; }
 
 .icon-btn {
   pointer-events: auto;
@@ -271,47 +277,6 @@ body.has-detail .stage-title { opacity: 0; }
 .pill-btn.ghost { background: transparent; }
 .pill-btn.is-fav { color: #ff5a7a; border-color: rgba(255, 90, 122, 0.5); }
 .pill-btn.is-fav svg { fill: #ff5a7a; stroke: #ff5a7a; }
-
-/* ---- About overlay ---- */
-.about {
-  position: fixed;
-  inset: 0;
-  z-index: 1500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.about[hidden] { display: none; }
-.about-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-}
-.about-card {
-  position: relative;
-  max-width: 440px;
-  margin: 1.5rem;
-  padding: 2.2rem;
-  border-radius: 18px;
-  background: rgba(14, 14, 18, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-}
-.about-card h2 {
-  font-family: var(--font-headline);
-  font-size: 1.5rem;
-  margin: 0 0 1rem;
-}
-.about-card p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--gray-300);
-  margin: 0 0 1rem;
-}
-.about-credit { color: var(--gray-500); font-size: 0.85rem; }
-.about-credit a { color: var(--gray-300); }
-.about-card .pill-btn { margin-top: 0.5rem; }
 
 /* ---- Mobile ---- */
 @media (max-width: 720px) {
