@@ -16,7 +16,7 @@
   let cols = 1;
   let rows = 1;
 
-  const coverSrc = (book) => `../assets/books/${book.id}.jpg`;
+  const coverSrc = (book) => `/assets/books/${book.id}.jpg`;
 
   function buildGrid() {
     const W = window.innerWidth || document.documentElement.clientWidth || 1280;
@@ -46,7 +46,7 @@
       img.src = coverSrc(book);
       img.addEventListener('error', function handle() {
         img.removeEventListener('error', handle);
-        img.src = `../assets/books/${book.id}.svg`;
+        img.src = `/assets/books/${book.id}.svg`;
       });
       el.appendChild(img);
 
@@ -176,7 +176,7 @@
   function openDetail(book) {
     current = book;
     dCover.src = coverSrc(book);
-    dCover.onerror = () => { dCover.onerror = null; dCover.src = `../assets/books/${book.id}.svg`; };
+    dCover.onerror = () => { dCover.onerror = null; dCover.src = `/assets/books/${book.id}.svg`; };
     dCover.alt = `${book.title} cover`;
     dTitle.textContent = book.title;
     dAuthor.textContent = `by ${book.author}`;
