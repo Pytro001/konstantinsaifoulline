@@ -155,8 +155,6 @@
   const dAuthor = document.getElementById('detailAuthor');
   const dTags = document.getElementById('detailTags');
   const dDesc = document.getElementById('detailDesc');
-  const linkGoogle = document.getElementById('linkGoogle');
-  const linkGoodreads = document.getElementById('linkGoodreads');
   const favBtn = document.getElementById('favBtn');
   const closeBtn = document.getElementById('detailClose');
   const closeX = document.getElementById('detailCloseX');
@@ -202,10 +200,6 @@
 
     const notes = (book.notes || '').trim();
     dDesc.textContent = notes || `“${book.title}” by ${book.author} — from Konstantin's library.`;
-
-    const q = encodeURIComponent(`${book.title} ${book.author}`);
-    linkGoogle.href = `https://www.google.com/search?tbm=bks&q=${q}`;
-    linkGoodreads.href = `https://www.goodreads.com/search?q=${q}`;
 
     syncFav();
     detail.classList.add('open');

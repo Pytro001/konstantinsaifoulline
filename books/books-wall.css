@@ -130,35 +130,6 @@ html, body {
   background: rgba(22, 22, 28, 0.7);
 }
 
-/* ---- Ambient title ---- */
-.stage-title {
-  position: fixed;
-  left: 50%;
-  bottom: 1.6rem;
-  transform: translateX(-50%);
-  text-align: center;
-  z-index: 1000;
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  transition: opacity 0.5s ease;
-}
-.stage-title-main {
-  font-family: var(--font-headline);
-  font-size: clamp(1rem, 2.4vw, 1.5rem);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.9);
-}
-.stage-title-sub {
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gray-500);
-}
-body.has-detail .stage-title { opacity: 0; }
-
 /* ---- Detail card ---- */
 .detail {
   position: fixed;
@@ -293,5 +264,4 @@ body.has-detail .stage-title { opacity: 0; }
   }
   .detail.open { transform: translateY(0); }
   .detail-inner { margin: 0; }
-  .stage-title { bottom: 1rem; }
 }
