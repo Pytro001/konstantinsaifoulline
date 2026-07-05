@@ -35,57 +35,12 @@ html, body {
   z-index: 1;
 }
 
-.tile {
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: #0b0b0e;
-  border-radius: 24%;
-  overflow: hidden;
-  cursor: pointer;
-  transform-origin: center;
-  filter: brightness(0.46);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.tile img {
+.wall-canvas {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* glossy pill highlight */
-.tile::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(155deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 44%);
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-/* Light that follows the focus and lifts the covers near it out of the dark */
-.focus-light {
-  position: fixed;
-  left: 0;
-  top: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.4) 24%,
-    rgba(255, 255, 255, 0.12) 46%,
-    rgba(255, 255, 255, 0) 66%);
-  mix-blend-mode: screen;
-  pointer-events: none;
-  z-index: 40;
-  will-change: transform, opacity;
+  cursor: pointer;
+  touch-action: none;
 }
 
 .vignette {
@@ -93,7 +48,7 @@ html, body {
   inset: 0;
   z-index: 42;
   pointer-events: none;
-  background: radial-gradient(130% 130% at 50% 45%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.65) 100%);
+  background: radial-gradient(130% 130% at 50% 45%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.7) 100%);
 }
 
 /* ---- Top bar ---- */
