@@ -3,8 +3,6 @@
   "directoryListing": false,
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
-    { "source": "/books", "destination": "/books/index.html" },
-    { "source": "/books/", "destination": "/books/index.html" },
     { "source": "/k9d3", "destination": "/admin/index.html" },
     { "source": "/k9d3/", "destination": "/admin/index.html" }
   ],
