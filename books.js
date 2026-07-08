@@ -5,6 +5,10 @@
 //    the card title renders in the same gray as the rest (no special styling).
 //  • The cover lives at assets/books/<id>.jpg.
 const BOOKS = [
+  { id: '2081', title: '2081', author: "Gerard K. O'Neill", notes: '' },
+  { id: 'the-high-frontier', title: 'The High Frontier', author: "Gerard K. O'Neill", notes: '' },
+  { id: 'trillion-dollar-coach', title: 'Trillion Dollar Coach', author: 'Eric Schmidt', notes: '' },
+  { id: 'what-we-owe-the-future', title: 'What We Owe the Future', author: 'William MacAskill', notes: '' },
   { id: 'the-optimist', title: 'Sam Altman', author: 'Keach Hagey', notes: '' },
   { id: 'our-oriental-heritage', title: 'The Story of Civilization Our Oriental Heritage', author: 'Will Durant', notes: '' },
   { id: 'the-case-for-space', title: 'The case for space', author: 'Robert Zubrin', notes: '' },

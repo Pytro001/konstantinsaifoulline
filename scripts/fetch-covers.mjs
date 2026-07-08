@@ -41,6 +41,10 @@ const SEARCH_OVERRIDES = {
   'wizard': { title: 'Wizard', author: 'Marc Seifer' },
   'that-will-never-work': { title: 'That Will Never Work', author: 'Marc Randolph' },
   'the-optimist': { title: 'The Optimist Sam Altman OpenAI', author: 'Keach Hagey' },
+  '2081': { title: '2081 A Hopeful View of the Human Future', author: "Gerard K. O'Neill" },
+  'the-high-frontier': { title: 'The High Frontier Human Colonies in Space', author: "Gerard K. O'Neill" },
+  'trillion-dollar-coach': { title: 'Trillion Dollar Coach', author: 'Eric Schmidt' },
+  'what-we-owe-the-future': { title: 'What We Owe the Future', author: 'William MacAskill' },
 };
 
 function sleep(ms) {
