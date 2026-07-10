@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900">
+  <rect width="600" height="900" fill="#2f6e64"/>
+  <rect width="600" height="900" fill="url(#grain)" opacity="0.06"/>
+  <defs>
+    <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="4" fill="#000"/>
+      <circle cx="1" cy="1" r="0.5" fill="#fff"/>
+    </pattern>
+  </defs>
+
+  <!-- transit / circuit motif -->
+  <g fill="none" stroke="#e7d9ab" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+    <path d="M60,470 H170 L215,515 H350 L400,470 H545"/>
+    <path d="M80,545 H240 L295,600 H470 L520,555 H560"/>
+    <path d="M120,410 L120,470 L165,515"/>
+    <path d="M300,360 L300,650"/>
+    <path d="M430,430 L430,470 L470,510 L470,640"/>
+    <path d="M150,635 L235,635 L285,585 L360,585 L420,645 H540"/>
+    <path d="M60,690 H200 L250,640"/>
+  </g>
+  <g fill="none" stroke="#b24a5c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+    <path d="M330,585 L370,625 L430,690 L520,690"/>
+  </g>
+  <g fill="#2f6e64" stroke="#e7d9ab" stroke-width="4">
+    <circle cx="170" cy="470" r="8"/><circle cx="215" cy="515" r="8"/>
+    <circle cx="350" cy="515" r="8"/><circle cx="400" cy="470" r="8"/>
+    <circle cx="300" cy="470" r="8"/><circle cx="300" cy="515" r="8"/>
+    <circle cx="300" cy="585" r="8"/><circle cx="470" cy="510" r="8"/>
+    <circle cx="235" cy="635" r="8"/><circle cx="360" cy="585" r="8"/>
+    <circle cx="120" cy="470" r="8"/><circle cx="470" cy="600" r="8"/>
+  </g>
+
+  <!-- title + copy -->
+  <text x="70" y="200" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900"
+        font-size="104" fill="#f2efe2" textLength="470" lengthAdjust="spacingAndGlyphs">Gongbans</text>
+
+  <g font-family="'Helvetica Neue', Arial, sans-serif" fill="#e7eee9">
+    <text x="72" y="272" font-size="31" font-weight="400">The secret hardware system</text>
+    <text x="72" y="311" font-size="31" font-weight="400">that powers half the world&#8217;s</text>
+    <text x="72" y="350" font-size="31" font-weight="400">consumer electronics</text>
+  </g>
+
+  <g font-family="'Helvetica Neue', Arial, sans-serif" fill="#f2efe2">
+    <text x="72" y="742" font-size="37" font-weight="600">A Practical Guide for</text>
+    <text x="72" y="786" font-size="37" font-weight="600">Western Entrepreneurs</text>
+    <text x="72" y="846" font-size="26" font-weight="700" letter-spacing="2">FIRST EDITION</text>
+    <text x="540" y="872" font-size="26" font-weight="400" text-anchor="end" fill="#e7eee9">Johan Philippe Stam</text>
+  </g>
+</svg>

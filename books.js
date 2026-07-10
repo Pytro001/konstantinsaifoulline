@@ -5,6 +5,8 @@
 //    the card title renders in the same gray as the rest (no special styling).
 //  • The cover lives at assets/books/<id>.jpg.
 const BOOKS = [
+  { id: 'gongbans', title: 'Gongbans', author: 'Johan Philippe Stam', notes: '' },
+  { id: 'the-hardest-hardware-lessons', title: 'The Hardest Hardware Lessons', author: 'Johan Philippe Stam', notes: '' },
   { id: '2081', title: '2081', author: "Gerard K. O'Neill", notes: '' },
   { id: 'the-high-frontier', title: 'The High Frontier', author: "Gerard K. O'Neill", notes: '' },
   { id: 'trillion-dollar-coach', title: 'Trillion Dollar Coach', author: 'Eric Schmidt', notes: '' },
