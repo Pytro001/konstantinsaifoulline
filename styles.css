@@ -495,7 +495,8 @@ body::after {
 
   .hero {
     min-height: 100vh;
-    padding: 5rem 1.5rem 3rem;
+    min-height: 100svh; /* small viewport: centre within the always-visible area */
+    padding: 2rem 1.5rem 5rem; /* bias the name slightly up from centre */
     justify-content: center;
   }
 
