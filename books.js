@@ -5,6 +5,12 @@
 //    the card title renders in the same gray as the rest (no special styling).
 //  • The cover lives at assets/books/<id>.jpg.
 const BOOKS = [
+  { id: 'the-toyota-way-fieldbook', title: 'The Toyota Way Fieldbook', author: 'Jeffrey K. Liker', notes: '' },
+  { id: 'kelly', title: 'Kelly', author: 'Clarence L. Johnson', notes: '' },
+  { id: 'in-the-company-of-giants', title: 'In the Company of Giants', author: 'Rama Dev Jager', notes: '' },
+  { id: 'steve-jobs-in-exile', title: 'Steve Jobs in Exile', author: 'Geoffrey Cain', notes: '' },
+  { id: 'salt', title: 'Salt', author: 'Mark Kurlansky', notes: '' },
+  { id: 'apple', title: 'Apple', author: 'David Pogue', notes: '' },
   { id: 'gongbans', title: 'Gongbans', author: 'Johan Philippe Stam', notes: '' },
   { id: 'the-hardest-hardware-lessons', title: 'The Hardest Hardware Lessons', author: 'Johan Philippe Stam', notes: '' },
   { id: '2081', title: '2081', author: "Gerard K. O'Neill", notes: '' },
