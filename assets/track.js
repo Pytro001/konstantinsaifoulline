@@ -6,8 +6,8 @@
 // Add to a page with:
 //   <script src="/assets/track.js" data-site="konstantinsaifoulline" defer></script>
 (function () {
-  var SUPABASE_URL = 'https://pjhprqoozwvftzuhgtdr.supabase.co';
-  var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqaHBycW9vend2ZnR6dWhndGRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzOTY4NTgsImV4cCI6MjA4ODk3Mjg1OH0.jmB5UQNyShOGZVm4Za9FH4lyoPFgdITtjyJ-11iO3co';
+  var SUPABASE_URL = 'https://fyxqdwhqposxitexydby.supabase.co';
+  var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ5eHFkd2hxcG9zeGl0ZXh5ZGJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzk5MDgsImV4cCI6MjA5MTc1NTkwOH0.cvpnWJvVsQx_qEk4hNDAtJZ_M8qNv4RNnhRJBRgulg8';
 
   try {
     var self = document.currentScript;
@@ -29,7 +29,7 @@
       SID = 'nostore';
     }
 
-    var RPC = SUPABASE_URL + '/rest/v1/rpc/log_event';
+    var RPC = SUPABASE_URL + '/rest/v1/rpc/web_log_event';
     var HEADERS = {
       'Content-Type': 'application/json',
       'apikey': ANON,
