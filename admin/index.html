@@ -24,6 +24,12 @@
     #gate button{width:100%;margin-top:.7rem;padding:.85rem;background:var(--ink);color:#000;border:none;border-radius:10px;font:inherit;font-weight:600;cursor:pointer}
     #gate .err{margin-top:.9rem;min-height:1.2em;font-size:.82rem;color:#ff6b7d}
 
+    /* shown on the public site — the admin only works locally */
+    #nf{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem}
+    #nf .c{font-size:clamp(3rem,12vw,6rem);font-weight:800;letter-spacing:-.03em;line-height:1}
+    #nf .m{color:var(--dim);margin:.6rem 0 1.4rem;font-size:1rem}
+    #nf .h{color:var(--dim2);font-size:.85rem;text-decoration:none;border:1px solid var(--line);padding:.55rem 1rem;border-radius:999px}
+
     .wrap{max-width:1120px;margin:0 auto;padding:2rem 1.25rem 4rem}
     header.top{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;margin-bottom:1.4rem}
     header.top h1{font-size:1.15rem;font-weight:700}
@@ -62,7 +68,13 @@
   </style>
 </head>
 <body>
-  <div id="gate">
+  <div id="nf">
+    <div class="c">404</div>
+    <div class="m">This page could not be found.</div>
+    <a class="h" href="/">Return home</a>
+  </div>
+
+  <div id="gate" hidden>
     <form id="gateForm">
       <h1>Admin</h1>
       <input id="pw" type="password" autocomplete="current-password" placeholder="Password" autofocus>
@@ -110,6 +122,13 @@
 
   <script>
   (function(){
+    // The admin is local-only. On the live site it stays a 404 with no login.
+    var host=location.hostname;
+    var LOCAL = host==='' || host==='localhost' || host==='127.0.0.1' || host==='::1' || host==='[::1]';
+    if(!LOCAL) return;
+    document.getElementById('nf').style.display='none';
+    document.getElementById('gate').hidden=false;
+
     var AIRSUP='https://fyxqdwhqposxitexydby.supabase.co';
     var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ5eHFkd2hxcG9zeGl0ZXh5ZGJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzk5MDgsImV4cCI6MjA5MTc1NTkwOH0.cvpnWJvVsQx_qEk4hNDAtJZ_M8qNv4RNnhRJBRgulg8';
     var $=function(id){return document.getElementById(id)};
