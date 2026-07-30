@@ -21,7 +21,7 @@
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1000px;margin:0 auto;padding:0 1.4rem}
 
-    .top{position:sticky;top:0;z-index:50;background:rgba(246,245,242,.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,0,0,.05)}
+    .top{position:sticky;top:0;z-index:50;background:rgba(246,245,242,.85);backdrop-filter:blur(10px)}
     .top .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
     .brand{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:.85rem}
     .brand .back{display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line);color:var(--dim)}
@@ -30,8 +30,15 @@
     .navlink{font-size:.85rem;font-weight:600;color:var(--dim)}
     .navlink:hover{color:var(--ink)}
     .plat{display:flex;gap:.35rem;align-items:center}
-    .plat a{display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center}
-    .plat svg{width:19px;height:19px;fill:currentColor}
+    .plat a{display:inline-flex;width:36px;height:36px;align-items:center;justify-content:center}
+    /* optically balanced so every logo reads the same size */
+    .plat svg{width:20px;height:20px;fill:currentColor}
+    .plat a[data-b=applepodcasts] svg{width:17px;height:17px}
+    .plat a[data-b=spotify] svg{width:18px;height:18px}
+    .plat a[data-b=youtube] svg{width:19px;height:19px}
+    .plat a[data-b=x] svg{width:20px;height:20px}
+    .plat a[data-b=amazonmusic] svg{width:23px;height:23px}
+    .plat a[data-b=deezer] svg{width:23px;height:23px}
     .plat a[data-b=youtube]{color:#FF0000}
     .plat a[data-b=applepodcasts]{color:#9933CC}
     .plat a[data-b=spotify]{color:#1DB954}
@@ -70,14 +77,8 @@
 <body>
   <div class="top">
     <div class="wrap">
-      <a class="brand" href="/">
-        <span class="back" aria-label="Back to site"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></span>
-        <span>Konstantin&nbsp;Saifoulline</span>
-      </a>
-      <div class="top-right">
-        <a class="navlink" href="/sponsor">Sponsors</a>
-        <nav class="plat" id="platTop" aria-label="Listen on"></nav>
-      </div>
+      <a class="navlink" href="/sponsor">Sponsors?</a>
+      <nav class="plat" id="platTop" aria-label="Listen on"></nav>
     </div>
   </div>
 
@@ -100,7 +101,7 @@
     <section class="sec">
       <h3>Episodes</h3>
       <div class="grid" id="epGrid"></div>
-      <div class="empty" id="epEmpty" hidden>More episodes coming soon.</div>
+      <div class="empty" id="epEmpty" hidden>This is a new part of the journey — the first episodes of the rebranded podcast will land here.</div>
     </section>
   </main>
 
