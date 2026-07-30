@@ -9,12 +9,12 @@
   <link rel="apple-touch-icon" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#f6f5f2; --card:#ffffff; --ink:#141414; --dim:#5b5b5b; --dim2:#8a8a8a;
       --line:rgba(0,0,0,.10); --line2:rgba(0,0,0,.06); --accent:#111;
-      --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; --head:'Archivo Black',var(--font);
+      --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; --head:var(--font);
       --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.06);
     }
     *{box-sizing:border-box;margin:0;padding:0}
@@ -29,22 +29,24 @@
     .brand{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:.82rem;letter-spacing:.02em}
     .brand .back{display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line);color:var(--dim)}
     .brand .back:hover{color:var(--ink);border-color:var(--ink)}
+    .top-right{display:flex;align-items:center;gap:.7rem}
+    .sponsor-link{border:1px solid var(--line);border-radius:999px;padding:.34rem .85rem;font-size:.76rem;font-weight:600;color:#2a2a2a;letter-spacing:.02em;white-space:nowrap;transition:border-color .18s,background .18s}
+    .sponsor-link:hover{border-color:#111;background:#fff}
     .plat{display:flex;gap:.35rem;align-items:center}
-    .plat a{display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;border-radius:9px;color:#4a4a4a;transition:color .18s,background .18s,transform .18s}
-    .plat a:hover{transform:translateY(-1px)}
+    .plat a{display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;border-radius:9px}
     .plat svg{width:19px;height:19px;fill:currentColor}
-    .plat a[data-b=youtube]:hover{color:#FF0000}
-    .plat a[data-b=x]:hover{color:#000}
-    .plat a[data-b=applepodcasts]:hover{color:#9933CC}
-    .plat a[data-b=spotify]:hover{color:#1DB954}
-    .plat a[data-b=deezer]:hover{color:#A238FF}
-    .plat a[data-b=amazonmusic]:hover{color:#25D1DA}
-    .plat a.soon{opacity:.55}
+    /* platform icons stay in their real brand colours */
+    .plat a[data-b=youtube],.chip[data-b=youtube] svg{color:#FF0000;fill:#FF0000}
+    .plat a[data-b=applepodcasts],.chip[data-b=applepodcasts] svg{color:#9933CC;fill:#9933CC}
+    .plat a[data-b=spotify],.chip[data-b=spotify] svg{color:#1DB954;fill:#1DB954}
+    .plat a[data-b=amazonmusic],.chip[data-b=amazonmusic] svg{color:#25D1DA;fill:#25D1DA}
+    .plat a[data-b=deezer],.chip[data-b=deezer] svg{color:#A238FF;fill:#A238FF}
+    .plat a[data-b=x],.chip[data-b=x] svg{color:#000000;fill:#000000}
 
     /* hero */
     .hero{padding:3.2rem 0 1.4rem;text-align:center}
     .eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--dim2);font-weight:600}
-    .hero h1{font-family:var(--head);font-size:clamp(2.4rem,7vw,4.2rem);line-height:.98;letter-spacing:-.02em;margin:.5rem 0 .6rem;text-transform:uppercase}
+    .hero h1{font-family:var(--head);font-weight:900;font-size:clamp(2.7rem,8.5vw,5rem);line-height:.96;letter-spacing:-.035em;margin:0}
     .hero p{max-width:34rem;margin:0 auto;color:var(--dim);font-size:1.02rem}
 
     /* latest episode */
@@ -57,7 +59,7 @@
     .play span{width:66px;height:66px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(0,0,0,.35)}
     .play span::after{content:'';margin-left:5px;border-style:solid;border-width:11px 0 11px 18px;border-color:transparent transparent transparent #141414}
     .latest-body{padding:1.7rem 1.7rem 1.7rem 0;display:flex;flex-direction:column;justify-content:center}
-    .tag{display:inline-block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:#b00;font-weight:700;margin-bottom:.5rem}
+    .tag{display:inline-block;font-size:.82rem;letter-spacing:.01em;color:#b00;font-weight:700;margin-bottom:.5rem}
     .latest-body h2{font-size:clamp(1.4rem,3vw,2rem);line-height:1.08;letter-spacing:-.01em;margin-bottom:.5rem}
     .latest-body .meta{color:var(--dim2);font-size:.82rem;margin-bottom:.7rem}
     .latest-body .desc{color:var(--dim);font-size:.92rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:1.1rem}
@@ -77,7 +79,7 @@
     /* section heading */
     .sec{margin-top:3.4rem}
     .sec-h{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.1rem;border-bottom:1px solid var(--line);padding-bottom:.6rem}
-    .sec-h h3{font-family:var(--head);font-size:1.15rem;letter-spacing:.01em;text-transform:uppercase}
+    .sec-h h3{font-family:var(--head);font-weight:800;font-size:1.05rem;letter-spacing:.01em}
     .sec-h .count{color:var(--dim2);font-size:.8rem}
 
     /* episode grid */
@@ -94,10 +96,10 @@
     /* sponsors */
     .sponsor{margin-top:3.6rem;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(1.6rem,4vw,2.8rem);box-shadow:var(--shadow)}
     .sponsor-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:2.4rem}
-    .sponsor h3{font-family:var(--head);font-size:clamp(1.5rem,3.5vw,2.1rem);text-transform:uppercase;line-height:1.02;margin-bottom:.7rem}
+    .sponsor h3{font-family:var(--head);font-weight:800;font-size:clamp(1.5rem,3.5vw,2.1rem);letter-spacing:-.01em;line-height:1.02;margin-bottom:.7rem}
     .sponsor .lede{color:var(--dim);font-size:.98rem;margin-bottom:1.2rem}
     .stats{display:flex;gap:1.6rem;margin-top:1.2rem}
-    .stat .n{font-family:var(--head);font-size:1.5rem}
+    .stat .n{font-family:var(--head);font-weight:800;font-size:1.5rem}
     .stat .l{color:var(--dim2);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
     .current{margin-top:1.6rem}
     .current .l{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim2);margin-bottom:.5rem}
@@ -134,15 +136,16 @@
         </span>
         <span>Konstantin&nbsp;Saifoulline</span>
       </a>
-      <nav class="plat" id="platTop" aria-label="Listen on"></nav>
+      <div class="top-right">
+        <a class="sponsor-link" href="#sponsors">Sponsor?</a>
+        <nav class="plat" id="platTop" aria-label="Listen on"></nav>
+      </div>
     </div>
   </div>
 
   <main class="wrap">
     <section class="hero">
-      <p class="eyebrow">The Podcast</p>
-      <h1>Hardware,<br>unfiltered</h1>
-      <p>Conversations on building physical products — the supply chains, the failures, and the people making real things. New episodes on YouTube and everywhere you listen.</p>
+      <h1>Konstantin<br>Saifoulline</h1>
     </section>
 
     <section class="latest" aria-label="Latest episode">
@@ -250,7 +253,7 @@
 
     // listen-on chips
     $('listenRow').innerHTML='<span class="lbl">Listen on</span>'+PLATFORMS.map(function(p){
-      return '<a class="chip '+(p.soon?'soon':'')+'" href="'+p.url+'" target="_blank" rel="noopener">'+IC[p.b]+'<span>'+p.name+'</span>'+(p.soon?'<span class="soonbadge">soon</span>':'')+'</a>';
+      return '<a class="chip '+(p.soon?'soon':'')+'" data-b="'+p.b+'" href="'+p.url+'" target="_blank" rel="noopener">'+IC[p.b]+'<span>'+p.name+'</span>'+(p.soon?'<span class="soonbadge">soon</span>':'')+'</a>';
     }).join('');
 
     // ---- episodes ----
