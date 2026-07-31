@@ -45,7 +45,8 @@
     .plat a[data-b=deezer]{color:#A238FF}
     .plat a[data-b=x]{color:#000}
 
-    .hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:1.2rem}
+    .hero{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:1.2rem;z-index:1}
+    .content{position:relative;z-index:2;background:var(--bg);margin-top:100vh;margin-top:100svh;box-shadow:0 -30px 60px rgba(0,0,0,.06)}
     .name{width:min(92vw,1060px);height:auto;display:block}
     .name text{font-family:'Inter','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:150px;fill:var(--ink)}
 
@@ -81,14 +82,15 @@
     </div>
   </div>
 
-  <main class="wrap">
-    <section class="hero">
-      <svg class="name" viewBox="0 0 1000 300" role="img" aria-label="Konstantin Saifoulline" preserveAspectRatio="xMidYMid meet">
-        <text x="500" y="128" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">KONSTANTIN</text>
-        <text x="500" y="280" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">SAIFOULLINE</text>
-      </svg>
-    </section>
+  <div class="hero">
+    <svg class="name" viewBox="0 0 1000 300" role="img" aria-label="Konstantin Saifoulline" preserveAspectRatio="xMidYMid meet">
+      <text x="500" y="128" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">KONSTANTIN</text>
+      <text x="500" y="280" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">SAIFOULLINE</text>
+    </svg>
+  </div>
 
+  <div class="content">
+  <main class="wrap">
     <section class="latest">
       <a class="thumb" id="latestThumb" href="#" target="_blank" rel="noopener">
         <img id="latestImg" alt=""><span class="play"><span></span></span>
@@ -113,6 +115,7 @@
     <nav class="plat" id="platBottom" aria-label="Listen on"></nav>
     <div>© <span id="yr"></span> Konstantin Saifoulline · <a href="/" style="text-decoration:underline">back to site</a></div>
   </footer>
+  </div>
 
   <script>
   (function(){
