@@ -52,8 +52,7 @@
     .latest{margin:1rem 0 2rem}
     .latest a.thumb{position:relative;display:block;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 10px 40px rgba(0,0,0,.10)}
     .latest a.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.10);transition:background .2s}
-    .latest a.thumb:hover .play{background:rgba(0,0,0,.24)}
+    .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.10)}
     .play span{width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(0,0,0,.35)}
     .play span::after{content:'';margin-left:6px;border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent #141414}
     .latest .info{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-top:1rem;flex-wrap:wrap}
@@ -128,9 +127,8 @@
     var PLATFORMS=[
       {b:'youtube',name:'YouTube',url:'https://www.youtube.com/@konstantinsaifo'},
       {b:'applepodcasts',name:'Apple Podcasts',url:'https://podcasts.apple.com/us/podcast/konstantin-saifoulline/id6796254399'},
-      {b:'spotify',name:'Spotify',url:'https://open.spotify.com/search/Konstantin%20Saifoulline'},
-      {b:'amazonmusic',name:'Amazon Music',url:'https://music.amazon.com/search/Konstantin%20Saifoulline'},
-      {b:'deezer',name:'Deezer',url:'https://www.deezer.com/search/Konstantin%20Saifoulline'},
+      {b:'spotify',name:'Spotify',url:'https://open.spotify.com/show/033YmXaDmzU8LCJzfdbqoM?si=40ec222f49544206'},
+      {b:'deezer',name:'Deezer',url:'https://www.deezer.com/us/show/1003446822'},
       {b:'x',name:'X',url:'https://x.com/konstantinsaifo'}
     ];
     function renderPlat(el){ el.innerHTML=PLATFORMS.map(function(p){ return '<a data-b="'+p.b+'" href="'+p.url+'" target="_blank" rel="noopener" aria-label="'+p.name+'">'+IC[p.b]+'</a>'; }).join(''); }
