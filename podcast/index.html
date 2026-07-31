@@ -51,11 +51,8 @@
     .name text{font-family:'Inter','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:150px;fill:var(--ink)}
 
     .latest{margin:1rem 0 2rem}
-    .latest a.thumb{position:relative;display:block;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 10px 40px rgba(0,0,0,.10)}
-    .latest a.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.10)}
-    .play span{width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(0,0,0,.35)}
-    .play span::after{content:'';margin-left:6px;border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent #141414}
+    .video{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 12px 44px rgba(0,0,0,.12)}
+    .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
     .latest .info{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-top:1rem;flex-wrap:wrap}
     .latest .lbl{font-size:.78rem;font-weight:600;color:var(--dim2)}
     .latest h2{font-size:clamp(1.3rem,3vw,1.8rem);font-weight:800;letter-spacing:-.02em}
@@ -92,14 +89,13 @@
   <div class="content">
   <main class="wrap">
     <section class="latest">
-      <a class="thumb" id="latestThumb" href="#" target="_blank" rel="noopener">
-        <img id="latestImg" alt=""><span class="play"><span></span></span>
-      </a>
+      <div class="video">
+        <iframe id="ytEmbed" src="about:blank" title="Latest episode"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+      </div>
       <div class="info">
-        <div>
-          <div class="lbl">Latest episode</div>
-          <h2 id="latestTitle">Loading…</h2>
-        </div>
+        <h2 id="latestTitle">Loading…</h2>
         <div class="date" id="latestDate"></div>
       </div>
     </section>
@@ -143,15 +139,14 @@
     function renderPlat(el){ el.innerHTML=PLATFORMS.map(function(p){ return '<a data-b="'+p.b+'" href="'+p.url+'" target="_blank" rel="noopener" aria-label="'+p.name+'">'+IC[p.b]+'</a>'; }).join(''); }
     renderPlat($('platTop')); renderPlat($('platBottom'));
 
-    var FALLBACK=[{id:'zlwhAwhqdOI',title:'Hardware (is) was hard.',published:'2026-07-20T00:00:00+00:00',url:'https://www.youtube.com/watch?v=zlwhAwhqdOI',thumbnail:'https://i.ytimg.com/vi/zlwhAwhqdOI/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/zlwhAwhqdOI/hqdefault.jpg'}];
-    function fmtDate(s){ try{ return new Date(s).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}); }catch(e){ return ''; } }
+    var FALLBACK=[{id:'CFpKRfGyZWQ',title:'Why Some People Progress Faster Than Everyone Else',published:'',url:'https://www.youtube.com/watch?v=CFpKRfGyZWQ',thumbnail:'https://i.ytimg.com/vi/CFpKRfGyZWQ/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/CFpKRfGyZWQ/hqdefault.jpg'}];
+    function fmtDate(s){ if(!s) return ''; var d=new Date(s); if(isNaN(d.getTime())) return ''; return d.toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}); }
     function fb(img,hq){ img.onerror=function(){ img.onerror=null; if(hq) img.src=hq; }; }
 
     function render(eps){
       if(!eps||!eps.length) eps=FALLBACK;
       var latest=eps[0], rest=eps.slice(1);
-      $('latestImg').src=latest.thumbnail; fb($('latestImg'),latest.thumbnail_hq); $('latestImg').alt=latest.title;
-      $('latestThumb').href=latest.url;
+      $('ytEmbed').src='https://www.youtube-nocookie.com/embed/'+latest.id+'?rel=0';
       $('latestTitle').textContent=latest.title;
       $('latestDate').textContent=fmtDate(latest.published);
       var grid=$('epGrid');
