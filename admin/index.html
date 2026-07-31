@@ -68,13 +68,7 @@
   </style>
 </head>
 <body>
-  <div id="nf">
-    <div class="c">404</div>
-    <div class="m">This page could not be found.</div>
-    <a class="h" href="/">Return home</a>
-  </div>
-
-  <div id="gate" hidden>
+  <div id="gate">
     <form id="gateForm">
       <h1>Admin</h1>
       <input id="pw" type="password" autocomplete="current-password" placeholder="Password" autofocus>
@@ -122,13 +116,6 @@
 
   <script>
   (function(){
-    // The admin is local-only. On the live site it stays a 404 with no login.
-    var host=location.hostname;
-    var LOCAL = host==='' || host==='localhost' || host==='127.0.0.1' || host==='::1' || host==='[::1]';
-    if(!LOCAL) return;
-    document.getElementById('nf').style.display='none';
-    document.getElementById('gate').hidden=false;
-
     var AIRSUP='https://fyxqdwhqposxitexydby.supabase.co';
     var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ5eHFkd2hxcG9zeGl0ZXh5ZGJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzk5MDgsImV4cCI6MjA5MTc1NTkwOH0.cvpnWJvVsQx_qEk4hNDAtJZ_M8qNv4RNnhRJBRgulg8';
     var $=function(id){return document.getElementById(id)};
