@@ -86,7 +86,7 @@
           <button data-t="metrics">Metrics</button>
         </div>
         <div class="seg" id="rangeSeg" hidden>
-          <button data-d="7">7d</button><button data-d="30" class="on">30d</button><button data-d="90">90d</button>
+          <button data-d="7">7d</button><button data-d="30" class="on">30d</button><button data-d="90">90d</button><button data-d="3650">All</button>
         </div>
         <button class="ghost" id="refresh">Refresh</button>
         <button class="ghost" id="logout">Log out</button>
@@ -102,6 +102,10 @@
       <div class="kpis" id="kpis"></div>
       <div class="card"><h2>Visits per day</h2><div class="bars" id="bars"></div><div class="axis" id="barsAxis"></div></div>
       <div class="card"><h2>By site</h2><div id="bySite"></div></div>
+      <div class="grid2">
+        <div class="card"><h2>Devices</h2><div id="devices"></div></div>
+        <div class="card"><h2>Browsers</h2><div id="browsers"></div></div>
+      </div>
       <div class="grid2">
         <div class="card"><h2>Top pages</h2><div id="topPages"></div></div>
         <div class="card"><h2>Most clicked</h2><div id="topClicks"></div></div>
@@ -172,13 +176,17 @@
       var d=analytics;
       if(!d){ $('kpis').innerHTML='<div class="muted">Analytics not reachable yet.</div>'; return; }
       var t=d.totals||{};
-      $('genAt').textContent='Last '+d.range_days+' days · '+new Date(d.generated_at).toLocaleString();
+      $('genAt').textContent='Last '+d.range_days+' days · tracking since '+(d.tracking_since?new Date(d.tracking_since).toLocaleDateString():'—')+' · updated '+new Date(d.generated_at).toLocaleString();
       $('kpis').innerHTML=[['Page views',fmt(t.pageviews)],['Unique visits',fmt(t.sessions)],['Clicks',fmt(t.clicks)],['Avg. time',dur(t.avg_seconds)]].map(function(k){return '<div class="kpi"><div class="n">'+k[1]+'</div><div class="l">'+k[0]+'</div></div>'}).join('');
       var daily=d.daily||[],max=1; daily.forEach(function(x){if(x.pageviews>max)max=x.pageviews});
       $('bars').innerHTML=daily.map(function(x){return '<div class="b" title="'+x.day+': '+x.pageviews+' views" style="height:'+Math.round(x.pageviews/max*100)+'%"></div>'}).join('')||'<span class="muted">No data yet.</span>';
       $('barsAxis').innerHTML=daily.length?'<span>'+daily[0].day+'</span><span>'+daily[daily.length-1].day+'</span>':'';
       var bs=d.by_site||[];
       $('bySite').innerHTML=bs.length?tbl(['Site','Views','Visits','Clicks','Avg time'],bs.map(function(s){return['<span class="pill">'+esc(s.site)+'</span>',s.pageviews,s.sessions,s.clicks,dur(s.avg_seconds)]}),[0]):'<span class="muted">No data yet.</span>';
+      var dev=d.devices||[];
+      $('devices').innerHTML=dev.length?tbl(['Device','Views'],dev.map(function(x){return[esc(x.device),x.views]}),[0]):'<span class="muted">No data.</span>';
+      var br=d.browsers||[];
+      $('browsers').innerHTML=br.length?tbl(['Browser','Views'],br.map(function(x){return[esc(x.browser),x.views]}),[0]):'<span class="muted">No data.</span>';
       var tp=d.top_pages||[];
       $('topPages').innerHTML=tp.length?tbl(['Site','Page','Views'],tp.map(function(p){return['<span class="pill">'+esc(p.site)+'</span>','<span>'+esc(p.path)+'</span>',p.views]}),[0,1]):'<span class="muted">No data.</span>';
       var tc=d.top_clicks||[];
