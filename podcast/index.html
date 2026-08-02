@@ -19,8 +19,10 @@
     .wrap{max-width:1000px;margin:0 auto;padding:0 1.4rem}
 
     /* header — sits at the top, scrolls away with the page (not fixed) */
-    .top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:1.5rem 0 1.2rem}
-    .brand{font-weight:900;font-size:1.05rem;line-height:1.04;letter-spacing:-.01em;text-transform:uppercase}
+    .top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:1.4rem 1.6rem 1.2rem}
+    .brand{display:block;width:clamp(128px,15vw,170px);flex:0 0 auto}
+    .brand svg{display:block;width:100%;height:auto}
+    .brand text{font-family:var(--font);font-weight:900;fill:var(--ink)}
     .right{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:flex-end}
     .navlink{font-size:.85rem;font-weight:600;color:var(--ink)}
     .plat{display:flex;gap:.35rem;align-items:center}
@@ -58,19 +60,24 @@
 
     footer{margin:4rem 0 3rem;text-align:center;color:var(--dim2);font-size:.82rem}
     footer .plat{justify-content:center;margin-bottom:1.1rem}
-    @media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}.brand{font-size:.95rem}}
+    @media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}.brand{width:120px}}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="top">
-      <div class="brand">Konstantin<br>Saifoulline</div>
-      <div class="right">
-        <nav class="plat" id="platTop" aria-label="Listen on"></nav>
-        <a class="navlink" href="/sponsor">Sponsor?</a>
-      </div>
-    </header>
+  <header class="top">
+    <a class="brand" href="/" aria-label="Konstantin Saifoulline">
+      <svg viewBox="0 0 200 62" preserveAspectRatio="xMinYMid meet">
+        <text x="0" y="26" textLength="200" lengthAdjust="spacingAndGlyphs">KONSTANTIN</text>
+        <text x="0" y="57" textLength="200" lengthAdjust="spacingAndGlyphs">SAIFOULLINE</text>
+      </svg>
+    </a>
+    <div class="right">
+      <nav class="plat" id="platTop" aria-label="Listen on"></nav>
+      <a class="navlink" href="/sponsor">Sponsor?</a>
+    </div>
+  </header>
 
+  <div class="wrap">
     <section class="hero-ep">
       <div class="video">
         <iframe id="ytEmbed" src="about:blank" title="Latest episode"
