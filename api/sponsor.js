@@ -61,23 +61,39 @@ module.exports = async (req, res) => {
     <p style="margin-top:18px;color:#888;font-size:12px">Sent from konstantinsaifoulline.com/sponsor</p>
   </div>`;
 
+  const subject = `Sponsor application — ${company || email}`;
+  const send = (to) => fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${KEY}` },
+    body: JSON.stringify({
+      from: `Sponsorships <${FROM}>`,
+      to: [to],
+      reply_to: email || undefined,
+      subject,
+      html,
+    }),
+  });
+
   try {
-    const r = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${KEY}` },
-      body: JSON.stringify({
-        from: `Sponsorships <${FROM}>`,
-        to: [TO],
-        reply_to: email || undefined,
-        subject: `Sponsor application — ${company || email}`,
-        html,
-      }),
-    });
-    if (!r.ok) {
-      const detail = (await r.text()).slice(0, 300);
-      return res.status(502).json({ ok: false, emailed: false, error: detail });
+    let r = await send(TO);
+    if (r.ok) return res.status(200).json({ ok: true, emailed: true, to: TO });
+
+    const detail = (await r.text()).slice(0, 400);
+
+    // Resend's shared test sender only delivers to the account owner's address.
+    // Until a domain is verified, retry to that address so mail is never lost.
+    const owner = (detail.match(/your own email address \(([^)]+)\)/) || [])[1];
+    if (owner && owner !== TO) {
+      const r2 = await send(owner);
+      if (r2.ok) {
+        return res.status(200).json({
+          ok: true, emailed: true, to: owner,
+          note: `Sent to ${owner} instead of ${TO}: verify a domain at resend.com/domains and set SPONSOR_FROM to deliver to ${TO}.`,
+        });
+      }
+      return res.status(502).json({ ok: false, emailed: false, error: (await r2.text()).slice(0, 400) });
     }
-    return res.status(200).json({ ok: true, emailed: true });
+    return res.status(502).json({ ok: false, emailed: false, error: detail });
   } catch (e) {
     return res.status(502).json({ ok: false, emailed: false, error: String(e).slice(0, 300) });
   }
