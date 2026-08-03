@@ -71,8 +71,16 @@
       var payload={company:$('company').value.trim(),contact_name:$('contact_name').value.trim(),email:$('email').value.trim(),website:$('website').value.trim(),budget:$('budget').value,message:$('message').value.trim()};
       if(!payload.company||!payload.email){ msg.className='msg err'; msg.textContent='Please add your company and email.'; return; }
       btn.disabled=true; btn.textContent='Sending…'; msg.className='msg'; msg.textContent='';
-      fetch(AIRSUP+'/rest/v1/rpc/submit_sponsor_app',{method:'POST',headers:{'Content-Type':'application/json','apikey':ANON,'Authorization':'Bearer '+ANON},body:JSON.stringify({payload:payload})})
-        .then(function(r){ if(!r.ok) throw new Error(); msg.className='msg ok'; msg.textContent='Thanks — your application is in.'; e.target.reset(); })
+      // Saves the application AND emails it. Falls back to the plain insert
+      // so an application is never lost if the mailer is unavailable.
+      fetch(AIRSUP+'/functions/v1/sponsor-notify',{method:'POST',headers:{'Content-Type':'application/json','apikey':ANON},body:JSON.stringify({payload:payload})})
+        .then(function(r){ return r.ok?r.json():Promise.reject(); })
+        .then(function(d){ if(!d||!d.ok) return Promise.reject(); })
+        .catch(function(){
+          return fetch(AIRSUP+'/rest/v1/rpc/submit_sponsor_app',{method:'POST',headers:{'Content-Type':'application/json','apikey':ANON,'Authorization':'Bearer '+ANON},body:JSON.stringify({payload:payload})})
+            .then(function(r){ if(!r.ok) throw new Error(); });
+        })
+        .then(function(){ msg.className='msg ok'; msg.textContent='Thanks — your application is in.'; e.target.reset(); })
         .catch(function(){ msg.className='msg err'; msg.textContent='Something went wrong. Please try again.'; })
         .finally(function(){ btn.disabled=false; btn.textContent='Apply to sponsor'; });
     });
