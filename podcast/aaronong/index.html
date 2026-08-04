@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How to Build a Career That Compounds — Konstantin Saifoulline</title>
-  <meta name="description" content="The exclusive document from the episode with Arun. Follow along to unlock it.">
+  <meta name="description" content="The exclusive document from the episode with Aaron Ong. Follow along to unlock it.">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,7 +67,7 @@
   </header>
 
   <main class="wrap">
-    <p class="eyebrow">Episode with Arun</p>
+    <p class="eyebrow">Episode with Aaron Ong</p>
     <h1>How to Build a Career That Compounds</h1>
     <p class="lede">We put together an exclusive document from this episode. Follow the podcast on X and YouTube, and it's yours.</p>
 
@@ -103,7 +103,7 @@
     var LINKS={ x:'https://x.com/konstantinsaifo', youtube:'https://www.youtube.com/@konstantinsaifo?sub_confirmation=1' };
     var AIRSUP='https://fyxqdwhqposxitexydby.supabase.co';
     var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ5eHFkd2hxcG9zeGl0ZXh5ZGJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzk5MDgsImV4cCI6MjA5MTc1NTkwOH0.cvpnWJvVsQx_qEk4hNDAtJZ_M8qNv4RNnhRJBRgulg8';
-    var KEY='arun-gate';
+    var KEY='aaronong-gate';
     var $=function(id){return document.getElementById(id)};
     $('yr').textContent=new Date().getFullYear();
 
@@ -116,7 +116,7 @@
         fetch(AIRSUP+'/rest/v1/rpc/web_log_event',{
           method:'POST', keepalive:true,
           headers:{'Content-Type':'application/json','apikey':ANON,'Authorization':'Bearer '+ANON},
-          body:JSON.stringify({events:[{site:'arun',type:'click',path:'/arun',target:target}]})
+          body:JSON.stringify({events:[{site:'aaronong',type:'click',path:'/podcast/aaronong',target:target}]})
         }).catch(function(){});
       }catch(e){}
     }

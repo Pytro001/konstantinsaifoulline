@@ -7,7 +7,7 @@
     { "source": "/podcast/", "destination": "/podcast/index.html" },
     { "source": "/sponsor", "destination": "/sponsor/index.html" },
     { "source": "/sponsor/", "destination": "/sponsor/index.html" },
-    { "source": "/arun", "destination": "/arun/index.html" },
-    { "source": "/arun/", "destination": "/arun/index.html" }
+    { "source": "/podcast/aaronong", "destination": "/podcast/aaronong/index.html" },
+    { "source": "/podcast/aaronong/", "destination": "/podcast/aaronong/index.html" }
   ]
 }
