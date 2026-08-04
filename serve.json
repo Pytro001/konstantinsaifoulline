@@ -6,6 +6,8 @@
     { "source": "/podcast", "destination": "/podcast/index.html" },
     { "source": "/podcast/", "destination": "/podcast/index.html" },
     { "source": "/sponsor", "destination": "/sponsor/index.html" },
-    { "source": "/sponsor/", "destination": "/sponsor/index.html" }
+    { "source": "/sponsor/", "destination": "/sponsor/index.html" },
+    { "source": "/arun", "destination": "/arun/index.html" },
+    { "source": "/arun/", "destination": "/arun/index.html" }
   ]
 }
