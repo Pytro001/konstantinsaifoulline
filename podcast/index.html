@@ -52,18 +52,19 @@
     /* other episodes */
     .sec{margin-top:3.2rem}
     .sec h3{font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--dim);text-transform:uppercase;margin-bottom:1.1rem}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem 1.2rem}
-    .ep{display:block}
+    /* one row per episode: cover left, title and date on the right */
+    .grid{display:grid;grid-template-columns:1fr;gap:1.15rem}
+    .ep{display:grid;grid-template-columns:230px 1fr;gap:1.15rem;align-items:center}
     .ep .epthumb{border-radius:12px;overflow:hidden;background:#000;aspect-ratio:16/9}
     .ep img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
     .ep:hover img{transform:scale(1.04)}
-    .ep .eptitle{margin-top:.7rem;font-size:.95rem;font-weight:700;line-height:1.32;letter-spacing:-.01em}
-    .ep .epdate{margin-top:.25rem;font-size:.8rem;color:var(--dim2)}
+    .ep .eptitle{font-size:1.05rem;font-weight:700;line-height:1.3;letter-spacing:-.015em}
+    .ep .epdate{margin-top:.35rem;font-size:.85rem;color:var(--dim2)}
     .empty{color:var(--dim2);font-size:.95rem}
 
     footer{margin:4rem 0 3rem;text-align:center;color:var(--dim2);font-size:.82rem}
     footer .plat{justify-content:center;margin-bottom:1.1rem}
-    @media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr);gap:1.3rem .9rem}.brand{width:104px}.ep .eptitle{font-size:.88rem}}
+    @media(max-width:720px){.grid{gap:1rem}.ep{grid-template-columns:140px 1fr;gap:.85rem}.brand{width:104px}.ep .eptitle{font-size:.9rem}.ep .epdate{font-size:.78rem}}
   </style>
 </head>
 <body>
