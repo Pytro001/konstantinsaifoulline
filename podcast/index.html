@@ -52,15 +52,18 @@
     /* other episodes */
     .sec{margin-top:3.2rem}
     .sec h3{font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--dim);text-transform:uppercase;margin-bottom:1.1rem}
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-    .ep{display:block;border-radius:12px;overflow:hidden;background:#000;aspect-ratio:16/9}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem 1.2rem}
+    .ep{display:block}
+    .ep .epthumb{border-radius:12px;overflow:hidden;background:#000;aspect-ratio:16/9}
     .ep img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
     .ep:hover img{transform:scale(1.04)}
+    .ep .eptitle{margin-top:.7rem;font-size:.95rem;font-weight:700;line-height:1.32;letter-spacing:-.01em}
+    .ep .epdate{margin-top:.25rem;font-size:.8rem;color:var(--dim2)}
     .empty{color:var(--dim2);font-size:.95rem}
 
     footer{margin:4rem 0 3rem;text-align:center;color:var(--dim2);font-size:.82rem}
     footer .plat{justify-content:center;margin-bottom:1.1rem}
-    @media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}.brand{width:104px}}
+    @media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr);gap:1.3rem .9rem}.brand{width:104px}.ep .eptitle{font-size:.88rem}}
   </style>
 </head>
 <body>
@@ -135,6 +138,7 @@
     ];
     function fmtDate(s){ if(!s) return ''; var d=new Date(s); if(isNaN(d.getTime())) return ''; return d.toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}); }
     function fb(img,hq){ img.onerror=function(){ img.onerror=null; if(hq) img.src=hq; }; }
+    function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])}); }
 
     function render(eps){
       if(!eps||!eps.length) eps=FALLBACK;
@@ -145,7 +149,12 @@
       var grid=$('epGrid');
       if(!rest.length){ grid.style.display='none'; $('epEmpty').hidden=false; return; }
       grid.innerHTML=rest.map(function(e){
-        return '<a class="ep" href="'+e.url+'" target="_blank" rel="noopener" title="'+e.title.replace(/"/g,'&quot;')+'"><img loading="lazy" src="'+e.thumbnail+'" data-hq="'+(e.thumbnail_hq||'')+'" alt=""></a>';
+        var d=fmtDate(e.published);
+        return '<a class="ep" href="'+e.url+'" target="_blank" rel="noopener">'+
+          '<div class="epthumb"><img loading="lazy" src="'+e.thumbnail+'" data-hq="'+(e.thumbnail_hq||'')+'" alt=""></div>'+
+          '<div class="eptitle">'+esc(e.title)+'</div>'+
+          (d?'<div class="epdate">'+d+'</div>':'')+
+        '</a>';
       }).join('');
       grid.querySelectorAll('img[data-hq]').forEach(function(im){ fb(im, im.getAttribute('data-hq')); });
     }
