@@ -128,7 +128,11 @@
     function renderPlat(el){ el.innerHTML=PLATFORMS.map(function(p){ return '<a data-b="'+p.b+'" href="'+p.url+'" target="_blank" rel="noopener" aria-label="'+p.name+'">'+IC[p.b]+'</a>'; }).join(''); }
     renderPlat($('platTop')); renderPlat($('platBottom'));
 
-    var FALLBACK=[{id:'CFpKRfGyZWQ',title:'Why Some People Progress Faster Than Everyone Else',published:'',url:'https://www.youtube.com/watch?v=CFpKRfGyZWQ',thumbnail:'https://i.ytimg.com/vi/CFpKRfGyZWQ/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/CFpKRfGyZWQ/hqdefault.jpg'}];
+    // Newest first. The live feed overrides this when the channel lists episodes.
+    var FALLBACK=[
+      {id:'JU3owSfVe5E',title:'How He Turned 100k Followers Into a Company | Robert Gutierrez',published:'',url:'https://www.youtube.com/watch?v=JU3owSfVe5E',thumbnail:'https://i.ytimg.com/vi/JU3owSfVe5E/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/JU3owSfVe5E/hqdefault.jpg'},
+      {id:'CFpKRfGyZWQ',title:'Why Some People Progress Faster Than Everyone Else',published:'',url:'https://www.youtube.com/watch?v=CFpKRfGyZWQ',thumbnail:'https://i.ytimg.com/vi/CFpKRfGyZWQ/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/CFpKRfGyZWQ/hqdefault.jpg'}
+    ];
     function fmtDate(s){ if(!s) return ''; var d=new Date(s); if(isNaN(d.getTime())) return ''; return d.toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}); }
     function fb(img,hq){ img.onerror=function(){ img.onerror=null; if(hq) img.src=hq; }; }
 
@@ -145,7 +149,7 @@
       }).join('');
       grid.querySelectorAll('img[data-hq]').forEach(function(im){ fb(im, im.getAttribute('data-hq')); });
     }
-    fetch(AIRSUP+'/functions/v1/podcast-feed',{headers:{'apikey':ANON}})
+    fetch(AIRSUP+'/functions/v1/podcast-feed',{headers:{'apikey':ANON},cache:'no-store'})
       .then(function(r){return r.json()})
       .then(function(d){ render(d&&d.episodes&&d.episodes.length?d.episodes:FALLBACK); })
       .catch(function(){ render(FALLBACK); });
