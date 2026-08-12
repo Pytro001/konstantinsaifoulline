@@ -5,6 +5,7 @@
 //    the card title renders in the same gray as the rest (no special styling).
 //  • The cover lives at assets/books/<id>.jpg.
 const BOOKS = [
+  { id: 'how-to-develop-the-moon', title: 'How To Develop The Moon', author: 'Ian Long', notes: '' },
   { id: 'the-toyota-way-fieldbook', title: 'The Toyota Way Fieldbook', author: 'Jeffrey K. Liker', notes: '' },
   { id: 'kelly', title: 'Kelly', author: 'Clarence L. Johnson', notes: '' },
   { id: 'in-the-company-of-giants', title: 'In the Company of Giants', author: 'Rama Dev Jager', notes: '' },
