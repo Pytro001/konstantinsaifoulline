@@ -1,69 +1,88 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900">
   <defs>
-    <radialGradient id="moonLight" cx="30%" cy="32%" r="78%">
-      <stop offset="0%" stop-color="#b9b8b4"/>
-      <stop offset="30%" stop-color="#8c8b87"/>
-      <stop offset="55%" stop-color="#54534f"/>
-      <stop offset="76%" stop-color="#242423"/>
-      <stop offset="100%" stop-color="#050505"/>
+    <!-- lit along the left limb, falling into shadow toward the terminator -->
+    <radialGradient id="surf" cx="8%" cy="46%" r="92%">
+      <stop offset="0%"   stop-color="#d4d0ce"/>
+      <stop offset="26%"  stop-color="#aeaaa9"/>
+      <stop offset="48%"  stop-color="#83807f"/>
+      <stop offset="68%"  stop-color="#565353"/>
+      <stop offset="86%"  stop-color="#2a2829"/>
+      <stop offset="100%" stop-color="#0b0b0c"/>
     </radialGradient>
+    <!-- diagonal terminator: bright lower-left, dark upper-right -->
+    <linearGradient id="term" x1="10%" y1="0%" x2="86%" y2="78%">
+      <stop offset="0%"   stop-color="#000" stop-opacity=".92"/>
+      <stop offset="22%"  stop-color="#000" stop-opacity=".62"/>
+      <stop offset="44%"  stop-color="#000" stop-opacity=".22"/>
+      <stop offset="62%"  stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
     <radialGradient id="flare" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#fff5d0" stop-opacity="1"/>
-      <stop offset="35%" stop-color="#ffca6a" stop-opacity=".7"/>
-      <stop offset="100%" stop-color="#ff9a00" stop-opacity="0"/>
+      <stop offset="0%"   stop-color="#fff4d6"/>
+      <stop offset="30%"  stop-color="#ffb45a" stop-opacity=".85"/>
+      <stop offset="100%" stop-color="#ff8a00" stop-opacity="0"/>
     </radialGradient>
-    <clipPath id="moonClip"><circle cx="150" cy="470" r="330"/></clipPath>
+    <clipPath id="moon"><circle cx="110" cy="640" r="440"/></clipPath>
   </defs>
 
   <rect width="600" height="900" fill="#000000"/>
 
-  <!-- moon -->
-  <g clip-path="url(#moonClip)">
-    <circle cx="150" cy="470" r="330" fill="url(#moonLight)"/>
-    <g fill="#000" opacity="0.13">
-      <ellipse cx="60" cy="300" rx="52" ry="44"/>
-      <ellipse cx="185" cy="235" rx="34" ry="30"/>
-      <ellipse cx="270" cy="360" rx="26" ry="23"/>
-      <ellipse cx="95" cy="470" rx="66" ry="58"/>
-      <ellipse cx="235" cy="545" rx="40" ry="35"/>
-      <ellipse cx="30" cy="640" rx="58" ry="50"/>
-      <ellipse cx="160" cy="690" rx="46" ry="40"/>
-      <ellipse cx="300" cy="640" rx="24" ry="21"/>
-      <ellipse cx="120" cy="180" rx="22" ry="19"/>
-      <ellipse cx="255" cy="450" rx="18" ry="16"/>
+  <g clip-path="url(#moon)">
+    <circle cx="110" cy="640" r="440" fill="url(#surf)"/>
+
+    <!-- maria -->
+    <g fill="#000" opacity=".15">
+      <ellipse cx="20"  cy="430" rx="120" ry="86" transform="rotate(-16 20 430)"/>
+      <ellipse cx="165" cy="720" rx="130" ry="95" transform="rotate(10 165 720)"/>
+      <ellipse cx="-40" cy="820" rx="110" ry="88"/>
     </g>
-    <g fill="#ffffff" opacity="0.10">
-      <ellipse cx="70" cy="288" rx="46" ry="38"/>
-      <ellipse cx="105" cy="455" rx="58" ry="50"/>
-      <ellipse cx="170" cy="678" rx="40" ry="34"/>
-      <ellipse cx="192" cy="225" rx="28" ry="24"/>
+
+    <!-- craters -->
+    <g fill="#000" opacity=".22">
+      <ellipse cx="-10" cy="330" rx="38" ry="32"/>
+      <ellipse cx="105" cy="455" rx="26" ry="22"/>
+      <ellipse cx="35"  cy="580" rx="44" ry="38"/>
+      <ellipse cx="200" cy="600" rx="23" ry="20"/>
+      <ellipse cx="90"  cy="790" rx="35" ry="30"/>
+      <ellipse cx="235" cy="835" rx="28" ry="24"/>
+      <ellipse cx="-25" cy="690" rx="30" ry="26"/>
+      <ellipse cx="160" cy="905" rx="26" ry="22"/>
+      <ellipse cx="285" cy="720" rx="19" ry="16"/>
+      <ellipse cx="140" cy="345" rx="18" ry="15"/>
     </g>
-    <g fill="#000" opacity="0.09">
-      <circle cx="215" cy="300" r="12"/><circle cx="140" cy="360" r="9"/>
-      <circle cx="60" cy="405" r="14"/><circle cx="205" cy="620" r="11"/>
-      <circle cx="285" cy="520" r="8"/><circle cx="115" cy="600" r="10"/>
+    <g fill="#e8e4e2" opacity=".14">
+      <ellipse cx="-15" cy="322" rx="34" ry="28"/>
+      <ellipse cx="30"  cy="571" rx="40" ry="33"/>
+      <ellipse cx="85"  cy="781" rx="31" ry="26"/>
+      <ellipse cx="196" cy="592" rx="19" ry="16"/>
     </g>
+    <g fill="#000" opacity=".15">
+      <circle cx="60"  cy="385" r="11"/><circle cx="135" cy="520" r="10"/>
+      <circle cx="10"  cy="490" r="14"/><circle cx="225" cy="670" r="11"/>
+      <circle cx="105" cy="655" r="9"/> <circle cx="175" cy="775" r="12"/>
+      <circle cx="258" cy="620" r="8"/> <circle cx="55"  cy="880" r="11"/>
+      <circle cx="85"  cy="270" r="9"/> <circle cx="215" cy="500" r="7"/>
+    </g>
+
+    <rect x="-600" y="-200" width="1400" height="1500" fill="url(#term)"/>
   </g>
 
-  <!-- impact flare on the terminator -->
-  <circle cx="243" cy="330" r="34" fill="url(#flare)"/>
-  <g stroke="#ffd68a" stroke-width="2" opacity=".85" stroke-linecap="round">
-    <line x1="243" y1="308" x2="243" y2="352"/>
-    <line x1="221" y1="330" x2="265" y2="330"/>
-    <line x1="228" y1="315" x2="258" y2="345"/>
-    <line x1="258" y1="315" x2="228" y2="345"/>
+  <!-- lit settlement on the terminator -->
+  <circle cx="232" cy="424" r="38" fill="url(#flare)"/>
+  <g stroke="#ffc271" stroke-width="2.2" opacity=".9" stroke-linecap="round">
+    <line x1="232" y1="400" x2="232" y2="448"/>
+    <line x1="208" y1="424" x2="256" y2="424"/>
+    <line x1="215" y1="407" x2="249" y2="441"/>
+    <line x1="249" y1="407" x2="215" y2="441"/>
   </g>
-  <circle cx="243" cy="330" r="4.5" fill="#fffdf3"/>
+  <circle cx="232" cy="424" r="5" fill="#fffaf0"/>
 
   <!-- title -->
-  <g font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" fill="#ffffff" font-size="62">
-    <text x="292" y="96">How To</text>
-    <text x="292" y="172">Develop</text>
-    <text x="292" y="248">The</text>
-    <text x="292" y="324">Moon</text>
+  <g font-family="Haettenschweiler,'Arial Narrow',Impact,'Helvetica Neue Condensed Bold',sans-serif"
+     font-weight="700" fill="#ffffff" text-anchor="end">
+    <text x="566" y="150" font-size="126">How To</text>
+    <text x="566" y="286" font-size="126">Develop</text>
+    <text x="566" y="422" font-size="126">The</text>
+    <text x="566" y="558" font-size="126">Moon</text>
+    <text x="566" y="860" font-size="84">Ian Long</text>
   </g>
-
-  <!-- author -->
-  <text x="560" y="856" text-anchor="end" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif"
-        font-weight="900" font-size="42" fill="#ffffff">Ian Long</text>
 </svg>
