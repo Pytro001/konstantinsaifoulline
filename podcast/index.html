@@ -135,8 +135,9 @@
 
     // Newest first. The live feed overrides this when the channel lists episodes.
     var FALLBACK=[
-      {id:'JU3owSfVe5E',title:'How He Turned 100k Followers Into a Company | Robert Gutierrez',published:'',url:'https://www.youtube.com/watch?v=JU3owSfVe5E',thumbnail:'https://i.ytimg.com/vi/JU3owSfVe5E/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/JU3owSfVe5E/hqdefault.jpg'},
-      {id:'CFpKRfGyZWQ',title:'Why Some People Progress Faster Than Everyone Else',published:'',url:'https://www.youtube.com/watch?v=CFpKRfGyZWQ',thumbnail:'https://i.ytimg.com/vi/CFpKRfGyZWQ/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/CFpKRfGyZWQ/hqdefault.jpg'}
+      {id:'D45UtYEQxS0',title:'Will 100,000 Satellites Make Space Unusable? | Jonathan McDowell',published:'2026-08-14T00:00:00+00:00',url:'https://www.youtube.com/watch?v=D45UtYEQxS0',thumbnail:'https://i.ytimg.com/vi/D45UtYEQxS0/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/D45UtYEQxS0/hqdefault.jpg'},
+      {id:'JU3owSfVe5E',title:'How He Turned 100k Followers Into a Company | Robert Gutierrez',published:'2026-08-07T00:00:00+00:00',url:'https://www.youtube.com/watch?v=JU3owSfVe5E',thumbnail:'https://i.ytimg.com/vi/JU3owSfVe5E/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/JU3owSfVe5E/hqdefault.jpg'},
+      {id:'CFpKRfGyZWQ',title:'Why Some People Progress Faster Than Everyone Else | Aaron Ong',published:'2026-07-31T00:00:00+00:00',url:'https://www.youtube.com/watch?v=CFpKRfGyZWQ',thumbnail:'https://i.ytimg.com/vi/CFpKRfGyZWQ/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/CFpKRfGyZWQ/hqdefault.jpg'}
     ];
     function fmtDate(s){ if(!s) return ''; var d=new Date(s); if(isNaN(d.getTime())) return ''; return d.toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}); }
     function fb(img,hq){ img.onerror=function(){ img.onerror=null; if(hq) img.src=hq; }; }
