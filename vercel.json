@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/podcast",
+      "destination": "https://www.airsup.ai/podcast",
+      "permanent": true
+    },
+    {
+      "source": "/podcast/:path*",
+      "destination": "https://www.airsup.ai/podcast",
+      "permanent": true
+    }
+  ]
+}
