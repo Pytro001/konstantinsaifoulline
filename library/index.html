@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library — Konstantin Saifoulline</title>
+  <meta name="description" content="Books from Konstantin Saifoulline's library.">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#0f1011;--muted:#777b7f;--line:#dedede;--font:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{min-height:100svh;background:#fff;color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .back{position:absolute;top:2rem;left:clamp(1.25rem,4vw,3.5rem);font-size:.8rem;font-weight:600}
+    .back:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+    .hero{min-height:43svh;display:grid;place-content:center;text-align:center;padding:6.5rem 1.25rem 3rem}
+    h1{font-size:clamp(4rem,12vw,10rem);font-weight:500;letter-spacing:-.08em;line-height:.86}
+    .shelf-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:0 clamp(1.25rem,4vw,3.5rem) 1rem}
+    .shelf-head p{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+    .counter{color:var(--muted);font-size:.75rem;font-variant-numeric:tabular-nums}
+    .viewport{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab;padding:0 clamp(1.25rem,4vw,3.5rem) 3rem}
+    .viewport::-webkit-scrollbar{display:none}
+    .viewport.dragging{cursor:grabbing}
+    .shelf{display:flex;gap:clamp(.85rem,1.8vw,1.4rem);width:max-content}
+    .book{width:clamp(145px,18vw,220px)}
+    .cover{width:100%;aspect-ratio:9/14;overflow:hidden;background:#f1f1f1;border:1px solid var(--line)}
+    .cover img{display:block;width:100%;height:100%;object-fit:cover}
+    .book h2{margin-top:.7rem;font-size:.83rem;font-weight:600;line-height:1.3;max-width:20ch}
+    .book p{margin-top:.18rem;color:var(--muted);font-size:.72rem;line-height:1.35;max-width:24ch}
+    .end-space{height:16svh}
+    @media(max-width:600px){.back{top:1.25rem}.hero{min-height:34svh;padding-top:5rem}.book{width:145px}.viewport{padding-bottom:2rem}}
+  </style>
+</head>
+<body>
+  <a class="back" href="/">← Podcast</a>
+  <main>
+    <section class="hero">
+      <h1>Library</h1>
+    </section>
+    <section aria-label="Books">
+      <div class="shelf-head">
+        <p>Scroll to browse</p>
+        <span class="counter" id="counter" aria-live="polite"></span>
+      </div>
+      <div class="viewport" id="viewport">
+        <div class="shelf" id="shelf"></div>
+      </div>
+    </section>
+    <div class="end-space" aria-hidden="true"></div>
+  </main>
+  <script src="/books.js"></script>
+  <script>
+  (function(){
+    var books=window.BOOKS||[];
+    var shelf=document.getElementById('shelf');
+    var viewport=document.getElementById('viewport');
+    var counter=document.getElementById('counter');
+    books.forEach(function(book){
+      var article=document.createElement('article');
+      article.className='book';
+      var cover=document.createElement('div');
+      cover.className='cover';
+      var image=document.createElement('img');
+      image.loading='lazy';
+      image.alt=book.title+' cover';
+      image.src='/assets/books/'+book.id+'.jpg';
+      image.onerror=function(){image.onerror=null;image.src='/assets/books/'+book.id+'.svg';};
+      var title=document.createElement('h2');
+      title.textContent=book.title;
+      var author=document.createElement('p');
+      author.textContent=book.author;
+      cover.appendChild(image);
+      article.appendChild(cover);
+      article.appendChild(title);
+      article.appendChild(author);
+      shelf.appendChild(article);
+    });
+    function updateCounter(){
+      var max=viewport.scrollWidth-viewport.clientWidth;
+      var current=max>0?Math.round((viewport.scrollLeft/max)*Math.max(books.length-1,0))+1:(books.length?1:0);
+      counter.textContent=current+' / '+books.length;
+    }
+    viewport.addEventListener('scroll',updateCounter,{passive:true});
+    viewport.addEventListener('wheel',function(event){
+      var delta=Math.abs(event.deltaY)>Math.abs(event.deltaX)?event.deltaY:event.deltaX;
+      if(!delta)return;
+      event.preventDefault();
+      viewport.scrollLeft+=delta;
+    },{passive:false});
+    var dragging=false,startX=0,startScroll=0;
+    viewport.addEventListener('pointerdown',function(event){
+      if(event.pointerType==='touch')return;
+      dragging=true;startX=event.clientX;startScroll=viewport.scrollLeft;viewport.classList.add('dragging');
+    });
+    viewport.addEventListener('pointermove',function(event){if(dragging)viewport.scrollLeft=startScroll-(event.clientX-startX);});
+    function stop(){dragging=false;viewport.classList.remove('dragging');}
+    window.addEventListener('pointerup',stop);
+    window.addEventListener('pointercancel',stop);
+    window.addEventListener('resize',updateCounter);
+    updateCounter();
+  })();
+  </script>
+  <script src="/assets/track.js" data-site="konstantinsaifoulline-library" defer></script>
+</body>
+</html>

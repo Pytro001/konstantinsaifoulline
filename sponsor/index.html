@@ -3,89 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sponsor — Konstantin Saifoulline</title>
+  <title>Sponsoring — Konstantin Saifoulline</title>
+  <meta name="description" content="Sponsoring inquiries for the Konstantin Saifoulline Podcast.">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#f6f5f2;--card:#fff;--ink:#141414;--dim:#6a6a6a;--dim2:#9a9a9a;--line:rgba(0,0,0,.10);--font:'Inter',-apple-system,sans-serif}
+    :root{--ink:#0f1011;--muted:#777b7f;--line:#dedede;--font:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.55;-webkit-font-smoothing:antialiased}
+    body{min-height:100svh;background:#fff;color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
     a{color:inherit;text-decoration:none}
-    .wrap{max-width:560px;margin:0 auto;padding:0 1.4rem}
-    .top{border-bottom:1px solid rgba(0,0,0,.05)}
-    .top .wrap{max-width:1000px;display:flex;align-items:center;gap:.6rem;height:62px;font-weight:700;font-size:.85rem}
-    .top .back{display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line);color:var(--dim)}
-    .top .back:hover{color:var(--ink);border-color:var(--ink)}
-    main.wrap{padding-top:clamp(5rem,14vh,9rem);padding-bottom:4rem}
-    h1{font-weight:900;font-size:clamp(2.2rem,7vw,3.2rem);letter-spacing:-.03em;line-height:1}
-    .lede{color:var(--dim);margin:1rem 0 2.2rem;font-size:1rem}
-    form{display:grid;gap:.8rem}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
-    label{display:block;font-size:.72rem;letter-spacing:.03em;text-transform:uppercase;color:var(--dim2);font-weight:600;margin-bottom:.3rem}
-    input,select,textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.75rem .85rem;font:inherit;font-size:.92rem;color:var(--ink)}
-    textarea{min-height:100px;resize:vertical}
-    input:focus,select:focus,textarea:focus{outline:none;border-color:#111}
-    button{margin-top:.4rem;background:var(--ink);color:#fff;border:none;border-radius:999px;padding:.85rem 1.3rem;font:inherit;font-weight:600;cursor:pointer}
-    button:hover{opacity:.9}
-    .msg{font-size:.88rem;min-height:1.1em;margin-top:.2rem}
-    .msg.ok{color:#1a7a3a}.msg.err{color:#b00}
-    @media(max-width:560px){.row{grid-template-columns:1fr}}
+    .back{position:absolute;top:2rem;left:clamp(1.25rem,4vw,3.5rem);font-size:.8rem;font-weight:600}
+    .back:focus-visible,.email:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+    main{min-height:100svh;display:grid;place-content:center;width:min(780px,calc(100% - 2.5rem));margin:0 auto;padding:7rem 0;text-align:center}
+    h1{font-size:clamp(3.4rem,10vw,8.2rem);font-weight:500;letter-spacing:-.075em;line-height:.9}
+    p{max-width:540px;margin:1.8rem auto 1.25rem;color:var(--muted);font-size:clamp(.95rem,1.6vw,1.1rem);line-height:1.6}
+    .email{display:inline-block;border-bottom:1px solid var(--ink);padding-bottom:.18rem;font-size:clamp(1.05rem,2.2vw,1.35rem);font-weight:600}
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <h1>Sponsor the show</h1>
-    <p class="lede">Tell me about your company and I’ll come back with placement and rates.</p>
-    <form id="f" novalidate>
-      <div class="row">
-        <div><label for="company">Company</label><input id="company" type="text" required></div>
-        <div><label for="contact_name">Your name</label><input id="contact_name" type="text"></div>
-      </div>
-      <div class="row">
-        <div><label for="email">Email</label><input id="email" type="email" required></div>
-        <div><label for="website">Website</label><input id="website" type="text"></div>
-      </div>
-      <div><label for="budget">Monthly budget</label>
-        <select id="budget">
-          <option value="">Select…</option>
-          <option>Under $1,000</option><option>$1,000 – $5,000</option>
-          <option>$5,000 – $15,000</option><option>$15,000+</option>
-        </select>
-      </div>
-      <div><label for="message">What do you want to promote?</label><textarea id="message"></textarea></div>
-      <button type="submit" id="btn">Apply to sponsor</button>
-      <p class="msg" id="msg" aria-live="polite"></p>
-    </form>
+  <a class="back" href="/">← Podcast</a>
+  <main>
+    <div>
+      <h1>Sponsoring</h1>
+      <p>For sponsorships and partnerships, send an email and we can take it from there.</p>
+      <a class="email" href="mailto:konstantin@airsup.ai">konstantin@airsup.ai</a>
+    </div>
   </main>
-
-  <script>
-  (function(){
-    var AIRSUP='https://fyxqdwhqposxitexydby.supabase.co';
-    var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ5eHFkd2hxcG9zeGl0ZXh5ZGJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzk5MDgsImV4cCI6MjA5MTc1NTkwOH0.cvpnWJvVsQx_qEk4hNDAtJZ_M8qNv4RNnhRJBRgulg8';
-    var $=function(id){return document.getElementById(id)};
-    $('f').addEventListener('submit',function(e){
-      e.preventDefault();
-      var msg=$('msg'),btn=$('btn');
-      var payload={company:$('company').value.trim(),contact_name:$('contact_name').value.trim(),email:$('email').value.trim(),website:$('website').value.trim(),budget:$('budget').value,message:$('message').value.trim()};
-      if(!payload.company||!payload.email){ msg.className='msg err'; msg.textContent='Please add your company and email.'; return; }
-      btn.disabled=true; btn.textContent='Sending…'; msg.className='msg'; msg.textContent='';
-
-      // 1) Email via Vercel (independent of Supabase, so it always works).
-      var mail=fetch('/api/sponsor',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payload:payload})})
-        .then(function(r){ return r.ok; }).catch(function(){ return false; });
-      // 2) Store it too, so the admin list keeps a record.
-      var store=fetch(AIRSUP+'/rest/v1/rpc/submit_sponsor_app',{method:'POST',headers:{'Content-Type':'application/json','apikey':ANON,'Authorization':'Bearer '+ANON},body:JSON.stringify({payload:payload})})
-        .then(function(r){ return r.ok; }).catch(function(){ return false; });
-
-      Promise.all([mail,store]).then(function(res){
-        if(res[0]||res[1]){ msg.className='msg ok'; msg.textContent='Thanks — your application is in.'; e.target.reset(); }
-        else { msg.className='msg err'; msg.textContent='Something went wrong. Please email konstantin@airsup.ai instead.'; }
-        btn.disabled=false; btn.textContent='Apply to sponsor';
-      });
-    });
-  })();
-  </script>
+  <script src="/assets/track.js" data-site="konstantinsaifoulline-sponsor" defer></script>
 </body>
 </html>

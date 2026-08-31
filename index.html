@@ -3,74 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Konstantin Saifoulline</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="favicon.png">
-  <link rel="stylesheet" href="styles.css">
+  <title>Konstantin Saifoulline Podcast</title>
+  <meta name="description" content="Watch and listen to the Konstantin Saifoulline Podcast.">
+  <link rel="canonical" href="https://konstantinsaifoulline.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://konstantinsaifoulline.com/">
+  <meta property="og:title" content="Konstantin Saifoulline Podcast">
+  <meta property="og:description" content="Watch and listen to the Konstantin Saifoulline Podcast.">
+  <meta property="og:image" content="https://konstantinsaifoulline.com/assets/og-podcast.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Konstantin Saifoulline Podcast">
+  <meta name="twitter:description" content="Watch and listen to the Konstantin Saifoulline Podcast.">
+  <meta name="twitter:image" content="https://konstantinsaifoulline.com/assets/og-podcast.png">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{--paper:#fff;--ink:#0f1011;--muted:#7b7e82;--line:#dedede;--font:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.45;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    .top{position:absolute;top:0;right:0;z-index:2;padding:2rem clamp(1.25rem,4vw,3.5rem)}
+    .sponsor-link{font-size:.82rem;font-weight:600;padding:.7rem .95rem;border:1px solid var(--ink)}
+    .sponsor-link:focus-visible,.platforms a:focus-visible,.footer a:focus-visible,.episode:focus-visible,.latest:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+    .intro{min-height:94svh;display:grid;place-content:center;text-align:center;padding:7rem 1.25rem 5rem}
+    h1{font-size:clamp(2.65rem,8.6vw,8.6rem);font-weight:500;letter-spacing:-.075em;line-height:.86;text-wrap:balance}
+    h1 span{display:block}
+    .platforms{display:flex;justify-content:center;flex-wrap:wrap;gap:.45rem;margin-top:2rem}
+    .platforms a{width:43px;height:43px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);background:#fff}
+    .platforms svg{width:19px;height:19px;fill:currentColor}
+    .platforms a[data-b=applepodcasts] svg{width:17px;height:17px}
+    .platforms a[data-b=amazonmusic] svg,.platforms a[data-b=deezer] svg{width:22px;height:22px}
+    .platforms a[data-b=library] svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .content{width:min(1050px,calc(100% - 2.5rem));margin:0 auto}
+    .latest{display:block}
+    .latest-visual{position:relative;aspect-ratio:16/9;overflow:hidden;background:#111}
+    .latest img{width:100%;height:100%;display:block;object-fit:cover}
+    .play-label{position:absolute;left:1rem;bottom:1rem;padding:.55rem .72rem;background:#fff;color:var(--ink);font-size:.75rem;font-weight:700}
+    .latest-copy{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding-top:1rem}
+    .latest-copy h2{font-size:clamp(1.25rem,2.7vw,2rem);font-weight:600;letter-spacing:-.035em;line-height:1.15}
+    time{color:var(--muted);font-size:.78rem;white-space:nowrap}
+    .episodes{padding:5.5rem 0 1rem}
+    .episodes>h2{font-size:.76rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.25rem}
+    .episode-list{display:grid;gap:1rem}
+    .episode{display:grid;grid-template-columns:minmax(150px,250px) 1fr;gap:1rem;align-items:start}
+    .episode-thumb{aspect-ratio:16/9;overflow:hidden;background:#111}
+    .episode img{width:100%;height:100%;display:block;object-fit:cover}
+    .episode-copy{padding-top:.05rem}
+    .episode h3{font-size:clamp(.95rem,1.6vw,1.12rem);font-weight:600;line-height:1.28;letter-spacing:-.02em;max-width:650px}
+    .episode time{display:block;margin-top:.35rem}
+    .empty{color:var(--muted);font-size:.9rem}
+    .footer{min-height:30vh;display:flex;align-items:flex-end;justify-content:center;gap:1.25rem;padding:5rem 1.25rem 2rem;color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+    .footer a:hover{text-decoration:underline;text-underline-offset:4px}
+    @media(max-width:650px){.top{padding:1.25rem}.intro{min-height:88svh}.latest-copy{display:block}.latest-copy time{display:block;margin-top:.45rem}.episode{grid-template-columns:128px 1fr;gap:.75rem}.episode h3{font-size:.88rem}.episode time{font-size:.7rem}.play-label{left:.7rem;bottom:.7rem}}
+  </style>
 </head>
 <body>
-  <nav class="nav">
-    <div class="nav-links">
-      <a href="#bookshelf">Library</a>
-      <a href="https://www.airsup.ai/podcast">Podcast</a>
-      <a href="https://pytromusic.com" target="_blank" rel="noopener noreferrer">Music</a>
-      <a href="doc/">Doc</a>
-    </div>
-    <button class="nav-toggle" aria-label="Menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </nav>
+  <header class="top">
+    <a class="sponsor-link" href="/sponsor">Sponsoring</a>
+  </header>
 
   <main>
-    <section id="top" class="hero">
-      <h1 class="hero-title">
-        <span class="hero-line">Konstantin</span>
-        <span class="hero-line">Saifoulline</span>
-      </h1>
-    </section>
-
-    <section id="bookshelf" class="section bookshelf-section">
-      <h2 class="section-title">Library</h2>
-      <div class="bookshelf-content" id="bookshelfContent">
-        <p class="bookshelf-hint">Scroll down to browse books →</p>
-        <div class="books-carousel-viewport" id="booksCarouselViewport">
-          <div class="books-carousel" id="booksCarousel" aria-label="Book covers"></div>
-        </div>
-        <p class="books-carousel-counter" id="booksCarouselCounter" aria-live="polite"></p>
+    <section class="intro" aria-labelledby="pageTitle">
+      <div>
+        <h1 id="pageTitle"><span>Konstantin</span><span>Saifoulline</span></h1>
+        <nav class="platforms" id="platforms" aria-label="Podcast platforms and pages"></nav>
       </div>
     </section>
+
+    <div class="content">
+      <a class="latest" id="latestLink" href="#" target="_blank" rel="noopener noreferrer">
+        <div class="latest-visual">
+          <img id="latestImage" alt="" fetchpriority="high">
+          <span class="play-label">Play episode ↗</span>
+        </div>
+        <div class="latest-copy">
+          <h2 id="latestTitle">Loading…</h2>
+          <time id="latestDate"></time>
+        </div>
+      </a>
+
+      <section class="episodes" aria-labelledby="episodesTitle">
+        <h2 id="episodesTitle">Episodes</h2>
+        <div class="episode-list" id="episodeList"></div>
+        <p class="empty" id="episodeEmpty" hidden>More episodes are coming soon.</p>
+      </section>
+    </div>
   </main>
 
   <footer class="footer">
-    <div class="footer-socials">
-      <a href="https://www.instagram.com/konstantinsaifo/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a href="https://www.youtube.com/@konstantinsaifo" target="_blank" rel="noopener noreferrer">YouTube</a>
-      <a href="https://www.linkedin.com/in/konstantinsaifoulline/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="https://x.com/konstantinsaifo" target="_blank" rel="noopener noreferrer">X</a>
-      <a href="https://www.airsup.dev/" target="_blank" rel="noopener noreferrer">airsup</a>
-    </div>
+    <a href="https://pytromusic.com" target="_blank" rel="noopener noreferrer">Pytro</a>
+    <a href="https://www.airsup.dev/" target="_blank" rel="noopener noreferrer">Airsup</a>
   </footer>
 
-  <div class="book-modal" id="bookModal" hidden>
-    <div class="book-modal-backdrop" id="bookModalBackdrop"></div>
-    <div class="book-modal-panel" role="dialog" aria-modal="true" aria-labelledby="bookModalTitle">
-      <button type="button" class="book-modal-close" id="bookModalClose" aria-label="Close">×</button>
-      <div class="book-modal-cover-wrap">
-        <img class="book-modal-cover" id="bookModalCover" alt="">
-      </div>
-      <h3 class="book-modal-title" id="bookModalTitle"></h3>
-      <p class="book-modal-author" id="bookModalAuthor"></p>
-      <div class="book-modal-notes" id="bookModalNotes"></div>
-    </div>
-  </div>
-
-  <script src="books.js"></script>
-  <script src="script.js"></script>
+  <script>
+  (function(){
+    var AIRSUP='https://fyxqdwhqposxitexydby.supabase.co';
+    var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmeXhxZHdocXBvc3hpdGV4eWRieSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzc2MTc5OTA4LCJleHAiOjIwOTE3NTU5MDh9.cvpnWJvVsQx_qEk4hNDAtJZ_M8qNv4RNnhRJBRgulg8';
+    var $=function(id){return document.getElementById(id)};
+    var ICONS={
+      youtube:'<svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.5 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>',
+      applepodcasts:'<svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 1 0 12 24 12 12 0 0 0 12 0Zm0 4.1a5.8 5.8 0 0 1 3.2 10.6l-.2-1.5a4.4 4.4 0 1 0-6 0l-.2 1.5A5.8 5.8 0 0 1 12 4.1Zm0 2.8a3 3 0 0 1 1.9 5.4c-.4-.6-1-1-1.9-1s-1.5.4-1.9 1A3 3 0 0 1 12 6.9Zm0 5.3c1 0 1.6.6 1.7 1.5.1 1.2-.3 4.1-.6 5.3-.1.7-.5 1-1.1 1s-1-.3-1.1-1c-.3-1.2-.7-4.1-.6-5.3.1-.9.7-1.5 1.7-1.5Z"/></svg>',
+      spotify:'<svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.5 17.3c-.2.4-.7.5-1 .3-2.8-1.7-6.4-2.1-10.6-1.1-.4.1-.8-.2-.9-.6-.1-.4.2-.8.6-.9 4.6-1 8.5-.6 11.6 1.3.4.2.5.7.3 1Zm1.5-3.3c-.3.4-.9.6-1.3.3-3.2-2-8.2-2.6-12-1.4-.5.1-1-.1-1.1-.6-.1-.5.1-1 .6-1.1 4.4-1.3 9.8-.7 13.5 1.6.4.2.6.8.3 1.2Zm.1-3.3C15.2 8.4 8.8 8.2 5.2 9.3c-.6.2-1.2-.2-1.4-.7-.2-.6.2-1.2.7-1.4 4.3-1.3 11.3-1 15.7 1.6.5.3.7 1 .4 1.6-.3.4-1 .6-1.5.3Z"/></svg>',
+      amazonmusic:'<svg viewBox="0 0 24 24"><rect x="1.5" y="10.5" width="2.4" height="3" rx="1.2"/><rect x="5.4" y="7.5" width="2.4" height="9" rx="1.2"/><rect x="9.3" y="4" width="2.4" height="16" rx="1.2"/><rect x="13.2" y="8" width="2.4" height="8" rx="1.2"/><rect x="17.1" y="6" width="2.4" height="12" rx="1.2"/><rect x="21" y="9.5" width="2.4" height="5" rx="1.2"/></svg>',
+      deezer:'<svg viewBox="0 0 24 24"><path d="M2 13h3v5H2v-5Zm4.3-3h3v8h-3v-8Zm4.3-5h3v13h-3V5Zm4.3 3h3v10h-3V8Zm4.3-5h3v15h-3V3Z"/></svg>',
+      x:'<svg viewBox="0 0 24 24"><path d="M14.2 10.2 23 0h-2.1l-7.6 8.8L7.3 0h-7l9.1 13.3L.3 24h2l8-9.3 6.4 9.3h7Zm-2.8 3.3L3.1 1.6h3.2l14.6 20.9h-3.2Z"/></svg>',
+      instagram:'<svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.5-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.5 1.3-.1 1.7-.1 4.9-.1ZM12 0C8.7 0 8.3 0 7 .1 5.7.2 4.8.4 4.1.7c-.7.3-1.4.7-2 1.3C1.5 2.6 1 3.3.7 4.1.4 4.8.2 5.7.1 7 0 8.3 0 8.7 0 12s0 3.7.1 5c.1 1.3.3 2.2.6 2.9.3.7.7 1.4 1.3 2 .6.6 1.3 1 2 1.3.7.3 1.6.5 2.9.6 1.3.1 1.7.1 5 .1s3.7 0 5-.1c1.3-.1 2.2-.3 2.9-.6.7-.3 1.4-.7 2-1.3.6-.6 1-1.3 1.3-2 .3-.7.5-1.6.6-2.9.1-1.3.1-1.7.1-5s0-3.7-.1-5c-.1-1.3-.3-2.2-.6-2.9-.3-.7-.7-1.4-1.3-2-.6-.6-1.3-1-2-1.3C19.2.4 18.3.2 17 .1 15.7 0 15.3 0 12 0Zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm7.9-10.4a1.4 1.4 0 1 1-2.9 0 1.4 1.4 0 0 1 2.9 0Z"/></svg>',
+      library:'<svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11a2 2 0 0 1 2 2v16a2.5 2.5 0 0 0-2.5-2.5H4v-13Z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v18a2.5 2.5 0 0 1 2.5-2.5H20v-13Z"/></svg>'
+    };
+    var LINKS=[
+      {b:'youtube',name:'YouTube',url:'https://www.youtube.com/@konstantinsaifo'},
+      {b:'applepodcasts',name:'Apple Podcasts',url:'https://podcasts.apple.com/us/podcast/konstantin-saifoulline/id6796254399'},
+      {b:'spotify',name:'Spotify',url:'https://open.spotify.com/show/033YmXaDmzU8LCJzfdbqoM'},
+      {b:'amazonmusic',name:'Amazon Music',url:'https://music.amazon.com/podcasts/459a5d7a-aa67-42cd-acd4-fb8f8de0f193/konstantin-saifoulline'},
+      {b:'deezer',name:'Deezer',url:'https://www.deezer.com/us/show/1003446822'},
+      {b:'x',name:'X',url:'https://x.com/konstantinsaifo'},
+      {b:'instagram',name:'Instagram',url:'https://www.instagram.com/konstantinsaifo/'},
+      {b:'library',name:'Library',url:'/library',local:true}
+    ];
+    $('platforms').innerHTML=LINKS.map(function(link){return '<a data-b="'+link.b+'" href="'+link.url+'"'+(link.local?'':' target="_blank" rel="noopener noreferrer"')+' aria-label="'+link.name+'" title="'+link.name+'">'+ICONS[link.b]+'</a>';}).join('');
+    var FALLBACK=[
+      {id:'D45UtYEQxS0',title:'Will 100,000 Satellites Make Space Unusable? | Jonathan McDowell',published:'2026-08-14T00:00:00+00:00',url:'https://www.youtube.com/watch?v=D45UtYEQxS0',thumbnail:'https://i.ytimg.com/vi/D45UtYEQxS0/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/D45UtYEQxS0/hqdefault.jpg'},
+      {id:'JU3owSfVe5E',title:'How He Turned 100k Followers Into a Company | Robert Gutierrez',published:'2026-08-07T00:00:00+00:00',url:'https://www.youtube.com/watch?v=JU3owSfVe5E',thumbnail:'https://i.ytimg.com/vi/JU3owSfVe5E/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/JU3owSfVe5E/hqdefault.jpg'},
+      {id:'CFpKRfGyZWQ',title:'Why Some People Progress Faster Than Everyone Else | Aaron Ong',published:'2026-07-31T00:00:00+00:00',url:'https://www.youtube.com/watch?v=CFpKRfGyZWQ',thumbnail:'https://i.ytimg.com/vi/CFpKRfGyZWQ/maxresdefault.jpg',thumbnail_hq:'https://i.ytimg.com/vi/CFpKRfGyZWQ/hqdefault.jpg'}
+    ];
+    function date(value){var d=new Date(value);return isNaN(d.getTime())?'':d.toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}
+    function esc(value){return String(value==null?'':value).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+    function imageFallback(img,hq){img.onerror=function(){img.onerror=null;if(hq)img.src=hq;};}
+    function render(episodes){
+      if(!episodes||!episodes.length)episodes=FALLBACK;
+      episodes=episodes.slice().sort(function(a,b){return new Date(b.published).getTime()-new Date(a.published).getTime();});
+      var latest=episodes[0],rest=episodes.slice(1);
+      $('latestLink').href=latest.url;
+      $('latestImage').src=latest.thumbnail;
+      $('latestImage').alt=latest.title;
+      imageFallback($('latestImage'),latest.thumbnail_hq);
+      $('latestTitle').textContent=latest.title;
+      $('latestDate').textContent=date(latest.published);
+      if(!rest.length){$('episodeEmpty').hidden=false;return;}
+      $('episodeList').innerHTML=rest.map(function(ep){return '<a class="episode" href="'+ep.url+'" target="_blank" rel="noopener noreferrer"><div class="episode-thumb"><img loading="lazy" src="'+ep.thumbnail+'" data-hq="'+(ep.thumbnail_hq||'')+'" alt="'+esc(ep.title)+'"></div><div class="episode-copy"><h3>'+esc(ep.title)+'</h3><time>'+date(ep.published)+'</time></div></a>';}).join('');
+      $('episodeList').querySelectorAll('img[data-hq]').forEach(function(img){imageFallback(img,img.getAttribute('data-hq'));});
+    }
+    function loadFeed(){
+      fetch(AIRSUP+'/functions/v1/podcast-feed',{headers:{apikey:ANON},cache:'no-store'}).then(function(response){return response.json();}).then(function(data){render(data&&data.episodes&&data.episodes.length?data.episodes:FALLBACK);}).catch(function(){render(FALLBACK);});
+    }
+    loadFeed();
+    setInterval(loadFeed,15*60*1000);
+    document.addEventListener('visibilitychange',function(){if(!document.hidden)loadFeed();});
+  })();
+  </script>
   <script src="/assets/track.js" data-site="konstantinsaifoulline" defer></script>
 </body>
 </html>
