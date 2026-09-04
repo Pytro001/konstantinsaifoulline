@@ -184,7 +184,11 @@
       text-transform: uppercase;
       white-space: nowrap;
     }
-    .episode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2.5vw, 2.5rem); }
+    .episode-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(3.5rem, 7vw, 7rem);
+    }
     .episode-image { aspect-ratio: 16 / 10; overflow: hidden; background: #dadad7; }
     .episode-image img {
       width: 100%;
@@ -220,8 +224,6 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      filter: blur(var(--footer-blur, 10px));
-      will-change: filter;
     }
     .footer-top { display: flex; align-items: flex-start; justify-content: flex-end; gap: 2rem; }
     .platforms { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.7rem 1.4rem; max-width: 470px; }
@@ -245,7 +247,6 @@
       .hero { min-height: 650px; max-height: 760px; padding-top: 4rem; }
       .hero-title { font-size: clamp(5rem, 20vw, 9rem); }
       .hero-portrait { width: min(76vw, 600px); height: 74%; object-position: center 8%; }
-      .episode-grid { grid-template-columns: 1fr 1fr; }
       .platforms { justify-content: flex-start; }
     }
 
@@ -400,13 +401,10 @@
       var portrait = document.querySelector('.hero-portrait');
       var episodes = document.querySelector('.episodes');
       var episodesInner = document.querySelector('.episodes-inner');
-      var footer = document.querySelector('.footer');
-      var footerInner = document.querySelector('.footer-inner');
-      if (!portrait || !episodes || !episodesInner || !footer || !footerInner) return;
+      if (!portrait || !episodes || !episodesInner) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         portrait.style.setProperty('--portrait-blur', '0px');
         episodesInner.style.setProperty('--episodes-blur', '0px');
-        footerInner.style.setProperty('--footer-blur', '0px');
         return;
       }
 
@@ -418,16 +416,13 @@
       function update() {
         var viewport = window.innerHeight;
         var episodesTop = episodes.getBoundingClientRect().top;
-        var footerTop = footer.getBoundingClientRect().top;
         var introReveal = clamp(window.scrollY / 140, 0, 1);
         var episodesReveal = clamp((viewport * 0.92 - episodesTop) / (viewport * 0.48), 0, 1);
         var portraitExit = clamp((viewport * 0.72 - episodesTop) / (viewport * 0.42), 0, 1);
-        var footerReveal = clamp((viewport * 0.92 - footerTop) / (viewport * 0.48), 0, 1);
         var portraitBlur = Math.min(10, (10 * (1 - introReveal)) + (10 * portraitExit));
 
         portrait.style.setProperty('--portrait-blur', portraitBlur.toFixed(2) + 'px');
         episodesInner.style.setProperty('--episodes-blur', (12 * (1 - episodesReveal)).toFixed(2) + 'px');
-        footerInner.style.setProperty('--footer-blur', (10 * (1 - footerReveal)).toFixed(2) + 'px');
         ticking = false;
       }
 
