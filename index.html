@@ -71,6 +71,7 @@
       font-size: 0.69rem;
       letter-spacing: 0.04em;
       text-align: center;
+      white-space: nowrap;
     }
     .announcement-title {
       max-width: min(720px, 65vw);
@@ -151,11 +152,18 @@
       will-change: filter;
     }
     .episodes {
-      padding: clamp(5rem, 9vw, 9rem) 0;
-      background: var(--soft);
+      padding: 0 0 clamp(5rem, 9vw, 9rem);
+      background: var(--white);
+      position: relative;
+      z-index: 5;
       scroll-margin-top: 78px;
     }
-    .episodes-inner { width: var(--page); margin: 0 auto; }
+    .episodes-inner {
+      width: var(--page);
+      margin: -4rem auto 0;
+      padding-top: clamp(2.5rem, 5vw, 4rem);
+      background: var(--white);
+    }
     .episodes-heading {
       display: flex;
       align-items: flex-end;
@@ -170,8 +178,8 @@
       letter-spacing: -0.045em;
       line-height: 0.72;
       text-transform: uppercase;
+      white-space: nowrap;
     }
-    .episodes-heading h2 span { display: block; }
     .episode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2.5vw, 2.5rem); }
     .episode-image { aspect-ratio: 16 / 10; overflow: hidden; background: #dadad7; }
     .episode-image img {
@@ -247,6 +255,7 @@
       .hero-title { width: 100%; font-size: clamp(4.5rem, 21vw, 7rem); white-space: normal; }
       .hero-portrait { width: min(100vw, 460px); height: 66%; object-position: center 8%; }
       .episodes-heading { align-items: flex-start; flex-direction: column; }
+      .episodes-heading h2 { font-size: clamp(3rem, 13vw, 4.5rem); }
       .episode-grid { grid-template-columns: 1fr; gap: 2.8rem; }
       .episode h3 { font-size: clamp(2.6rem, 15vw, 4.2rem); }
       .footer-bottom { flex-direction: column; }
@@ -285,7 +294,7 @@
     <section class="episodes" id="episodes" aria-labelledby="episodesTitle">
       <div class="episodes-inner">
         <div class="episodes-heading">
-          <h2 id="episodesTitle"><span>Latest</span><span>Episodes</span></h2>
+          <h2 id="episodesTitle">Latest Episodes</h2>
         </div>
         <div class="episode-grid" id="episodeGrid">
           <a class="episode" href="https://www.youtube.com/watch?v=D45UtYEQxS0" target="_blank" rel="noopener noreferrer">
