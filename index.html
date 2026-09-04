@@ -369,16 +369,20 @@
       return parts.length > 1 ? parts[parts.length - 1].trim() : title;
     }
 
+    function episodeVideoUrl(episode) {
+      return episode.youtube_url || episode.video_url || episode.url;
+    }
+
     function render(episodes) {
       if (!episodes || !episodes.length) episodes = FALLBACK;
       episodes = episodes.slice().sort(function (a, b) {
         return new Date(b.published).getTime() - new Date(a.published).getTime();
       });
 
-      $('announcementLink').href = episodes[0].url;
+      $('announcementLink').href = episodeVideoUrl(episodes[0]);
       $('announcementTitle').textContent = guestName(episodes[0].title);
       $('episodeGrid').innerHTML = episodes.map(function (episode) {
-        return '<a class="episode" href="' + episode.url + '" target="_blank" rel="noopener noreferrer" aria-label="' + escapeHtml(episode.title) + '">' +
+        return '<a class="episode" href="' + escapeHtml(episodeVideoUrl(episode)) + '" target="_blank" rel="noopener noreferrer" aria-label="Watch ' + escapeHtml(episode.title) + '">' +
           '<div class="episode-image"><img loading="lazy" src="' + episode.thumbnail + '" data-hq="' + (episode.thumbnail_hq || '') + '" alt="' + escapeHtml(guestName(episode.title)) + ' episode"></div>' +
           '<h3>' + escapeHtml(guestName(episode.title)) + '</h3>' +
         '</a>';
