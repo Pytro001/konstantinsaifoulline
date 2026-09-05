@@ -79,10 +79,8 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .announcement:hover .announcement-title { text-decoration: underline; text-underline-offset: 3px; }
-
     .header {
-      min-height: 78px;
+      min-height: 62px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -111,7 +109,7 @@
       text-transform: uppercase;
     }
     .hero {
-      height: calc(100svh - 116px);
+      height: calc(100svh - 100px);
       min-height: 620px;
       max-height: 880px;
       display: flex;
@@ -119,7 +117,7 @@
       align-items: center;
       padding: clamp(4rem, 10vh, 7rem) 1rem 0;
       position: sticky;
-      top: 78px;
+      top: 62px;
       z-index: 1;
       overflow: hidden;
       background: var(--white);
@@ -260,10 +258,10 @@
       :root { --page: calc(100% - 2rem); }
       .announcement { justify-content: flex-start; }
       .announcement-title { max-width: 62vw; }
-      .header { min-height: 66px; }
+      .header { min-height: 58px; }
       .nav { gap: 1rem; }
       .nav a { display: none; }
-      .hero { height: calc(100svh - 104px); min-height: 600px; padding-top: 3.8rem; top: 66px; }
+      .hero { height: calc(100svh - 96px); min-height: 600px; padding-top: 3.8rem; top: 58px; }
       .hero-title { width: 100%; font-size: clamp(4.5rem, 21vw, 7rem); white-space: normal; }
       .hero-portrait { width: min(100vw, 460px); height: 66%; object-position: center 8%; }
       .episodes-heading h2 { font-size: clamp(3rem, 13vw, 4.5rem); }
