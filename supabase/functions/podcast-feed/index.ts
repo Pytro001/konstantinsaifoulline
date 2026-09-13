@@ -16,6 +16,8 @@ const CORS: Record<string, string> = {
 };
 
 const KNOWN_VIDEO_IDS: Record<string, string> = {
+  'he co founded apple with steve jobs then weeks later he left ronald wayne': '-TmKc2T6ia8',
+  'how to build a mars city that doesn t need earth casey handmer': '6V_ACIA47-k',
   'the next decade of ai robots spacex robert scoble': 'bnI0JL5Pfw0',
   'how samsung became a design powerhouse gordon bruce': 'MO8nQZfo2TM',
   'we built the best humanoid robot possible in 2026 scott walter': 'GvvK0E_yO6Y',
