@@ -16,6 +16,7 @@ const CORS: Record<string, string> = {
 };
 
 const KNOWN_VIDEO_IDS: Record<string, string> = {
+  'figure vs 1x vs tesla optimus who actually wins scott walter': 'XXf6eMv4rvw',
   'he co founded apple with steve jobs then weeks later he left ronald wayne': '-TmKc2T6ia8',
   'how to build a mars city that doesn t need earth casey handmer': '6V_ACIA47-k',
   'the next decade of ai robots spacex robert scoble': 'bnI0JL5Pfw0',
