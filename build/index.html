@@ -1,328 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Konstantin Saifoulline — Selected Builds</title>
-  <meta name="description" content="Selected builds by Konstantin Saifoulline across manufacturing software, factory simulation, media and music.">
-  <link rel="icon" type="image/png" href="../favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Konstantin Saifoulline — Things I've built</title>
+  <meta name="description" content="A visual portfolio of Konstantin Saifoulline's work in manufacturing software, factory simulations, AI, space, media and music.">
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --black:#050505;
-      --white:#fff;
-      --paper:#f4f3ef;
-      --muted:#73736f;
-      --line:#d8d7d2;
-      --accent:#ece9df;
-      --display:'Barlow Condensed','Arial Narrow',sans-serif;
-      --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-      --page:min(1380px,calc(100% - clamp(2rem,6vw,6rem)));
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{background:var(--white);color:var(--black);font-family:var(--sans);line-height:1.45;-webkit-font-smoothing:antialiased}
-    a{color:inherit;text-decoration:none}
-    img,video{display:block;max-width:100%}
-    ::selection{background:var(--black);color:var(--white)}
-    .top{
-      position:sticky;top:0;z-index:50;
-      min-height:64px;padding:0 clamp(1rem,3vw,2.5rem);
-      display:flex;align-items:center;justify-content:space-between;gap:2rem;
-      background:rgba(255,255,255,.94);backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(0,0,0,.06)
-    }
-    .mark{font-family:var(--display);font-size:1.25rem;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;line-height:.8}
-    .mark span{display:block}
-    .nav{display:flex;gap:clamp(1rem,3vw,2.4rem)}
-    .nav a,.eyebrow,.tag,.micro{font-size:.67rem;font-weight:600;letter-spacing:.075em;text-transform:uppercase}
-    .nav a:hover{opacity:.55}
-    .hero{width:var(--page);margin:0 auto;padding:clamp(4.5rem,10vw,9rem) 0 clamp(4rem,9vw,8rem)}
-    .hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:clamp(2rem,7vw,8rem);align-items:end}
-    .hero h1{
-      font-family:var(--display);font-size:clamp(5.7rem,14.6vw,14rem);font-weight:800;
-      line-height:.72;letter-spacing:-.052em;text-transform:uppercase
-    }
-    .hero h1 span{display:block}
-    .hero-copy{max-width:570px;padding-bottom:.5rem}
-    .hero-copy p{font-size:clamp(1.1rem,1.6vw,1.45rem);letter-spacing:-.025em;line-height:1.34}
-    .hero-copy .small{margin-top:1.5rem;font-size:.8rem;color:var(--muted);letter-spacing:0;line-height:1.55}
-    .facts{border-top:1px solid var(--black);border-bottom:1px solid var(--black)}
-    .facts-inner{width:var(--page);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
-    .fact{padding:1.35rem 1.4rem 1.45rem 0;border-right:1px solid var(--line)}
-    .fact:not(:first-child){padding-left:1.4rem}
-    .fact:last-child{border-right:0}
-    .fact strong{display:block;font-family:var(--display);font-size:2rem;letter-spacing:-.03em;line-height:1;text-transform:uppercase}
-    .fact span{display:block;margin-top:.45rem;font-size:.7rem;color:var(--muted)}
-    .section{width:var(--page);margin:0 auto;padding:clamp(5rem,9vw,9rem) 0}
-    .section-head{display:grid;grid-template-columns:.3fr .7fr;gap:2rem;margin-bottom:clamp(3rem,6vw,5rem)}
-    .section-head h2{font-family:var(--display);font-size:clamp(4.8rem,10vw,9rem);font-weight:800;line-height:.74;letter-spacing:-.045em;text-transform:uppercase}
-    .section-head p{max-width:560px;align-self:end;font-size:.95rem;color:var(--muted)}
-    .project{border-top:1px solid var(--black);padding:clamp(2rem,4vw,3.5rem) 0 clamp(4rem,8vw,7rem)}
-    .project-top{display:grid;grid-template-columns:.3fr .7fr;gap:2rem}
-    .project-meta{padding-top:.55rem}
-    .project-meta .tag{display:block;margin-bottom:.45rem}
-    .project-meta .role{font-size:.76rem;color:var(--muted);max-width:180px}
-    .project-main h3{font-family:var(--display);font-size:clamp(3.7rem,8vw,7.8rem);font-weight:800;letter-spacing:-.045em;line-height:.78;text-transform:uppercase}
-    .project-main .dek{max-width:780px;margin-top:1.25rem;font-size:clamp(1.05rem,1.5vw,1.35rem);letter-spacing:-.02em}
-    .evidence{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);margin-top:2.4rem;border:1px solid var(--line)}
-    .evidence div{background:var(--white);padding:1.25rem}
-    .evidence strong{display:block;font-size:.82rem;margin-bottom:.35rem}
-    .evidence span{display:block;font-size:.75rem;color:var(--muted);line-height:1.5}
-    .links{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1.5rem}
-    .button{display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--black);padding:.7rem .85rem;font-size:.68rem;font-weight:600;letter-spacing:.055em;text-transform:uppercase;transition:.18s}
-    .button:hover{background:var(--black);color:var(--white)}
-    .writebox{margin-top:2rem;padding:1.25rem 1.35rem;background:var(--paper);border-left:3px solid var(--black);max-width:900px}
-    .writebox strong{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.5rem}
-    .writebox p{font-size:.84rem;color:#52524f;line-height:1.6}
-    .lab-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--black);margin-top:2.5rem;border:1px solid var(--black)}
-    .lab-card{background:var(--white);min-height:235px;padding:clamp(1.4rem,3vw,2.4rem);display:flex;flex-direction:column;justify-content:space-between}
-    .lab-card h4{font-family:var(--display);font-size:2.7rem;line-height:.86;text-transform:uppercase;letter-spacing:-.035em}
-    .lab-card p{font-size:.78rem;color:var(--muted);max-width:360px}
-    .media-strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--black);border:1px solid var(--black);margin-top:2.5rem}
-    .media-panel{background:var(--white);padding:clamp(1.4rem,3vw,2.4rem);min-height:300px}
-    .media-panel.dark{background:var(--black);color:var(--white)}
-    .media-panel h4{font-family:var(--display);font-size:clamp(3rem,5vw,5rem);line-height:.82;text-transform:uppercase;letter-spacing:-.04em}
-    .media-panel p{margin-top:1rem;font-size:.8rem;max-width:430px;color:var(--muted)}
-    .media-panel.dark p{color:#aaa}
-    .portrait-wrap{margin-top:2rem;position:relative;background:var(--paper);height:min(70vw,690px);overflow:hidden}
-    .portrait-wrap img{width:100%;height:100%;object-fit:cover;object-position:center 10%;filter:grayscale(1) contrast(1.06)}
-    .timeline{border-top:1px solid var(--black)}
-    .time-row{display:grid;grid-template-columns:.3fr .7fr;gap:2rem;padding:1.35rem 0;border-bottom:1px solid var(--line)}
-    .time-row .year{font-family:var(--display);font-weight:800;font-size:1.4rem}
-    .time-row strong{font-size:.84rem;display:block}
-    .time-row span{display:block;margin-top:.25rem;font-size:.74rem;color:var(--muted)}
-    .link-section{background:var(--black);color:var(--white);padding:clamp(5rem,9vw,8rem) 0}
-    .link-inner{width:var(--page);margin:0 auto}
-    .link-inner h2{font-family:var(--display);font-size:clamp(5rem,12vw,12rem);line-height:.72;letter-spacing:-.05em;text-transform:uppercase}
-    .link-list{margin-top:3rem;border-top:1px solid #333}
-    .link-row{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 0;border-bottom:1px solid #333;font-size:.82rem}
-    .link-row span:last-child{color:#999}
-    .footer{width:var(--page);margin:0 auto;padding:1.5rem 0 3rem;display:flex;justify-content:space-between;gap:1rem;font-size:.67rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-    @media(max-width:850px){
-      .nav{gap:.9rem}.nav a:nth-child(2){display:none}
-      .hero-grid,.section-head,.project-top,.time-row{grid-template-columns:1fr}
-      .hero-copy{padding-top:1rem}
-      .facts-inner{grid-template-columns:1fr 1fr}.fact:nth-child(2){border-right:0}.fact:nth-child(n+3){border-top:1px solid var(--line)}
-      .evidence{grid-template-columns:1fr}
-      .lab-grid,.media-strip{grid-template-columns:1fr}
-      .section-head{gap:1rem}.project-top{gap:1rem}
-    }
+    :root{--ink:#172016;--paper:#f5f3ea;--white:#fff;--line:#d4d7cb;--muted:#596354;--lime:#d5fb62;--display:'Barlow Condensed',Impact,sans-serif;--body:'DM Sans',Arial,sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.5}img{display:block;width:100%}a{color:inherit;text-decoration:none}a:focus-visible{outline:3px solid #5b8520;outline-offset:4px}::selection{background:var(--lime);color:var(--ink)}
+    .wrap{width:min(1380px,calc(100% - clamp(32px,7vw,112px)));margin:auto}.top{height:70px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:700;font-size:13px;letter-spacing:-.03em}.top nav{display:flex;gap:24px}.top nav a,.kicker,.num{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.top nav a:hover{opacity:.55}.top .pill{border:1px solid var(--ink);border-radius:100px;padding:9px 14px}
+    .hero{padding:clamp(64px,8vw,120px) 0 48px}.hero-grid{display:grid;grid-template-columns:1fr .85fr;gap:6vw;align-items:end}.hero h1{font:800 clamp(86px,13vw,204px)/.72 var(--display);letter-spacing:-.05em;text-transform:uppercase;margin:14px 0 0}.hero h1 span{display:block}.hero-copy{max-width:470px}.hero-copy p{font-size:clamp(20px,2.1vw,31px);line-height:1.2;letter-spacing:-.045em;margin:0 0 24px}.hero-copy .sub{font-size:14px;color:var(--muted);letter-spacing:0;line-height:1.55;margin:0}.hero-visual{position:relative;margin-top:64px;height:clamp(340px,45vw,620px);overflow:hidden;background:#cad8c0}.hero-visual img{height:100%;object-fit:cover;object-position:center 45%}.hero-stamp{position:absolute;left:24px;bottom:24px;background:var(--lime);padding:16px 20px;font:800 clamp(28px,3vw,48px)/.9 var(--display);text-transform:uppercase;letter-spacing:-.025em}
+    .strip{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr)}.strip div{padding:18px 20px;border-right:1px solid var(--line)}.strip div:first-child{padding-left:0}.strip div:last-child{border-right:0}.strip strong{display:block;font:800 clamp(23px,2.5vw,36px)/1 var(--display);text-transform:uppercase}.strip span{display:block;font-size:11px;color:var(--muted);margin-top:5px}
+    section.block{padding:clamp(72px,10vw,148px) 0}.section-top{display:flex;align-items:end;justify-content:space-between;gap:30px;border-top:1px solid var(--ink);padding-top:20px;margin-bottom:34px}.section-top h2{font:800 clamp(60px,9vw,135px)/.78 var(--display);letter-spacing:-.045em;text-transform:uppercase;margin:16px 0 0}.section-top .intro{max-width:430px;font-size:15px;color:var(--muted);margin:0}
+    .feature,.factory-grid{display:grid;grid-template-columns:1.25fr .75fr}.feature{background:var(--white);border:1px solid var(--line)}.feature-image{min-height:560px;background:#dce1d9}.feature-image img{height:100%;object-fit:cover}.feature-copy,.factory-copy{padding:clamp(28px,4vw,62px);display:flex;flex-direction:column;justify-content:space-between}.num{color:var(--muted)}h3{font:800 clamp(46px,5.6vw,84px)/.85 var(--display);text-transform:uppercase;letter-spacing:-.035em;margin:20px 0 18px}.lead{font-size:17px;line-height:1.42;letter-spacing:-.02em;margin:0 0 28px}.proof{border-top:1px solid var(--line);padding:11px 0;display:grid;grid-template-columns:74px 1fr;gap:10px;font-size:13px}.proof b{font-size:10px;text-transform:uppercase;letter-spacing:.1em}.proof span{color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.action{display:inline-flex;align-items:center;border:1px solid var(--ink);border-radius:100px;padding:9px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;transition:.15s}.action:hover{background:var(--ink);color:var(--white)}.action.dark{background:var(--ink);color:var(--white)}.action.dark:hover{background:var(--lime);color:var(--ink)}.caption{font-size:11px;color:var(--muted);margin:10px 0 0}
+    .image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.image-pair figure,.showcase figure{margin:0}.image-pair img{height:270px;object-fit:cover;background:#e3e7df}.image-pair figcaption{font-size:11px;color:var(--muted);padding-top:9px}
+    .factory-grid{gap:16px;grid-template-columns:1.2fr .8fr}.factory-visual{background:#e0e6df;min-height:500px}.factory-visual img{height:100%;object-fit:cover}.factory-copy{background:var(--ink);color:var(--white)}.factory-copy .num,.factory-copy .proof span{color:#bdc6b4}.factory-copy .proof{border-color:#53604f}.factory-copy .action{border-color:var(--white)}.factory-copy .action:hover{background:var(--white);color:var(--ink)}.factory-copy .action.dark{background:var(--lime);color:var(--ink);border-color:var(--lime)}
+    .card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.card{background:var(--white);border:1px solid var(--line);display:flex;flex-direction:column}.card-media{height:clamp(260px,28vw,390px);overflow:hidden;background:#e2e5da}.card-media img{height:100%;object-fit:cover}.card:nth-child(2) .card-media img,.card:nth-child(3) .card-media img{object-position:center 28%}.card-body{padding:24px;flex:1;display:flex;flex-direction:column}.card h3{font-size:clamp(39px,4vw,60px);margin:14px 0}.card .lead{font-size:14px}.card .proof{grid-template-columns:65px 1fr;font-size:12px}.card .actions{margin-top:auto;padding-top:20px}.card .caption{margin-top:12px}
+    .two-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.showcase{background:var(--white);border:1px solid var(--line)}.showcase img{height:clamp(290px,30vw,460px);object-fit:cover}.showcase .body{padding:clamp(24px,3vw,40px)}.showcase h3{font-size:clamp(45px,5vw,76px)}.showcase .lead{max-width:580px}.showcase .actions{margin-top:20px}
+    .social{background:var(--lime);padding:clamp(64px,8vw,110px) 0}.social h2{font:800 clamp(60px,9vw,130px)/.78 var(--display);text-transform:uppercase;letter-spacing:-.04em;margin:14px 0 40px}.social-list{border-top:1px solid var(--ink)}.social-list a{display:grid;grid-template-columns:140px 1fr auto;gap:20px;align-items:center;border-bottom:1px solid var(--ink);padding:18px 0;font-size:14px}.social-list a:hover{padding-left:12px}.social-list b{text-transform:uppercase;font-size:11px;letter-spacing:.1em}.social-list span:nth-child(2){font-weight:700}.social-list em{font-style:normal;font-size:11px}.footer{display:flex;justify-content:space-between;gap:20px;padding:32px 0 55px;font-size:11px;color:var(--muted)}
+    @media(max-width:900px){.hero-grid,.feature,.factory-grid{grid-template-columns:1fr}.hero h1{font-size:clamp(88px,18vw,170px)}.hero-copy{padding-top:32px}.feature-image,.factory-visual{min-height:0}.feature-image img,.factory-visual img{aspect-ratio:16/10}.strip{grid-template-columns:1fr 1fr}.strip div:nth-child(2){border-right:0}.strip div:nth-child(n+3){border-top:1px solid var(--line)}}
+    @media(max-width:600px){.top nav{gap:10px}.top nav a:nth-child(2){display:none}.hero{padding-top:60px}.hero h1{font-size:clamp(80px,19vw,120px)}.hero-visual{margin-top:45px;height:360px}.hero-stamp{left:12px;bottom:12px;padding:10px 12px}.strip strong{font-size:24px}.section-top{display:block}.section-top .intro{margin-top:20px}.image-pair,.card-grid,.two-grid{grid-template-columns:1fr}.card-media{height:300px}.social-list a{grid-template-columns:68px 1fr auto;gap:8px;font-size:12px}.social-list em{font-size:10px}.footer{display:block}.footer span{display:block;margin-bottom:8px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.action{transition:none}}
   </style>
 </head>
 <body>
-  <header class="top">
-    <a class="mark" href="../"><span>Konstantin</span><span>Saifoulline</span></a>
-    <nav class="nav">
-      <a href="#builds">Builds</a>
-      <a href="#experiments">Experiments</a>
-      <a href="#links">Links</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="eyebrow">Selected work · 2021—2026</div>
-      <div class="hero-grid">
-        <h1><span>Selected</span><span>Builds</span></h1>
-        <div class="hero-copy">
-          <p>I build software and systems for the physical world, then put them in front of real users as fast as I can.</p>
-          <p class="small">Below are the projects that best show how I work: what I built, what was hard, what changed, and what happened next.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="facts" aria-label="Quick facts">
-      <div class="facts-inner">
-        <div class="fact"><strong>Airsup</strong><span>Current company</span></div>
-        <div class="fact"><strong>100+</strong><span>hardware teams & factories studied</span></div>
-        <div class="fact"><strong>Factory AI</strong><span>production simulation & operations</span></div>
-        <div class="fact"><strong>Gold</strong><span>music release before software</span></div>
-      </div>
-    </section>
-
-    <section class="section" id="builds">
-      <div class="section-head">
-        <div class="eyebrow">01 · Main build</div>
-        <div>
-          <h2>Airsup</h2>
-          <p>Software for teams building complex physical products. The current focus is making manufacturing information and production decisions usable by both people and AI.</p>
-        </div>
-      </div>
-
-      <article class="project">
-        <div class="project-top">
-          <div class="project-meta">
-            <span class="tag">2026 — now</span>
-            <div class="role">Founder & CEO<br>Airsup</div>
-          </div>
-          <div class="project-main">
-            <h3>One live record for the physical product</h3>
-            <p class="dek">Airsup connects the files and decisions around a build — CAD, BOMs, PDFs, quotes, suppliers and production changes — so a hardware team can work from the current state instead of reconstructing it across tools.</p>
-            <div class="evidence">
-              <div><strong>What I built</strong><span>I founded Airsup and led the early product: live product records, manufacturing workflows and factory simulation tools for complex hardware teams.</span></div>
-              <div><strong>Hard part</strong><span>Manufacturing truth is fragmented across CAD, BOMs, PDFs, quotes, suppliers, machines and test data. The product has to preserve that complexity without becoming another system people maintain by hand.</span></div>
-              <div><strong>Traction</strong><span>I have studied 100+ hardware teams and factories, onboarded the first paid enterprise users directly, and used those deployments to decide what gets built next.</span></div>
-              <div><strong>What I learned</strong><span>The useful AI layer is not a generic factory chatbot. It has to understand the current physical state, make the decision explicit, and leave a trace of why the change happened.</span></div>
-            </div>
-            <div class="links">
-              <a class="button" href="https://www.airsup.ai/" target="_blank" rel="noopener">Open Airsup ↗</a>
-              <a class="button" href="https://www.airsup.ai/factory" target="_blank" rel="noopener">Factory demos ↗</a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <article class="project" id="experiments">
-        <div class="project-top">
-          <div class="project-meta">
-            <span class="tag">2026</span>
-            <div class="role">Factory simulation experiments</div>
-          </div>
-          <div class="project-main">
-            <h3>Factories as executable systems</h3>
-            <p class="dek">A series of interactive factory experiments used to explore production flow, bottlenecks, machine placement and AI-assisted decision making before changes are made on a real floor.</p>
-            <div class="lab-grid">
-              <div class="lab-card"><h4>Jet factory</h4><p>Aircraft manufacturing flow translated into an interactive 3D plant model and production system.</p></div>
-              <div class="lab-card"><h4>Robotaxi factory</h4><p>Production-line simulation around a high-complexity physical product with repeatable manufacturing steps.</p></div>
-              <div class="lab-card"><h4>Humanoid factory</h4><p>Manufacturing exploration for robotics assembly, sequencing and production constraints.</p></div>
-              <div class="lab-card"><h4>Launch systems</h4><p>Experiments extending the same approach to aerospace and launch infrastructure.</p></div>
-            </div>
-            <div class="evidence">
-              <div><strong>What I built</strong><span>Interactive factory models where stations, routing and production decisions can be changed rather than only viewed.</span></div>
-              <div><strong>Hard part</strong><span>A factory can look convincing while behaving unrealistically. I kept pushing the models toward actual process constraints instead of decorative animation.</span></div>
-              <div><strong>Why I built them</strong><span>The simulations are a fast way to test how software and AI should interact with production systems before touching a real line.</span></div>
-              <div><strong>What I learned</strong><span>Useful factory AI needs explicit state, constraints and deterministic boundaries. Otherwise the output is interesting but not operational.</span></div>
-            </div>
-            <div class="links">
-              <a class="button" href="https://www.airsup.ai/factory" target="_blank" rel="noopener">Run the demos ↗</a>
-              <a class="button" href="https://x.com/konstantinsaifo" target="_blank" rel="noopener">Build log on X ↗</a>
-            </div>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="eyebrow">02 · Distribution</div>
-        <div>
-          <h2>Media</h2>
-          <p>Building has also meant learning how to earn attention, ask better questions and get close to people who have built difficult things before.</p>
-        </div>
-      </div>
-
-      <article class="project">
-        <div class="project-top">
-          <div class="project-meta">
-            <span class="tag">2025 — now</span>
-            <div class="role">Host & producer<br>Konstantin Saifoulline Podcast</div>
-          </div>
-          <div class="project-main">
-            <h3>Long-form conversations with builders</h3>
-            <p class="dek">I research, book, host and produce long-form conversations with people who have built difficult technology and companies.</p>
-            <div class="media-strip">
-              <div class="media-panel">
-                <h4>Guests</h4>
-                <p>Episodes include Apple co-founder Ronald Wayne, SpaceX veteran Hans Koenigsmann, robotics researcher Scott Walter, Casey Handmer, Jonathan McDowell and Robert Scoble.</p>
-                <div class="links"><a class="button" href="https://www.konstantinsaifoulline.com/" target="_blank" rel="noopener">Watch / listen ↗</a></div>
-              </div>
-              <div class="media-panel dark">
-                <h4>Why it matters</h4>
-                <p>The useful artifact is the system around the show: research, cold outreach, interviewing, editing, publishing and using each conversation to ask better questions in the next one.</p>
-              </div>
-            </div>
-            <div class="evidence">
-              <div><strong>What I built</strong><span>A repeatable research-to-publish workflow and a direct way to learn from experienced builders instead of only reading about them.</span></div>
-              <div><strong>Hard part</strong><span>Getting unusually strong guests before the show had scale meant making the outreach specific enough that the conversation itself was worth their time.</span></div>
-              <div><strong>Traction</strong><span>Individual episodes have reached more than 100,000 views and the guest list now spans aerospace, robotics, AI and company building.</span></div>
-              <div><strong>What I learned</strong><span>Access compounds. One serious conversation improves the questions, the network and the next piece of work.</span></div>
-            </div>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="eyebrow">03 · Earlier work</div>
-        <div>
-          <h2>Music</h2>
-          <p>Before manufacturing software, the main output was music: making tracks, testing them in public and learning distribution through releases and live performance.</p>
-        </div>
-      </div>
-
-      <article class="project">
-        <div class="project-top">
-          <div class="project-meta">
-            <span class="tag">Teenage years — now</span>
-            <div class="role">Producer / DJ<br>Pytro</div>
-          </div>
-          <div class="project-main">
-            <h3>Shipping creative work to a real audience</h3>
-            <p class="dek">I started producing and releasing music as a teenager. As Pytro, my releases passed 100M streams, one record went Gold, and I played Bootshaus at 16.</p>
-            <div class="portrait-wrap">
-              <img src="../assets/music-hero.png" alt="Pytro music project">
-            </div>
-            <div class="evidence">
-              <div><strong>What I built</strong><span>I produced the records, iterated on releases and learned distribution by repeatedly putting creative work in public.</span></div>
-              <div><strong>Hard part</strong><span>Music gives immediate feedback but no clean instructions. I had to learn how to separate taste from signal and keep shipping anyway.</span></div>
-              <div><strong>Result</strong><span>100M+ streams, a Gold record and live performances while I was still in my teens.</span></div>
-              <div><strong>What I learned</strong><span>Shipping compounds faster than waiting. That became the operating habit I later carried into software and hardware.</span></div>
-            </div>
-            <div class="links">
-              <a class="button" href="../bootshaus.mp4" target="_blank" rel="noopener">Bootshaus clip ↗</a>
-            </div>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="eyebrow">04 · Builder trail</div>
-        <div>
-          <h2>Earlier experiments</h2>
-          <p>Smaller experiments from before and alongside Airsup. Different domains, same pattern: make a version, put it in the world, then learn from what breaks.</p>
-        </div>
-      </div>
-      <div class="timeline">
-        <a class="time-row" href="https://proxima-centaurib.com/" target="_blank" rel="noopener">
-          <div class="year">SPACE GLOBE</div>
-          <div><strong>Proxima Centauri b — satellite tracker</strong><span>Interactive globe for tracking roughly 10,000 satellites and upcoming launches. Open live project ↗</span></div>
-        </a>
-        <a class="time-row" href="https://www.linkedin.com/posts/konstantinsaifoulline_ai-productivity-personalassistant-activity-7362062337941368832-Io0D" target="_blank" rel="noopener">
-          <div class="year">A.V.I.C.</div>
-          <div><strong>Personal AI agent system</strong><span>Agent workflow connecting email, calendar, research and voice control. Public demo ↗</span></div>
-        </a>
-        <div class="time-row">
-          <div class="year">PEAK</div>
-          <div><strong>SmartCap AI wearable prototype</strong><span>Wearable prototype combining camera, microphones, speakers, onboard compute and wake-word interaction.</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="link-section" id="links">
-      <div class="link-inner">
-        <div class="micro">Direct evidence</div>
-        <h2>Links</h2>
-        <div class="link-list">
-          <a class="link-row" href="https://www.airsup.ai/" target="_blank" rel="noopener"><span>Airsup</span><span>airsup.ai ↗</span></a>
-          <a class="link-row" href="https://www.airsup.ai/factory" target="_blank" rel="noopener"><span>Factory simulations</span><span>airsup.ai/factory ↗</span></a>
-          <a class="link-row" href="https://x.com/konstantinsaifo" target="_blank" rel="noopener"><span>X / build log</span><span>@konstantinsaifo ↗</span></a>
-          <a class="link-row" href="https://www.linkedin.com/in/konstantinsaifoulline" target="_blank" rel="noopener"><span>LinkedIn</span><span>Konstantin Saifoulline ↗</span></a>
-          <a class="link-row" href="https://www.konstantinsaifoulline.com/" target="_blank" rel="noopener"><span>Podcast</span><span>konstantinsaifoulline.com ↗</span></a>
-          <a class="link-row" href="https://proxima-centaurib.com/" target="_blank" rel="noopener"><span>Satellite tracker</span><span>proxima-centaurib.com ↗</span></a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <span>Konstantin Saifoulline</span>
-    <span>Selected builds · 2026</span>
-  </footer>
+  <div class="wrap">
+    <header class="top"><a class="brand" href="../">KONSTANTIN SAIFOULLINE</a><nav aria-label="Page navigation"><a href="#airsup">Airsup</a><a href="#experiments">Experiments</a><a href="#more">More work</a><a class="pill" href="#links">Links ↗</a></nav></header>
+    <main>
+      <section class="hero" aria-labelledby="page-title"><div class="kicker">Selected work / 2021–2026</div><div class="hero-grid"><h1 id="page-title"><span>Things</span><span>I've built.</span></h1><div class="hero-copy"><p>From music releases to AI tools to software for the factory floor.</p><p class="sub">I’m Konstantin. I learn by making things, putting them in front of people, and rebuilding what does not work.</p></div></div><div class="hero-visual"><img src="media/jet-factory.jpg" alt="Konstantin presenting an interactive jet factory simulation" fetchpriority="high"><div class="hero-stamp">Current obsession:<br>how things get made.</div></div></section>
+      <div class="strip" aria-label="Selected results"><div><strong>Airsup</strong><span>Current company</span></div><div><strong>100+</strong><span>hardware teams and factories studied</span></div><div><strong>2.1M</strong><span>views on an engineering build reel</span></div><div><strong>100M+</strong><span>streams as Pytro</span></div></div>
+      <section class="block" id="airsup" aria-labelledby="airsup-title"><div class="section-top"><div><div class="kicker">01 / Current build</div><h2 id="airsup-title">Airsup</h2></div><p class="intro">A live record for complex hardware: the product, its parts, checks, changes, suppliers and decisions in one place.</p></div>
+        <div class="feature"><div class="feature-image"><img src="media/airsup-demo.jpg" alt="Airsup demo showing parts, revisions and verification states" loading="lazy"></div><div class="feature-copy"><div><div class="num">Founder & CEO · 2026–now</div><h3>Make the physical state visible.</h3><p class="lead">I founded Airsup after talking with hardware teams that were reconstructing production truth from CAD, spreadsheets, PDFs and messages.</p><div class="proof"><b>Built</b><span>Led the first product: product records, manufacturing workflows and AI assisted operations.</span></div><div class="proof"><b>Hard part</b><span>Keeping revisions and decisions connected without adding another manual system.</span></div><div class="proof"><b>Learned</b><span>Useful factory AI needs current state and a traceable reason for each change.</span></div><div class="proof"><b>Result</b><span>100+ team and factory conversations informed the product; I onboarded the first paid enterprise users.</span></div></div><div class="actions"><a class="action dark" href="https://www.airsup.ai/" target="_blank" rel="noopener noreferrer">Explore Airsup ↗</a><a class="action" href="https://www.airsup.ai/factory" target="_blank" rel="noopener noreferrer">See factory demos ↗</a></div></div></div>
+        <p class="caption">Product images show Airsup’s demo workspace, not customer data.</p><div class="image-pair"><figure><img src="media/airsup-workspace.webp" alt="Airsup demo workspace showing decisions and checks" loading="lazy"><figcaption>Production decisions in the demo workspace</figcaption></figure><figure><img src="media/jet-factory.jpg" alt="Airsup jet factory walkthrough" loading="lazy"><figcaption>From product state to a simulated production floor</figcaption></figure></div>
+      </section>
+      <section class="block" id="experiments" aria-labelledby="factory-title"><div class="section-top"><div><div class="kicker">02 / Applied experiments</div><h2 id="factory-title">Factory simulations</h2></div><p class="intro">Interactive models for testing production flow, station placement and bottlenecks before a real line changes.</p></div><div class="factory-grid"><div class="factory-visual"><img src="media/jet-factory.jpg" alt="Interactive 3D jet factory with stations and production flow" loading="lazy"></div><div class="factory-copy"><div><div class="num">Jet / robotaxi / humanoid / launch</div><h3>Factories as executable systems.</h3><p class="lead">I built 3D factory experiments where the layout and process can change, instead of treating a plant as a static rendering.</p><div class="proof"><b>Hard part</b><span>A convincing animation can still model an unrealistic process.</span></div><div class="proof"><b>Learned</b><span>Explicit stations, routing and constraints matter more than visual polish alone.</span></div></div><div class="actions"><a class="action dark" href="https://www.airsup.ai/factory" target="_blank" rel="noopener noreferrer">Run the demos ↗</a><a class="action" href="https://x.com/konstantinsaifo/status/2096122429319852319" target="_blank" rel="noopener noreferrer">Watch the X build video ↗</a></div></div></div></section>
+      <section class="block" id="more" aria-labelledby="more-title"><div class="section-top"><div><div class="kicker">03 / Builder trail</div><h2 id="more-title">Earlier experiments</h2></div><p class="intro">Smaller projects that taught me to build across software, physical hardware and interfaces.</p></div><div class="card-grid">
+        <article class="card"><div class="card-media"><img src="media/avic-demo.jpg" alt="Thumbnail from Konstantin’s public A.V.I.C. personal assistant demo" loading="lazy"></div><div class="card-body"><div class="num">AI agent / A.V.I.C.</div><h3>A personal assistant that acts.</h3><p class="lead">I connected email, calendar, research and voice into an agent workflow I could use day to day.</p><div class="proof"><b>Challenge</b><span>Giving an assistant useful access while keeping actions understandable.</span></div><div class="proof"><b>Learned</b><span>Good automation needs clear context and visible control.</span></div><div class="actions"><a class="action" href="https://www.linkedin.com/posts/konstantinsaifoulline_ai-productivity-personalassistant-activity-7362062337941368832-Io0D" target="_blank" rel="noopener noreferrer">Watch the demo ↗</a></div></div></article>
+        <article class="card"><div class="card-media"><img src="media/proxima-globe.png" alt="Local capture of the Proxima interactive space globe" loading="lazy"></div><div class="card-body"><div class="num">Space / Proxima</div><h3>A globe for orbit.</h3><p class="lead">I built an interactive 3D globe to explore satellites, orbital paths and launch activity.</p><div class="proof"><b>Challenge</b><span>Making a dense stream of moving objects legible and navigable.</span></div><div class="proof"><b>Learned</b><span>Real time data only helps when the interface makes it explorable.</span></div><div class="actions"><a class="action" href="https://github.com/Pytro001/proximacentaurib" target="_blank" rel="noopener noreferrer">View source ↗</a></div><p class="caption">Captured from the local project; the former public domain is offline.</p></div></article>
+        <article class="card"><div class="card-media"><img src="media/peak-portrait.jpg" alt="Konstantin during the PEAK project period" loading="lazy"></div><div class="card-body"><div class="num">Hardware / PEAK SmartCap</div><h3>A wearable experiment.</h3><p class="lead">I prototyped a cap based AI interface combining cameras, microphones, speakers and onboard compute.</p><div class="proof"><b>Challenge</b><span>Getting hardware, power and interaction into a usable wearable form.</span></div><div class="proof"><b>Learned</b><span>Physical interfaces expose constraints that software mockups hide.</span></div><p class="caption">Project portrait. The prototype itself is not pictured.</p></div></article>
+        <article class="card"><div class="card-media"><img src="media/arc-reactor.png" alt="Konstantin testing a lit wearable arc reactor prototype" loading="lazy"></div><div class="card-body"><div class="num">Physical build / Arc reactor</div><h3>From CAD to a working object.</h3><p class="lead">I designed and assembled an illuminated wearable prop, then showed the build process in public.</p><div class="proof"><b>Challenge</b><span>Making the light, enclosure and fit work together on a physical prototype.</span></div><div class="proof"><b>Result</b><span>The engineering build reel reached 2.1M views on Instagram.</span></div><div class="actions"><a class="action" href="https://www.instagram.com/reel/DTOq2jRj5HZ/" target="_blank" rel="noopener noreferrer">Watch the build ↗</a></div></div></article>
+      </div></section>
+      <section class="block" aria-labelledby="media-title"><div class="section-top"><div><div class="kicker">04 / Learning & distribution</div><h2 id="media-title">Work in public</h2></div><p class="intro">Building also taught me how to find an audience and learn directly from people with harder earned experience.</p></div><div class="two-grid">
+        <article class="showcase"><figure><img src="../assets/og-podcast.png" alt="Konstantin Saifoulline Podcast artwork" loading="lazy"></figure><div class="body"><div class="num">Podcast / 2025–now</div><h3>Conversations with builders.</h3><p class="lead">I research, book, host and produce conversations about aerospace, robotics, AI and company building.</p><div class="proof"><b>Built</b><span>A repeatable research to publish process, from outreach to final episode.</span></div><div class="proof"><b>Result</b><span>Guests include Ronald Wayne, Hans Koenigsmann and Scott Walter; some episodes passed 100,000 views.</span></div><div class="actions"><a class="action" href="https://www.konstantinsaifoulline.com/" target="_blank" rel="noopener noreferrer">Watch the podcast ↗</a></div></div></article>
+        <article class="showcase"><figure><img src="../assets/pytro/pytro-stage.png" alt="Konstantin performing as Pytro in front of an audience" loading="lazy"></figure><div class="body"><div class="num">Music / Pytro</div><h3>Learning to ship early.</h3><p class="lead">I began producing and releasing music as a teenager, testing tracks in public and learning distribution from the audience.</p><div class="proof"><b>Result</b><span>100M+ streams, a Gold record and live performances including Bootshaus at 16.</span></div><div class="proof"><b>Learned</b><span>Release, listen, change the next version. I brought that loop into software.</span></div><div class="actions"><a class="action" href="../assets/pytro/bootshaus-cologne-2024.mp4" target="_blank" rel="noopener noreferrer">Watch a live set ↗</a><a class="action" href="https://www.instagram.com/konstantinsaifo/reel/DaIAIIrI8z4/" target="_blank" rel="noopener noreferrer">Music reel ↗</a></div></div></article>
+      </div></section>
+    </main>
+  </div>
+  <section class="social" id="links" aria-labelledby="links-title"><div class="wrap"><div class="kicker">A few things you can actually open</div><h2 id="links-title">See the work.</h2><div class="social-list"><a href="https://www.airsup.ai/factory" target="_blank" rel="noopener noreferrer"><b>Demo</b><span>Interactive factory models</span><em>airsup.ai ↗</em></a><a href="https://x.com/konstantinsaifo/status/2096122429319852319" target="_blank" rel="noopener noreferrer"><b>X video</b><span>Jet factory build walkthrough</span><em>Watch ↗</em></a><a href="https://www.instagram.com/reel/DTOq2jRj5HZ/" target="_blank" rel="noopener noreferrer"><b>Instagram</b><span>Engineering build reel · 2.1M views</span><em>Watch ↗</em></a><a href="https://www.linkedin.com/posts/konstantinsaifoulline_ai-productivity-personalassistant-activity-7362062337941368832-Io0D" target="_blank" rel="noopener noreferrer"><b>AI demo</b><span>A.V.I.C. personal assistant</span><em>Watch ↗</em></a><a href="https://github.com/Pytro001/proximacentaurib" target="_blank" rel="noopener noreferrer"><b>Source</b><span>Proxima space globe</span><em>GitHub ↗</em></a></div></div></section>
+  <footer class="wrap footer"><span>Konstantin Saifoulline · Selected builds</span><span>Made to be explored, not just read.</span></footer>
 </body>
 </html>
