@@ -67,7 +67,7 @@
     .project-meta .role{font-size:.76rem;color:var(--muted);max-width:180px}
     .project-main h3{font-family:var(--display);font-size:clamp(3.7rem,8vw,7.8rem);font-weight:800;letter-spacing:-.045em;line-height:.78;text-transform:uppercase}
     .project-main .dek{max-width:780px;margin-top:1.25rem;font-size:clamp(1.05rem,1.5vw,1.35rem);letter-spacing:-.02em}
-    .evidence{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:2.4rem;border:1px solid var(--line)}
+    .evidence{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);margin-top:2.4rem;border:1px solid var(--line)}
     .evidence div{background:var(--white);padding:1.25rem}
     .evidence strong{display:block;font-size:.82rem;margin-bottom:.35rem}
     .evidence span{display:block;font-size:.75rem;color:var(--muted);line-height:1.5}
@@ -128,8 +128,8 @@
       <div class="hero-grid">
         <h1><span>Selected</span><span>Builds</span></h1>
         <div class="hero-copy">
-          <p>Manufacturing software, factory simulation, media and music built by Konstantin Saifoulline.</p>
-          <p class="small">This page is intentionally evidence-first: shipped work, direct links, constraints and results.</p>
+          <p>I build software and systems for the physical world, then put them in front of real users as fast as I can.</p>
+          <p class="small">Below are the projects that best show how I work: what I built, what was hard, what changed, and what happened next.</p>
         </div>
       </div>
     </section>
@@ -162,17 +162,14 @@
             <h3>One live record for the physical product</h3>
             <p class="dek">Airsup connects the files and decisions around a build — CAD, BOMs, PDFs, quotes, suppliers and production changes — so a hardware team can work from the current state instead of reconstructing it across tools.</p>
             <div class="evidence">
-              <div><strong>Customer discovery</strong><span>100+ hardware teams and factories studied across aerospace, robotics and manufacturing.</span></div>
-              <div><strong>Current product</strong><span>AI-assisted product records plus manufacturing and factory simulation workflows.</span></div>
-              <div><strong>Launch motion</strong><span>Personally onboarding the first cohort of teams rather than handing early deployment to a sales layer.</span></div>
+              <div><strong>What I built</strong><span>I founded Airsup and led the early product: live product records, manufacturing workflows and factory simulation tools for complex hardware teams.</span></div>
+              <div><strong>Hard part</strong><span>Manufacturing truth is fragmented across CAD, BOMs, PDFs, quotes, suppliers, machines and test data. The product has to preserve that complexity without becoming another system people maintain by hand.</span></div>
+              <div><strong>Traction</strong><span>I have studied 100+ hardware teams and factories, onboarded the first paid enterprise users directly, and used those deployments to decide what gets built next.</span></div>
+              <div><strong>What I learned</strong><span>The useful AI layer is not a generic factory chatbot. It has to understand the current physical state, make the decision explicit, and leave a trace of why the change happened.</span></div>
             </div>
             <div class="links">
               <a class="button" href="https://www.airsup.ai/" target="_blank" rel="noopener">Open Airsup ↗</a>
               <a class="button" href="https://www.airsup.ai/factory" target="_blank" rel="noopener">Factory demos ↗</a>
-            </div>
-            <div class="writebox">
-              <strong>Write this yourself before submitting · 3–5 sentences</strong>
-              <p>What did you personally build or own inside Airsup? Name the hardest real constraint you hit with customers or manufacturing data, what you changed because of it, and one result you can prove. Avoid company-level “we” unless you immediately explain your part.</p>
             </div>
           </div>
         </div>
@@ -193,13 +190,15 @@
               <div class="lab-card"><h4>Humanoid factory</h4><p>Manufacturing exploration for robotics assembly, sequencing and production constraints.</p></div>
               <div class="lab-card"><h4>Launch systems</h4><p>Experiments extending the same approach to aerospace and launch infrastructure.</p></div>
             </div>
+            <div class="evidence">
+              <div><strong>What I built</strong><span>Interactive factory models where stations, routing and production decisions can be changed rather than only viewed.</span></div>
+              <div><strong>Hard part</strong><span>A factory can look convincing while behaving unrealistically. I kept pushing the models toward actual process constraints instead of decorative animation.</span></div>
+              <div><strong>Why I built them</strong><span>The simulations are a fast way to test how software and AI should interact with production systems before touching a real line.</span></div>
+              <div><strong>What I learned</strong><span>Useful factory AI needs explicit state, constraints and deterministic boundaries. Otherwise the output is interesting but not operational.</span></div>
+            </div>
             <div class="links">
               <a class="button" href="https://www.airsup.ai/factory" target="_blank" rel="noopener">Run the demos ↗</a>
               <a class="button" href="https://x.com/konstantinsaifo" target="_blank" rel="noopener">Build log on X ↗</a>
-            </div>
-            <div class="writebox">
-              <strong>Write this yourself before submitting · 2–4 sentences</strong>
-              <p>Pick one simulation. Say exactly what you personally made, what was technically wrong or unrealistic in version one, and what you learned by forcing the model to represent a real production system. Concrete details beat a list of tools.</p>
             </div>
           </div>
         </div>
@@ -223,7 +222,7 @@
           </div>
           <div class="project-main">
             <h3>Long-form conversations with builders</h3>
-            <p class="dek">A founder-led interview show focused on technology, engineering and the decisions behind companies and physical systems.</p>
+            <p class="dek">I research, book, host and produce long-form conversations with people who have built difficult technology and companies.</p>
             <div class="media-strip">
               <div class="media-panel">
                 <h4>Guests</h4>
@@ -232,12 +231,14 @@
               </div>
               <div class="media-panel dark">
                 <h4>Why it matters</h4>
-                <p>The useful artifact is not the guest list. It is a repeated system for research, outreach, interviewing, publishing and turning conversations into better questions for the next build.</p>
+                <p>The useful artifact is the system around the show: research, cold outreach, interviewing, editing, publishing and using each conversation to ask better questions in the next one.</p>
               </div>
             </div>
-            <div class="writebox">
-              <strong>Write this yourself before submitting · 2–3 sentences</strong>
-              <p>Describe what you personally built around the show: how you got the first difficult guest, the publishing/distribution system you created, and one thing interviewing technical builders changed in how you operate.</p>
+            <div class="evidence">
+              <div><strong>What I built</strong><span>A repeatable research-to-publish workflow and a direct way to learn from experienced builders instead of only reading about them.</span></div>
+              <div><strong>Hard part</strong><span>Getting unusually strong guests before the show had scale meant making the outreach specific enough that the conversation itself was worth their time.</span></div>
+              <div><strong>Traction</strong><span>Individual episodes have reached more than 100,000 views and the guest list now spans aerospace, robotics, AI and company building.</span></div>
+              <div><strong>What I learned</strong><span>Access compounds. One serious conversation improves the questions, the network and the next piece of work.</span></div>
             </div>
           </div>
         </div>
@@ -261,16 +262,18 @@
           </div>
           <div class="project-main">
             <h3>Shipping creative work to a real audience</h3>
-            <p class="dek">Released music as Pytro, earned a Gold record on a release, and played Bootshaus at 16. The project was an early lesson in iteration, distribution and putting work in front of people before it felt finished.</p>
+            <p class="dek">I started producing and releasing music as a teenager. As Pytro, my releases passed 100M streams, one record went Gold, and I played Bootshaus at 16.</p>
             <div class="portrait-wrap">
               <img src="../assets/music-hero.png" alt="Pytro music project">
             </div>
+            <div class="evidence">
+              <div><strong>What I built</strong><span>I produced the records, iterated on releases and learned distribution by repeatedly putting creative work in public.</span></div>
+              <div><strong>Hard part</strong><span>Music gives immediate feedback but no clean instructions. I had to learn how to separate taste from signal and keep shipping anyway.</span></div>
+              <div><strong>Result</strong><span>100M+ streams, a Gold record and live performances while I was still in my teens.</span></div>
+              <div><strong>What I learned</strong><span>Shipping compounds faster than waiting. That became the operating habit I later carried into software and hardware.</span></div>
+            </div>
             <div class="links">
               <a class="button" href="../bootshaus.mp4" target="_blank" rel="noopener">Bootshaus clip ↗</a>
-            </div>
-            <div class="writebox">
-              <strong>Write this yourself before submitting · 2–3 sentences</strong>
-              <p>Give the one specific story that best shows how you built rather than “wanted to be a musician”: a release, remix, show or distribution problem. State what you made, what failed, and what you changed.</p>
             </div>
           </div>
         </div>
@@ -282,7 +285,7 @@
         <div class="eyebrow">04 · Builder trail</div>
         <div>
           <h2>Earlier experiments</h2>
-          <p>Smaller projects from before Airsup. Different domains, same pattern: make a version, put it in the world, then learn from what breaks.</p>
+          <p>Smaller experiments from before and alongside Airsup. Different domains, same pattern: make a version, put it in the world, then learn from what breaks.</p>
         </div>
       </div>
       <div class="timeline">
@@ -296,12 +299,8 @@
         </a>
         <div class="time-row">
           <div class="year">PEAK</div>
-          <div><strong>SmartCap AI wearable prototype</strong><span>Wearable prototype combining camera, microphones, speakers, onboard compute and wake-word interaction. Add your strongest prototype photo / video link before submitting.</span></div>
+          <div><strong>SmartCap AI wearable prototype</strong><span>Wearable prototype combining camera, microphones, speakers, onboard compute and wake-word interaction.</span></div>
         </div>
-      </div>
-      <div class="writebox">
-        <strong>Write this yourself before submitting · 2–4 sentences total</strong>
-        <p>Do not explain all three projects. Pick the one that best proves you were already obsessed with building before Airsup. Say what you personally made, why version one did not work, and what that taught you. Add one artifact for PEAK if you still have it.</p>
       </div>
     </section>
 
@@ -315,6 +314,7 @@
           <a class="link-row" href="https://x.com/konstantinsaifo" target="_blank" rel="noopener"><span>X / build log</span><span>@konstantinsaifo ↗</span></a>
           <a class="link-row" href="https://www.linkedin.com/in/konstantinsaifoulline" target="_blank" rel="noopener"><span>LinkedIn</span><span>Konstantin Saifoulline ↗</span></a>
           <a class="link-row" href="https://www.konstantinsaifoulline.com/" target="_blank" rel="noopener"><span>Podcast</span><span>konstantinsaifoulline.com ↗</span></a>
+          <a class="link-row" href="https://proxima-centaurib.com/" target="_blank" rel="noopener"><span>Satellite tracker</span><span>proxima-centaurib.com ↗</span></a>
         </div>
       </div>
     </section>
