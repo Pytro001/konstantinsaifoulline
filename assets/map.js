@@ -379,7 +379,23 @@
     var maxX = Math.max(0, WORLD_W - layout.viewW);
     var maxY = Math.max(0, layout.worldH - layout.viewH);
     var centerShift = Math.max(0, (stage.clientWidth - WORLD_W * layout.scale) / 2);
-    var camX = clamp(focusX - layout.viewW * 0.5, 0, maxX);
+    var noteWidth = Math.min(240, Math.max(160, stage.clientWidth * 0.16));
+    var noteLeft = Math.max(16, stage.clientWidth - 72 - noteWidth);
+    var pinHalf = 310 * layout.scale * 1.06;
+    var desiredCenter = noteLeft - 36 - pinHalf;
+    desiredCenter = clamp(desiredCenter, Math.min(stage.clientWidth * 0.34, pinHalf), stage.clientWidth * 0.56);
+    function camFor(worldX) {
+      return clamp(worldX - (desiredCenter - centerShift) / layout.scale, 0, maxX);
+    }
+    var holdA = camFor(fromPoint.x);
+    var holdB = camFor(toPoint.x);
+    var camX = holdA;
+    if (!reduce) {
+      if (local >= 0.58) camX = holdB;
+      else if (local > 0.42) camX = holdA + (holdB - holdA) * ((local - 0.42) / 0.16);
+    } else {
+      camX = clamp(focusX - layout.viewW * 0.5, 0, maxX);
+    }
     var restY = Math.max(0, focusY - 200 - layout.viewH * 0.5);
     var camY = reduce ? restY : restY * reveal;
     if (!reduce) {
@@ -405,11 +421,13 @@
       note.style.opacity = String(closeness * reveal);
       var pinBox = layout.points[index].node.getBoundingClientRect();
       var stageBox = stage.getBoundingClientRect();
-      var noteWidth = Math.min(240, Math.max(160, stageBox.width * 0.16));
-      var left = pinBox.right - stageBox.left + 40;
-      var maxLeft = stageBox.width - noteWidth - 68;
-      if (left > maxLeft) left = maxLeft;
-      if (left < 16) left = 16;
+      var left = noteLeft;
+      if (reduce) {
+        left = pinBox.right - stageBox.left + 40;
+        var maxLeft = stageBox.width - noteWidth - 68;
+        if (left > maxLeft) left = maxLeft;
+        if (left < 16) left = 16;
+      }
       note.style.width = noteWidth + 'px';
       note.style.left = left + 'px';
       note.style.top = (pinBox.top - stageBox.top + Math.max(28, pinBox.height * 0.28)) + 'px';
