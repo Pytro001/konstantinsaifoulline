@@ -199,6 +199,8 @@
   box-shadow: 0 0 0 1.5px #111;
 }
 
+.pin.is-terminal .pin-node { visibility: hidden; }
+
 .pin.is-past {
   opacity: 0.42;
 }

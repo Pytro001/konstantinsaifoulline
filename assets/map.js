@@ -197,7 +197,12 @@
   function build() {
     var points = tracePath(episodes);
     var worldH = (points.length ? points[points.length - 1].y : FIRST_Y) + 760;
-    var route = routePath(points);
+    var routePoints = points.map(function (point) { return { x: point.x, y: point.y }; });
+    if (routePoints.length) {
+      routePoints[0].y -= 190;
+      routePoints[routePoints.length - 1].y -= 190;
+    }
+    var route = routePath(routePoints);
 
     world.style.width = WORLD_W + 'px';
     world.style.height = worldH + 'px';
@@ -236,6 +241,7 @@
         var nextSrc = img.getAttribute('data-hq');
         if (nextSrc && img.src !== nextSrc) img.src = nextSrc;
       });
+      if (point.index === 0 || point.index === points.length - 1) link.classList.add('is-terminal');
       world.appendChild(link);
       point.node = link;
     });
@@ -243,7 +249,7 @@
     var routeEl = svg.querySelector('#mapRouteWalk');
     var traveler = svg.querySelector('#mapTraveler');
     var total = routeEl.getTotalLength();
-    var stops = points.map(function (point) { return lengthNear(routeEl, point, total); });
+    var stops = routePoints.map(function (point) { return lengthNear(routeEl, point, total); });
     for (var s = 1; s < stops.length; s++) {
       if (stops[s] < stops[s - 1]) stops[s] = stops[s - 1];
     }
@@ -393,27 +399,20 @@
     if (guest) guest.textContent = episode.label;
     var note = $('episodeNote');
     if (note) {
-      var closeness = clamp(1 - Math.abs(t - index) / 0.22, 0, 1);
-      var shown = closeness * reveal;
+      var distance = Math.abs(t - index);
+      var closeness = distance < 0.42 ? 1 : clamp(1 - (distance - 0.42) / 0.28, 0, 1);
       note.textContent = episode.note || episode.title;
-      note.style.opacity = String(shown);
+      note.style.opacity = String(closeness * reveal);
       var pinBox = layout.points[index].node.getBoundingClientRect();
       var stageBox = stage.getBoundingClientRect();
-      var roomRight = stageBox.right - pinBox.right;
-      var roomLeft = pinBox.left - stageBox.left;
-      var noteWidth = Math.min(260, Math.max(roomRight, roomLeft) - 56);
-      if (noteWidth < 140) noteWidth = Math.min(280, stageBox.width - 40);
+      var noteWidth = Math.min(240, Math.max(160, stageBox.width * 0.16));
+      var left = pinBox.right - stageBox.left + 40;
+      var maxLeft = stageBox.width - noteWidth - 68;
+      if (left > maxLeft) left = maxLeft;
+      if (left < 16) left = 16;
       note.style.width = noteWidth + 'px';
-      var top = pinBox.top - stageBox.top + Math.max(24, pinBox.height * 0.22);
-      if (roomRight >= roomLeft && roomRight > 160) {
-        note.style.left = (pinBox.right - stageBox.left + 52) + 'px';
-      } else if (roomLeft > 160) {
-        note.style.left = (pinBox.left - stageBox.left - noteWidth - 28) + 'px';
-      } else {
-        note.style.left = '20px';
-        top = Math.min(stageBox.height - 96, pinBox.bottom - stageBox.top + 16);
-      }
-      note.style.top = top + 'px';
+      note.style.left = left + 'px';
+      note.style.top = (pinBox.top - stageBox.top + Math.max(28, pinBox.height * 0.28)) + 'px';
     }
 
     var announcement = $('announcementLink');
