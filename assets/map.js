@@ -320,7 +320,7 @@
     return clamp((window.scrollY - layout.stickStart) / layout.travel, 0, 1);
   }
 
-  function scrollToIndex(index) {
+  function scrollToIndex(index, behavior) {
     if (reduce) {
       var pin = document.getElementById('ep-' + episodes[index].id);
       if (pin) pin.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -329,7 +329,11 @@
     measure();
     var t = episodes.length <= 1 ? 0 : index / (episodes.length - 1);
     var top = layout.stickStart + (layout.lead || 0) + t * (layout.journey || layout.travel);
-    window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+    window.scrollTo({ top: top, behavior: behavior || 'smooth' });
+  }
+
+  function openLatest(behavior) {
+    scrollToIndex(0, behavior);
   }
 
   function placeHero() {
@@ -477,6 +481,16 @@
 
   build();
   loadFeed();
+
+  var podcastLink = document.querySelector('.nav a[href="#episodes"]');
+  if (podcastLink) {
+    podcastLink.addEventListener('click', function (event) {
+      event.preventDefault();
+      if (location.hash !== '#episodes') history.pushState(null, '', '#episodes');
+      openLatest('smooth');
+    });
+  }
+  if (location.hash === '#episodes') openLatest('auto');
   window.addEventListener('scroll', requestApply, { passive: true });
   window.addEventListener('resize', function () {
     measure();
