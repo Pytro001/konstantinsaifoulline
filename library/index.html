@@ -167,6 +167,7 @@
   <script>
   (function () {
     var books = window.BOOKS || [];
+    document.querySelector('.stage h1').textContent = books.length + " Books I've read";
     var shelf = document.getElementById('shelf');
     var runway = document.getElementById('runway');
     var title = document.getElementById('bookTitle');
