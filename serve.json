@@ -4,6 +4,8 @@
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/sponsor", "destination": "/sponsor/index.html" },
-    { "source": "/sponsor/", "destination": "/sponsor/index.html" }
+    { "source": "/sponsor/", "destination": "/sponsor/index.html" },
+    { "source": "/library", "destination": "/library/index.html" },
+    { "source": "/library/", "destination": "/library/index.html" }
   ]
 }

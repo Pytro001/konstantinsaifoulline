@@ -4,104 +4,259 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Library — Konstantin Saifoulline</title>
-  <meta name="description" content="Books from Konstantin Saifoulline's library.">
+  <meta name="description" content="Every book Konstantin Saifoulline has read.">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f1011;--muted:#777b7f;--line:#dedede;--font:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif}
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{min-height:100svh;background:#fff;color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-    a{color:inherit;text-decoration:none}
-    .back{position:absolute;top:2rem;left:clamp(1.25rem,4vw,3.5rem);font-size:.8rem;font-weight:600}
-    .back:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
-    .hero{min-height:43svh;display:grid;place-content:center;text-align:center;padding:6.5rem 1.25rem 3rem}
-    h1{font-size:clamp(4rem,12vw,10rem);font-weight:500;letter-spacing:-.08em;line-height:.86}
-    .shelf-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:0 clamp(1.25rem,4vw,3.5rem) 1rem}
-    .shelf-head p{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
-    .counter{color:var(--muted);font-size:.75rem;font-variant-numeric:tabular-nums}
-    .viewport{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab;padding:0 clamp(1.25rem,4vw,3.5rem) 3rem}
-    .viewport::-webkit-scrollbar{display:none}
-    .viewport.dragging{cursor:grabbing}
-    .shelf{display:flex;gap:clamp(.85rem,1.8vw,1.4rem);width:max-content}
-    .book{width:clamp(145px,18vw,220px)}
-    .cover{width:100%;aspect-ratio:9/14;overflow:hidden;background:#f1f1f1;border:1px solid var(--line)}
-    .cover img{display:block;width:100%;height:100%;object-fit:cover}
-    .book h2{margin-top:.7rem;font-size:.83rem;font-weight:600;line-height:1.3;max-width:20ch}
-    .book p{margin-top:.18rem;color:var(--muted);font-size:.72rem;line-height:1.35;max-width:24ch}
-    .end-space{height:16svh}
-    @media(max-width:600px){.back{top:1.25rem}.hero{min-height:34svh;padding-top:5rem}.book{width:145px}.viewport{padding-bottom:2rem}}
+    :root {
+      --ink: #111;
+      --muted: #5c5c5c;
+      --display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: auto; }
+    body {
+      min-height: 100svh;
+      background: #fff;
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    .back {
+      position: absolute;
+      top: 1.4rem;
+      left: clamp(1.1rem, 3vw, 2.2rem);
+      z-index: 3;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .back:focus-visible, .book:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+    .runway { position: relative; background: #fff; }
+    .stage {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      background: #fff;
+      padding-top: 4.2rem;
+    }
+    h1 {
+      padding: 0 clamp(1.1rem, 3vw, 2.4rem);
+      font-family: var(--display);
+      font-size: clamp(3.2rem, 7vw, 5.6rem);
+      font-weight: 800;
+      letter-spacing: -0.048em;
+      line-height: 0.8;
+      text-transform: uppercase;
+    }
+    .viewport {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .shelf {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: clamp(1.1rem, 2vw, 1.8rem);
+      will-change: transform;
+    }
+    .book {
+      flex: 0 0 auto;
+      width: clamp(210px, 24vw, 320px);
+      transform-origin: center bottom;
+    }
+    .cover {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      overflow: hidden;
+      background: #eee;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+    }
+    .cover img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .caption {
+      flex: 0 0 auto;
+      padding: 0.4rem clamp(1.1rem, 3vw, 2.4rem) max(1.5rem, env(safe-area-inset-bottom));
+    }
+    .caption h2 {
+      max-width: 18ch;
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      line-height: 0.84;
+      text-transform: uppercase;
+    }
+    .caption p {
+      margin-top: 0.45rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .runway.is-static { height: auto !important; }
+    .runway.is-static .stage {
+      position: relative;
+      height: auto;
+      overflow: visible;
+    }
+    .runway.is-static .viewport { height: auto; overflow: visible; }
+    .runway.is-static .shelf {
+      position: relative;
+      height: auto;
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1.6rem 1.1rem;
+      padding: 0 0 4rem;
+      transform: none !important;
+    }
+    .runway.is-static .book { width: auto; }
+    .runway.is-static .book h3 {
+      margin-top: 0.55rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    @media (max-width: 700px) {
+      h1 { font-size: clamp(2.8rem, 14vw, 4rem); }
+      .book { width: 190px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cover, .book { transition: none; }
+    }
   </style>
 </head>
 <body>
   <a class="back" href="/">← Podcast</a>
   <main>
-    <section class="hero">
-      <h1>Library</h1>
-    </section>
-    <section aria-label="Books">
-      <div class="shelf-head">
-        <p>Scroll to browse</p>
-        <span class="counter" id="counter" aria-live="polite"></span>
+    <section class="runway" id="runway" aria-label="Books">
+      <div class="stage">
+        <h1>Books I've read</h1>
+        <div class="viewport" id="viewport">
+          <div class="shelf" id="shelf"></div>
+        </div>
+        <div class="caption">
+          <h2 id="bookTitle"></h2>
+          <p id="bookAuthor"></p>
+        </div>
       </div>
-      <div class="viewport" id="viewport">
-        <div class="shelf" id="shelf"></div>
-      </div>
     </section>
-    <div class="end-space" aria-hidden="true"></div>
   </main>
   <script src="/books.js"></script>
   <script>
-  (function(){
-    var books=window.BOOKS||[];
-    var shelf=document.getElementById('shelf');
-    var viewport=document.getElementById('viewport');
-    var counter=document.getElementById('counter');
-    books.forEach(function(book){
-      var article=document.createElement('article');
-      article.className='book';
-      var cover=document.createElement('div');
-      cover.className='cover';
-      var image=document.createElement('img');
-      image.loading='lazy';
-      image.alt=book.title+' cover';
-      image.src='/assets/books/'+book.id+'.jpg';
-      image.onerror=function(){image.onerror=null;image.src='/assets/books/'+book.id+'.svg';};
-      var title=document.createElement('h2');
-      title.textContent=book.title;
-      var author=document.createElement('p');
-      author.textContent=book.author;
+  (function () {
+    var books = window.BOOKS || [];
+    var shelf = document.getElementById('shelf');
+    var runway = document.getElementById('runway');
+    var title = document.getElementById('bookTitle');
+    var author = document.getElementById('bookAuthor');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var current = -1;
+
+    books.forEach(function (book, index) {
+      var article = document.createElement('article');
+      article.className = 'book';
+      var cover = document.createElement('div');
+      cover.className = 'cover';
+      var image = document.createElement('img');
+      image.alt = book.title;
+      image.src = '/assets/books/' + book.id + '.jpg';
+      if (index > 5) image.loading = 'lazy';
+      image.onerror = function () {
+        image.onerror = null;
+        image.src = '/assets/books/' + book.id + '.svg';
+      };
       cover.appendChild(image);
       article.appendChild(cover);
-      article.appendChild(title);
-      article.appendChild(author);
+      if (reduce) {
+        var label = document.createElement('h3');
+        label.textContent = book.title;
+        article.appendChild(label);
+      }
       shelf.appendChild(article);
     });
-    function updateCounter(){
-      var max=viewport.scrollWidth-viewport.clientWidth;
-      var current=max>0?Math.round((viewport.scrollLeft/max)*Math.max(books.length-1,0))+1:(books.length?1:0);
-      counter.textContent=current+' / '+books.length;
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
     }
-    viewport.addEventListener('scroll',updateCounter,{passive:true});
-    viewport.addEventListener('wheel',function(event){
-      var delta=Math.abs(event.deltaY)>Math.abs(event.deltaX)?event.deltaY:event.deltaX;
-      if(!delta)return;
-      event.preventDefault();
-      viewport.scrollLeft+=delta;
-    },{passive:false});
-    var dragging=false,startX=0,startScroll=0;
-    viewport.addEventListener('pointerdown',function(event){
-      if(event.pointerType==='touch')return;
-      dragging=true;startX=event.clientX;startScroll=viewport.scrollLeft;viewport.classList.add('dragging');
-    });
-    viewport.addEventListener('pointermove',function(event){if(dragging)viewport.scrollLeft=startScroll-(event.clientX-startX);});
-    function stop(){dragging=false;viewport.classList.remove('dragging');}
-    window.addEventListener('pointerup',stop);
-    window.addEventListener('pointercancel',stop);
-    window.addEventListener('resize',updateCounter);
-    updateCounter();
+
+    function stride() {
+      var book = shelf.children[0];
+      if (!book) return 1;
+      var gap = parseFloat(getComputedStyle(shelf).columnGap || getComputedStyle(shelf).gap) || 0;
+      return book.getBoundingClientRect().width + gap;
+    }
+
+    function measure() {
+      if (reduce || books.length < 2) {
+        runway.classList.add('is-static');
+        runway.style.height = 'auto';
+        return;
+      }
+      runway.classList.remove('is-static');
+      var stage = runway.querySelector('.stage');
+      var steps = books.length - 1;
+      runway.style.height = (stage.offsetHeight + steps * Math.max(window.innerHeight * 0.34, 240)) + 'px';
+    }
+
+    function render() {
+      if (reduce || !books.length || runway.classList.contains('is-static')) {
+        if (books[0]) {
+          title.textContent = books[0].title;
+          author.textContent = books[0].author;
+        }
+        return;
+      }
+      var stage = runway.querySelector('.stage');
+      var stick = runway.offsetTop;
+      var travel = Math.max(1, runway.offsetHeight - stage.offsetHeight);
+      var progress = clamp((window.scrollY - stick) / travel, 0, 1);
+      var t = progress * (books.length - 1);
+      var index = clamp(Math.round(t), 0, books.length - 1);
+      var step = stride();
+      var center = runway.querySelector('.viewport').clientWidth / 2 - step / 2;
+      shelf.style.transform = 'translate3d(' + (center - t * step) + 'px,0,0)';
+
+      Array.prototype.forEach.call(shelf.children, function (book, i) {
+        var distance = Math.abs(i - t);
+        var near = Math.max(0, 1 - distance / 1.35);
+        var scale = 0.78 + near * 0.3;
+        var lift = near * 22;
+        book.style.transform = 'translateY(' + (-lift) + 'px) scale(' + scale + ')';
+        book.style.zIndex = String(Math.round(near * 10));
+      });
+
+      if (index !== current) {
+        current = index;
+        title.textContent = books[index].title;
+        author.textContent = books[index].author;
+      }
+    }
+
+    measure();
+    render();
+    window.addEventListener('scroll', function () { requestAnimationFrame(render); }, { passive: true });
+    window.addEventListener('resize', function () { measure(); render(); });
   })();
   </script>
   <script src="/assets/track.js" data-site="konstantinsaifoulline-library" defer></script>

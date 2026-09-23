@@ -17,6 +17,7 @@
   <meta name="twitter:image" content="https://konstantinsaifoulline.com/assets/og-podcast.png">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="stylesheet" href="/assets/map.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
@@ -109,18 +110,19 @@
       text-transform: uppercase;
     }
     .hero {
-      height: calc(100svh - 100px);
-      min-height: 620px;
-      max-height: 880px;
+      position: fixed;
+      top: 62px;
+      left: 0;
+      right: 0;
+      height: calc(100svh - 62px);
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: clamp(4rem, 10vh, 7rem) 1rem 0;
-      position: sticky;
-      top: 62px;
-      z-index: 1;
-      overflow: hidden;
-      background: var(--white);
+      z-index: 4;
+      overflow: visible;
+      background: transparent;
+      pointer-events: none;
     }
     .hero-title {
       position: relative;
@@ -146,77 +148,39 @@
       max-width: none;
       object-fit: cover;
       object-position: center 10%;
-      filter: grayscale(1) contrast(1.08) blur(var(--portrait-blur, 10px));
+      filter: grayscale(1) contrast(1.08);
       transform: translateX(-50%);
-      will-change: filter;
+      will-change: opacity, transform;
     }
-    .episodes {
-      padding: 0 0 clamp(5rem, 9vw, 9rem);
-      background: var(--white);
-      position: relative;
-      z-index: 5;
-      scroll-margin-top: 78px;
-    }
-    .episodes-inner {
-      width: var(--page);
-      margin: 0 auto;
-      padding-top: clamp(5rem, 10vw, 9rem);
-      background: var(--white);
-      filter: blur(var(--episodes-blur, 12px));
-      will-change: filter;
-    }
-    .episodes-heading {
+    .platform-icons {
+      position: fixed;
+      z-index: 8;
+      right: 1.15rem;
+      top: 50%;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+      flex-direction: column;
+      gap: 0.85rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(calc(-50% + 22px));
     }
-    .episodes-heading h2 {
-      font-family: var(--display);
-      font-size: clamp(4.5rem, 10vw, 10rem);
-      font-weight: 800;
-      letter-spacing: -0.045em;
-      line-height: 0.72;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .episode-grid {
+    .platform-icons a {
+      width: 28px;
+      height: 28px;
       display: grid;
-      grid-template-columns: 1fr;
-      gap: clamp(3.5rem, 7vw, 7rem);
+      place-items: center;
+      color: #111;
     }
-    .episode {
-      display: block;
-      width: min(100%, 860px);
-      margin-inline: auto;
+    .platform-icons svg { width: 22px; height: 22px; display: block; fill: currentColor; }
+    .platform-icons a:hover { color: var(--brand); }
+    .platform-icons a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+    @media (max-width: 700px) {
+      .platform-icons { right: 0.7rem; gap: 0.7rem; }
+      .platform-icons svg { width: 20px; height: 20px; }
     }
-    .episode-image {
-      aspect-ratio: 16 / 10;
-      overflow: hidden;
-      background: #dadad7;
-      border-radius: clamp(0.75rem, 1.4vw, 1.25rem);
-    }
-    .episode-image img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-    }
-    .episode h3 {
-      margin-top: 1.1rem;
-      font-family: var(--display);
-      font-size: clamp(2rem, 3.5vw, 4rem);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 0.88;
-      text-transform: uppercase;
-    }
-    .empty { color: var(--gray); font-size: 0.8rem; }
 
     .footer {
-      min-height: 270px;
-      padding: clamp(3rem, 6vw, 5rem) 0 2rem;
+      padding: 1.35rem 0 1.15rem;
       background: var(--black);
       color: var(--white);
       position: relative;
@@ -224,21 +188,19 @@
     }
     .footer-inner {
       width: var(--page);
-      min-height: inherit;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
+      gap: 1.1rem;
     }
     .footer-top { display: flex; align-items: flex-start; justify-content: flex-end; gap: 2rem; }
-    .platforms { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.7rem 1.4rem; max-width: 470px; }
+    .platforms { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.55rem 1.2rem; max-width: 470px; }
     .platforms a { font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; }
     .platforms a:hover { text-decoration: underline; text-underline-offset: 4px; }
     .footer-bottom {
       display: flex;
       justify-content: space-between;
       gap: 1rem;
-      margin-top: auto;
-      padding-top: 3rem;
       color: #999;
       font-size: 0.6rem;
       letter-spacing: 0.05em;
@@ -248,7 +210,7 @@
     a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 
     @media (max-width: 800px) {
-      .hero { min-height: 650px; max-height: 760px; padding-top: 4rem; }
+      .hero { padding-top: 4rem; }
       .hero-title { font-size: clamp(5rem, 20vw, 9rem); }
       .hero-portrait { width: min(76vw, 600px); height: 74%; object-position: center 8%; }
       .platforms { justify-content: flex-start; }
@@ -261,12 +223,9 @@
       .header { min-height: 58px; }
       .nav { gap: 1rem; }
       .nav a { display: none; }
-      .hero { height: calc(100svh - 96px); min-height: 600px; padding-top: 3.8rem; top: 58px; }
+      .hero { top: 58px; height: calc(100svh - 58px); padding-top: 3.8rem; }
       .hero-title { width: 100%; font-size: clamp(4.5rem, 21vw, 7rem); white-space: normal; }
       .hero-portrait { width: min(100vw, 460px); height: 66%; object-position: center 8%; }
-      .episodes-heading h2 { font-size: clamp(3rem, 13vw, 4.5rem); }
-      .episode-grid { grid-template-columns: 1fr; gap: 2.8rem; }
-      .episode h3 { font-size: clamp(2.6rem, 15vw, 4.2rem); }
       .footer-bottom { flex-direction: column; }
     }
 
@@ -279,9 +238,9 @@
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <a class="announcement" id="announcementLink" href="https://www.youtube.com/watch?v=XXf6eMv4rvw" target="_blank" rel="noopener noreferrer">
+  <a class="announcement" id="announcementLink" href="https://www.youtube.com/watch?v=yCQUzzXxVoM" target="_blank" rel="noopener noreferrer">
     <span>Latest episode:</span>
-    <span class="announcement-title" id="announcementTitle">Scott Walter</span>
+    <span class="announcement-title" id="announcementTitle">Alvy Ray Smith</span>
     <span aria-hidden="true">↗</span>
   </a>
 
@@ -300,192 +259,65 @@
       <img class="hero-portrait" src="/assets/konstantin-portrait.png" alt="Konstantin Saifoulline" fetchpriority="high">
     </section>
 
-    <section class="episodes" id="episodes" aria-labelledby="episodesTitle">
-      <div class="episodes-inner">
-        <div class="episodes-heading">
-          <h2 id="episodesTitle">Latest Episodes</h2>
+    <section class="map-runway" id="episodes" aria-labelledby="episodesTitle">
+      <h2 class="sr-only" id="episodesTitle">Latest episodes</h2>
+      <div class="map-stage" id="mapStage">
+        <div class="map-viewport" id="mapViewport">
+          <div class="map-world" id="mapWorld"></div>
         </div>
-        <div class="episode-grid" id="episodeGrid">
-          <a class="episode" href="https://www.youtube.com/watch?v=XXf6eMv4rvw" target="_blank" rel="noopener noreferrer">
-            <div class="episode-image"><img src="https://i.ytimg.com/vi/XXf6eMv4rvw/maxresdefault.jpg" alt="Scott Walter episode" loading="lazy"></div>
-            <h3>Scott Walter</h3>
-          </a>
-          <a class="episode" href="https://www.youtube.com/watch?v=-TmKc2T6ia8" target="_blank" rel="noopener noreferrer">
-            <div class="episode-image"><img src="https://i.ytimg.com/vi/-TmKc2T6ia8/maxresdefault.jpg" alt="Ronald Wayne episode" loading="lazy"></div>
-            <h3>Ronald Wayne</h3>
-          </a>
-          <a class="episode" href="https://www.youtube.com/watch?v=6V_ACIA47-k" target="_blank" rel="noopener noreferrer">
-            <div class="episode-image"><img src="https://i.ytimg.com/vi/6V_ACIA47-k/maxresdefault.jpg" alt="Casey Handmer episode" loading="lazy"></div>
-            <h3>Casey Handmer</h3>
-          </a>
-          <a class="episode" href="https://www.youtube.com/watch?v=bnI0JL5Pfw0" target="_blank" rel="noopener noreferrer">
-            <div class="episode-image"><img src="https://i.ytimg.com/vi/bnI0JL5Pfw0/maxresdefault.jpg" alt="Robert Scoble episode" loading="lazy"></div>
-            <h3>Robert Scoble</h3>
-          </a>
-          <a class="episode" href="https://www.youtube.com/watch?v=MO8nQZfo2TM" target="_blank" rel="noopener noreferrer">
-            <div class="episode-image"><img src="https://i.ytimg.com/vi/MO8nQZfo2TM/maxresdefault.jpg" alt="Gordon Bruce episode" loading="lazy"></div>
-            <h3>Gordon Bruce</h3>
-          </a>
-          <a class="episode" href="https://www.youtube.com/watch?v=GvvK0E_yO6Y" target="_blank" rel="noopener noreferrer">
-            <div class="episode-image"><img src="https://i.ytimg.com/vi/GvvK0E_yO6Y/maxresdefault.jpg" alt="Scott Walter episode" loading="lazy"></div>
-            <h3>Scott Walter</h3>
-          </a>
-          <a class="episode" href="https://www.youtube.com/watch?v=QDgwstGHhZo" target="_blank" rel="noopener noreferrer">
-            <div class="episode-image"><img src="https://i.ytimg.com/vi/QDgwstGHhZo/maxresdefault.jpg" alt="Hans Koenigsmann episode" loading="lazy"></div>
-            <h3>Hans Koenigsmann</h3>
-          </a>
-          <a class="episode" href="https://www.youtube.com/watch?v=D45UtYEQxS0" target="_blank" rel="noopener noreferrer">
-            <div class="episode-image"><img src="https://i.ytimg.com/vi/D45UtYEQxS0/maxresdefault.jpg" alt="Jonathan McDowell episode" loading="lazy"></div>
-            <h3>Jonathan McDowell</h3>
-          </a>
-          <a class="episode" href="https://www.youtube.com/watch?v=JU3owSfVe5E" target="_blank" rel="noopener noreferrer">
-            <div class="episode-image"><img src="https://i.ytimg.com/vi/JU3owSfVe5E/maxresdefault.jpg" alt="Robert Gutierrez episode" loading="lazy"></div>
-            <h3>Robert Gutierrez</h3>
-          </a>
-          <a class="episode" href="https://www.youtube.com/watch?v=CFpKRfGyZWQ" target="_blank" rel="noopener noreferrer">
-            <div class="episode-image"><img src="https://i.ytimg.com/vi/CFpKRfGyZWQ/maxresdefault.jpg" alt="Aaron Ong episode" loading="lazy"></div>
-            <h3>Aaron Ong</h3>
-          </a>
+        <p class="episode-note" id="episodeNote"></p>
+        <div class="map-focus" id="mapFocus">
+          <p class="map-guest" id="mapGuest"></p>
         </div>
-        <p class="empty" id="episodeEmpty" hidden>More episodes are coming soon.</p>
+        <div class="sr-only" aria-live="polite" id="mapLive"></div>
       </div>
     </section>
   </main>
 
+  <nav class="platform-icons" id="platformIcons" aria-label="Podcast platforms"></nav>
+
   <footer class="footer" id="listen">
     <div class="footer-inner">
-      <div class="footer-top">
-        <nav class="platforms" id="platforms" aria-label="Podcast platforms"></nav>
-      </div>
       <div class="footer-bottom">
         <span>© <span id="year">2026</span> Konstantin Saifoulline</span>
       </div>
     </div>
   </footer>
 
+  <script src="/assets/map.js"></script>
   <script>
   (function () {
-    var AIRSUP = 'https://fyxqdwhqposxitexydby.supabase.co';
-    var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmeXhxZHdocXBvc3hpdGV4eWRieSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzc2MTc5OTA4LCJleHAiOjIwOTE3NTU5MDh9.cvpnWJvVsQx_qEk4hNDAtJZ_M8qNv4RNnhRJBRgulg8';
     var $ = function (id) { return document.getElementById(id); };
+    var ICONS = {
+      'YouTube': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>',
+      'Apple Podcasts': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.34 0A5.328 5.328 0 000 5.34v13.32A5.328 5.328 0 005.34 24h13.32A5.328 5.328 0 0024 18.66V5.34A5.328 5.328 0 0018.66 0zm6.525 2.568c2.336 0 4.448.902 6.056 2.587 1.224 1.272 1.912 2.619 2.264 4.392.12.59.12 2.2.007 2.864a8.506 8.506 0 01-3.24 5.296c-.608.46-2.096 1.261-2.336 1.261-.088 0-.096-.091-.056-.46.072-.592.144-.715.48-.856.536-.224 1.448-.874 2.008-1.435a7.644 7.644 0 002.008-3.536c.208-.824.184-2.656-.048-3.504-.728-2.696-2.928-4.792-5.624-5.352-.784-.16-2.208-.16-3 0-2.728.56-4.984 2.76-5.672 5.528-.184.752-.184 2.584 0 3.336.456 1.832 1.64 3.512 3.192 4.512.304.2.672.408.824.472.336.144.408.264.472.856.04.36.03.464-.056.464-.056 0-.464-.176-.896-.384l-.04-.03c-2.472-1.216-4.056-3.274-4.632-6.012-.144-.706-.168-2.392-.03-3.04.36-1.74 1.048-3.1 2.192-4.304 1.648-1.737 3.768-2.656 6.128-2.656zm.134 2.81c.409.004.803.04 1.106.106 2.784.62 4.76 3.408 4.376 6.174-.152 1.114-.536 2.03-1.216 2.88-.336.43-1.152 1.15-1.296 1.15-.023 0-.048-.272-.048-.603v-.605l.416-.496c1.568-1.878 1.456-4.502-.256-6.224-.664-.67-1.432-1.064-2.424-1.246-.64-.118-.776-.118-1.448-.008-1.02.167-1.81.562-2.512 1.256-1.72 1.704-1.832 4.342-.264 6.222l.413.496v.608c0 .336-.027.608-.06.608-.03 0-.264-.16-.512-.36l-.034-.011c-.832-.664-1.568-1.842-1.872-2.997-.184-.698-.184-2.024.008-2.72.504-1.878 1.888-3.335 3.808-4.019.41-.145 1.133-.22 1.814-.211zm-.13 2.99c.31 0 .62.06.844.178.488.253.888.745 1.04 1.259.464 1.578-1.208 2.96-2.72 2.254h-.015c-.712-.331-1.096-.956-1.104-1.77 0-.733.408-1.371 1.112-1.745.224-.117.534-.176.844-.176zm-.011 4.728c.988-.004 1.706.349 1.97.97.198.464.124 1.932-.218 4.302-.232 1.656-.36 2.074-.68 2.356-.44.39-1.064.498-1.656.288h-.003c-.716-.257-.87-.605-1.164-2.644-.341-2.37-.416-3.838-.218-4.302.262-.616.974-.966 1.97-.97z"/></svg>',
+      'Spotify': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>',
+      'Amazon Music': '<svg viewBox="-0.6 12 18.4 6.8" aria-hidden="true"><path d="M15.84 15.95c-2.07 1.53-5.07 2.34-7.65 2.34-3.62 0-6.88-1.34-9.35-3.56-.19-.18-.02-.42.21-.28 2.66 1.55 5.95 2.48 9.34 2.48 2.29 0 4.81-.48 7.13-1.46.35-.15.64.23.32.48zm1.02-1.15c-.26-.33-1.73-.16-2.39-.08-.2.02-.23-.15-.05-.28 1.17-.82 3.1-.59 3.32-.31.23.27-.06 2.16-1.16 3.06-.17.14-.33.06-.26-.12.25-.62.81-1.61.54-2.27z"/></svg>',
+      'Deezer': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M.693 10.024c.381 0 .693-1.256.693-2.807 0-1.55-.312-2.807-.693-2.807C.312 4.41 0 5.666 0 7.217s.312 2.808.693 2.808ZM21.038 1.56c-.364 0-.684.805-.91 2.096C19.765 1.446 19.184 0 18.526 0c-.78 0-1.464 2.036-1.784 5-.312-2.158-.788-3.536-1.325-3.536-.745 0-1.386 2.704-1.62 6.472-.442-1.932-1.083-3.145-1.793-3.145s-1.35 1.213-1.793 3.145c-.242-3.76-.874-6.463-1.628-6.463-.537 0-1.013 1.378-1.325 3.535C6.938 2.036 6.262 0 5.474 0c-.658 0-1.247 1.447-1.602 3.665-.217-1.291-.546-2.105-.91-2.105-.675 0-1.221 2.807-1.221 6.272 0 3.466.546 6.273 1.221 6.273.277 0 .537-.476.736-1.273.32 2.928.996 4.938 1.776 4.938.606 0 1.143-1.204 1.507-3.11.251 3.622.875 6.195 1.602 6.195.46 0 .875-1.023 1.187-2.677C10.142 21.6 11 24 12.004 24c1.005 0 1.863-2.4 2.235-5.822.312 1.654.727 2.677 1.186 2.677.728 0 1.352-2.573 1.603-6.195.364 1.906.9 3.11 1.507 3.11.78 0 1.455-2.01 1.775-4.938.208.797.46 1.273.737 1.273.675 0 1.22-2.807 1.22-6.273-.008-3.457-.553-6.272-1.23-6.272ZM23.307 10.024c.381 0 .693-1.256.693-2.807 0-1.55-.312-2.807-.693-2.807-.381 0-.693 1.256-.693 2.807s.312 2.808.693 2.808Z"/></svg>',
+      'Instagram': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>',
+      'X': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg>',
+    };
     var LINKS = [
-      { name: 'YouTube', url: 'https://www.youtube.com/@konstantinsaifo' },
-      { name: 'Apple Podcasts', url: 'https://podcasts.apple.com/us/podcast/konstantin-saifoulline/id6796254399' },
-      { name: 'Spotify', url: 'https://open.spotify.com/show/033YmXaDmzU8LCJzfdbqoM' },
-      { name: 'Amazon Music', url: 'https://music.amazon.com/podcasts/459a5d7a-aa67-42cd-acd4-fb8f8de0f193/konstantin-saifoulline' },
-      { name: 'Deezer', url: 'https://www.deezer.com/us/show/1003446822' },
-      { name: 'Instagram', url: 'https://www.instagram.com/konstantinsaifo/' },
-      { name: 'X', url: 'https://x.com/konstantinsaifo' }
+      { name: 'YouTube', color: '#FF0000', url: 'https://www.youtube.com/@konstantinsaifo' },
+      { name: 'Apple Podcasts', color: '#9933CC', url: 'https://podcasts.apple.com/us/podcast/konstantin-saifoulline/id6796254399' },
+      { name: 'Spotify', color: '#1ED760', url: 'https://open.spotify.com/show/033YmXaDmzU8LCJzfdbqoM' },
+      { name: 'Amazon Music', color: '#FF9900', url: 'https://music.amazon.com/podcasts/459a5d7a-aa67-42cd-acd4-fb8f8de0f193/konstantin-saifoulline' },
+      { name: 'Deezer', color: '#A238FF', url: 'https://www.deezer.com/us/show/1003446822' },
+      { name: 'Instagram', color: '#E4405F', url: 'https://www.instagram.com/konstantinsaifo/' },
+      { name: 'X', color: '#000000', url: 'https://x.com/konstantinsaifo' }
     ];
-    var FALLBACK = [
-      { title: 'Figure vs 1X vs Tesla Optimus — Who Actually Wins? | Scott Walter', published: '2026-09-17T00:00:00+00:00', url: 'https://www.youtube.com/watch?v=XXf6eMv4rvw', youtube_url: 'https://www.youtube.com/watch?v=XXf6eMv4rvw', thumbnail: 'https://i.ytimg.com/vi/XXf6eMv4rvw/maxresdefault.jpg', thumbnail_hq: 'https://i.ytimg.com/vi/XXf6eMv4rvw/hqdefault.jpg' },
-      { title: 'He Co-Founded Apple with Steve Jobs — Then Weeks Later He Left | Ronald Wayne', published: '2026-09-13T15:00:04+00:00', url: 'https://www.youtube.com/watch?v=-TmKc2T6ia8', youtube_url: 'https://www.youtube.com/watch?v=-TmKc2T6ia8', thumbnail: 'https://i.ytimg.com/vi/-TmKc2T6ia8/maxresdefault.jpg', thumbnail_hq: 'https://i.ytimg.com/vi/-TmKc2T6ia8/hqdefault.jpg' },
-      { title: 'How to Build a Mars City That Doesn’t Need Earth | Casey Handmer', published: '2026-09-09T16:08:03+00:00', url: 'https://www.youtube.com/watch?v=6V_ACIA47-k', youtube_url: 'https://www.youtube.com/watch?v=6V_ACIA47-k', thumbnail: 'https://i.ytimg.com/vi/6V_ACIA47-k/maxresdefault.jpg', thumbnail_hq: 'https://i.ytimg.com/vi/6V_ACIA47-k/hqdefault.jpg' },
-      { title: 'The Next Decade of AI, Robots & SpaceX | Robert Scoble', published: '2026-09-03T22:12:17+00:00', url: 'https://www.youtube.com/watch?v=bnI0JL5Pfw0', youtube_url: 'https://www.youtube.com/watch?v=bnI0JL5Pfw0', thumbnail: 'https://i.ytimg.com/vi/bnI0JL5Pfw0/maxresdefault.jpg', thumbnail_hq: 'https://i.ytimg.com/vi/bnI0JL5Pfw0/hqdefault.jpg' },
-      { title: 'How Samsung Became a Design Powerhouse | Gordon Bruce', published: '2026-08-30T16:22:38+00:00', url: 'https://www.youtube.com/watch?v=MO8nQZfo2TM', youtube_url: 'https://www.youtube.com/watch?v=MO8nQZfo2TM', thumbnail: 'https://i.ytimg.com/vi/MO8nQZfo2TM/maxresdefault.jpg', thumbnail_hq: 'https://i.ytimg.com/vi/MO8nQZfo2TM/hqdefault.jpg' },
-      { title: 'We Built the Best Humanoid Robot Possible in 2026 | Scott Walter', published: '2026-08-30T15:03:27+00:00', url: 'https://www.youtube.com/watch?v=GvvK0E_yO6Y', youtube_url: 'https://www.youtube.com/watch?v=GvvK0E_yO6Y', thumbnail: 'https://i.ytimg.com/vi/GvvK0E_yO6Y/maxresdefault.jpg', thumbnail_hq: 'https://i.ytimg.com/vi/GvvK0E_yO6Y/hqdefault.jpg' },
-      { title: 'SpaceX’s 4th Engineer: Will Starship actually get us to Mars? | Hans Koenigsmann', published: '2026-08-21T17:00:00+00:00', url: 'https://www.youtube.com/watch?v=QDgwstGHhZo', youtube_url: 'https://www.youtube.com/watch?v=QDgwstGHhZo', thumbnail: 'https://i.ytimg.com/vi/QDgwstGHhZo/maxresdefault.jpg', thumbnail_hq: 'https://i.ytimg.com/vi/QDgwstGHhZo/hqdefault.jpg' },
-      { title: 'Will 100,000 Satellites Make Space Unusable? | Jonathan McDowell', published: '2026-08-14T00:00:00+00:00', url: 'https://www.youtube.com/watch?v=D45UtYEQxS0', thumbnail: 'https://i.ytimg.com/vi/D45UtYEQxS0/maxresdefault.jpg', thumbnail_hq: 'https://i.ytimg.com/vi/D45UtYEQxS0/hqdefault.jpg' },
-      { title: 'How He Turned 100k Followers Into a Company | Robert Gutierrez', published: '2026-08-07T00:00:00+00:00', url: 'https://www.youtube.com/watch?v=JU3owSfVe5E', thumbnail: 'https://i.ytimg.com/vi/JU3owSfVe5E/maxresdefault.jpg', thumbnail_hq: 'https://i.ytimg.com/vi/JU3owSfVe5E/hqdefault.jpg' },
-      { title: 'Why Some People Progress Faster Than Everyone Else | Aaron Ong', published: '2026-07-31T00:00:00+00:00', url: 'https://www.youtube.com/watch?v=CFpKRfGyZWQ', thumbnail: 'https://i.ytimg.com/vi/CFpKRfGyZWQ/maxresdefault.jpg', thumbnail_hq: 'https://i.ytimg.com/vi/CFpKRfGyZWQ/hqdefault.jpg' }
-    ];
-
-    function escapeHtml(value) {
-      return String(value == null ? '' : value).replace(/[&<>"]/g, function (character) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[character];
-      });
-    }
-
-    function guestName(title) {
-      var parts = String(title || '').split('|');
-      return parts.length > 1 ? parts[parts.length - 1].trim() : title;
-    }
-
-    function episodeVideoUrl(episode) {
-      return episode.youtube_url || episode.video_url || episode.url;
-    }
-
-    function render(episodes) {
-      if (!episodes || !episodes.length) episodes = FALLBACK;
-
-      $('announcementLink').href = episodeVideoUrl(episodes[0]);
-      $('announcementTitle').textContent = guestName(episodes[0].title);
-      $('episodeGrid').innerHTML = episodes.map(function (episode) {
-        return '<a class="episode" href="' + escapeHtml(episodeVideoUrl(episode)) + '" target="_blank" rel="noopener noreferrer" aria-label="Watch ' + escapeHtml(episode.title) + '">' +
-          '<div class="episode-image"><img loading="lazy" src="' + episode.thumbnail + '" data-hq="' + (episode.thumbnail_hq || '') + '" alt="' + escapeHtml(guestName(episode.title)) + ' episode"></div>' +
-          '<h3>' + escapeHtml(guestName(episode.title)) + '</h3>' +
-        '</a>';
-      }).join('');
-      $('episodeEmpty').hidden = episodes.length > 0;
-
-      $('episodeGrid').querySelectorAll('img[data-hq]').forEach(function (image) {
-        image.onerror = function () {
-          image.onerror = null;
-          var fallback = image.getAttribute('data-hq');
-          if (fallback) image.src = fallback;
-        };
-      });
-    }
-
-    function loadFeed() {
-      fetch(AIRSUP + '/functions/v1/podcast-feed', { headers: { apikey: ANON }, cache: 'no-store' })
-        .then(function (response) {
-          if (!response.ok) throw new Error('Feed request failed');
-          return response.json();
-        })
-        .then(function (data) { render(data && data.episodes && data.episodes.length ? data.episodes : FALLBACK); })
-        .catch(function () { render(FALLBACK); });
-    }
-
-    function initScrollSequence() {
-      var portrait = document.querySelector('.hero-portrait');
-      var episodes = document.querySelector('.episodes');
-      var episodesInner = document.querySelector('.episodes-inner');
-      if (!portrait || !episodes || !episodesInner) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        portrait.style.setProperty('--portrait-blur', '0px');
-        episodesInner.style.setProperty('--episodes-blur', '0px');
-        return;
-      }
-
-      function clamp(value, min, max) {
-        return Math.min(Math.max(value, min), max);
-      }
-
-      var ticking = false;
-      function update() {
-        var viewport = window.innerHeight;
-        var episodesTop = episodes.getBoundingClientRect().top;
-        var introReveal = clamp(window.scrollY / 140, 0, 1);
-        var episodesReveal = clamp((viewport * 0.92 - episodesTop) / (viewport * 0.48), 0, 1);
-        var portraitExit = clamp((viewport * 0.72 - episodesTop) / (viewport * 0.42), 0, 1);
-        var portraitBlur = Math.min(10, (10 * (1 - introReveal)) + (10 * portraitExit));
-
-        portrait.style.setProperty('--portrait-blur', portraitBlur.toFixed(2) + 'px');
-        episodesInner.style.setProperty('--episodes-blur', (12 * (1 - episodesReveal)).toFixed(2) + 'px');
-        ticking = false;
-      }
-
-      function requestUpdate() {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(update);
-        }
-      }
-
-      window.addEventListener('scroll', requestUpdate, { passive: true });
-      window.addEventListener('resize', requestUpdate);
-      update();
-    }
-
-    $('platforms').innerHTML = LINKS.map(function (link) {
-      return '<a href="' + link.url + '" target="_blank" rel="noopener noreferrer">' + link.name + ' ↗</a>';
+    var icons = $('platformIcons');
+    icons.innerHTML = LINKS.map(function (link) {
+      return '<a href="' + link.url + '" target="_blank" rel="noopener noreferrer" aria-label="' + link.name + '" style="--brand:' + link.color + '">' + ICONS[link.name] + '</a>';
     }).join('');
-    initScrollSequence();
-    render(FALLBACK);
-    loadFeed();
-    setInterval(loadFeed, 15 * 60 * 1000);
-    document.addEventListener('visibilitychange', function () { if (!document.hidden) loadFeed(); });
+    function placeIcons() {
+      var shown = Math.min(1, Math.max(0, (window.scrollY - 36) / 160));
+      icons.style.opacity = String(shown);
+      icons.style.transform = 'translateY(calc(-50% + ' + (22 * (1 - shown)) + 'px))';
+      icons.style.pointerEvents = shown > 0.45 ? 'auto' : 'none';
+    }
+    window.addEventListener('scroll', placeIcons, { passive: true });
+    placeIcons();
     $('year').textContent = new Date().getFullYear();
   })();
   </script>
