@@ -257,8 +257,17 @@
   border: 0;
 }
 
-@media (max-width: 700px) {
-  .episode-note { font-size: 0.98rem; }
+@media (max-width: 760px) {
+  .pin.is-here .pin-card {
+    transform: none;
+  }
+  .episode-note {
+    padding: 0;
+    color: #111;
+    background: transparent;
+    font-size: 0.98rem;
+    line-height: 1.4;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

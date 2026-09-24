@@ -299,8 +299,9 @@
     stage.style.top = headerH + 'px';
     var stageH = Math.max(420, window.innerHeight - headerH);
     stage.style.height = stageH + 'px';
-    var scale = stage.clientWidth < 760
-      ? stage.clientWidth / 520
+    layout.compact = stage.clientWidth < 760;
+    var scale = layout.compact
+      ? Math.min((stage.clientWidth - 64) / 620, Math.max(160, stageH - 168) / 400)
       : Math.min(1.45, stage.clientWidth / 1320);
     var viewW = stage.clientWidth / scale;
     var viewH = stageH / scale;
@@ -383,11 +384,14 @@
     var maxX = Math.max(0, WORLD_W - layout.viewW);
     var maxY = Math.max(0, layout.worldH - layout.viewH);
     var centerShift = Math.max(0, (stage.clientWidth - WORLD_W * layout.scale) / 2);
-    var noteWidth = Math.min(240, Math.max(160, stage.clientWidth * 0.16));
-    var noteLeft = Math.max(16, stage.clientWidth - 72 - noteWidth);
-    var pinHalf = 310 * layout.scale * 1.06;
-    var desiredCenter = noteLeft - 36 - pinHalf;
-    desiredCenter = clamp(desiredCenter, Math.min(stage.clientWidth * 0.34, pinHalf), stage.clientWidth * 0.56);
+    var compact = layout.compact;
+    var noteWidth = compact
+      ? Math.max(0, stage.clientWidth - 44)
+      : Math.min(240, Math.max(160, stage.clientWidth * 0.16));
+    var noteLeft = compact ? 22 : Math.max(16, stage.clientWidth - 72 - noteWidth);
+    var pinHalf = 310 * layout.scale * (compact ? 1 : 1.06);
+    var desiredCenter = compact ? stage.clientWidth / 2 : noteLeft - 36 - pinHalf;
+    if (!compact) desiredCenter = clamp(desiredCenter, Math.min(stage.clientWidth * 0.34, pinHalf), stage.clientWidth * 0.56);
     function camFor(worldX) {
       return clamp(worldX - (desiredCenter - centerShift) / layout.scale, 0, maxX);
     }
@@ -400,7 +404,9 @@
     } else {
       camX = clamp(focusX - layout.viewW * 0.5, 0, maxX);
     }
-    var restY = Math.max(0, focusY - 200 - layout.viewH * 0.5);
+    var restY = compact
+      ? focusY - (stage.clientHeight * 0.52) / layout.scale
+      : Math.max(0, focusY - 200 - layout.viewH * 0.5);
     var camY = reduce ? restY : restY * reveal;
     if (!reduce) {
       world.style.transform = 'translate3d(' + (centerShift - camX * layout.scale) + 'px,' + (-camY * layout.scale) + 'px,0) scale(' + layout.scale + ')';
@@ -432,9 +438,18 @@
         if (left > maxLeft) left = maxLeft;
         if (left < 16) left = 16;
       }
+      var top = pinBox.top - stageBox.top + Math.max(28, pinBox.height * 0.28);
+      if (compact && !reduce) {
+        var card = layout.points[index].node.querySelector('.pin-card');
+        var cardBox = card ? card.getBoundingClientRect() : pinBox;
+        var lineX = pinBox.left + pinBox.width / 2 - stageBox.left;
+        left = lineX + 22;
+        noteWidth = Math.max(120, stageBox.width - left - 18);
+        top = cardBox.bottom - stageBox.top + 14;
+      }
       note.style.width = noteWidth + 'px';
       note.style.left = left + 'px';
-      note.style.top = (pinBox.top - stageBox.top + Math.max(28, pinBox.height * 0.28)) + 'px';
+      note.style.top = top + 'px';
     }
 
     var announcement = $('announcementLink');
