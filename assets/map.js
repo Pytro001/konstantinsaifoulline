@@ -95,8 +95,24 @@
     return 'https://www.youtube.com/watch?v=' + encodeURIComponent(episode.id);
   }
 
+  var COVERS = {
+    '5lroz9Wg5QI': true,
+    '6V_ACIA47-k': true,
+    'CFpKRfGyZWQ': true,
+    'D45UtYEQxS0': true,
+    'GvvK0E_yO6Y': true,
+    'JU3owSfVe5E': true,
+    'MO8nQZfo2TM': true,
+    'QDgwstGHhZo': true,
+    'bnI0JL5Pfw0': true
+  };
+
   function thumb(id, quality) {
     return 'https://i.ytimg.com/vi/' + id + '/' + (quality || 'maxresdefault') + '.jpg';
+  }
+
+  function coverOf(id) {
+    return COVERS[id] ? '/assets/covers/' + id + '.jpg' : thumb(id);
   }
 
   function sortEpisodes(list) {
@@ -229,8 +245,8 @@
       link.style.left = point.x + 'px';
       link.style.top = point.y + 'px';
       link.setAttribute('aria-label', episode.label + '. ' + episode.title);
-      var image = thumb(episode.id);
-      var fallback = thumb(episode.id, 'hqdefault');
+      var image = coverOf(episode.id);
+      var fallback = thumb(episode.id);
       link.innerHTML =
         '<span class="pin-card">' +
           '<img alt="" ' + (point.index < 2 ? 'fetchpriority="high" ' : 'loading="lazy" ') +
