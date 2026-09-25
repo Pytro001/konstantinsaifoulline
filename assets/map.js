@@ -8,6 +8,7 @@
   var PATH_MARGIN = 420;
 
   var CATALOG = [
+    { id: 'KfHJtQuMrN0', label: 'Airsup', topic: 'An AI that debugs a factory', title: 'We Built An AI That Can Debug A Factory', note: 'An AI that can see what is happening inside a factory, and help fix it.', motif: 'machines', published: '2026-09-25T18:00:06Z', date: '25 Sep' },
     { id: 'yCQUzzXxVoM', label: 'Alvy Ray Smith', topic: 'Pixar, Jobs, Disney', title: 'Pixar Founder: Steve Jobs, Disney and the Fight to Stay Alive', note: 'Pixar’s founder on Steve Jobs, Disney, and keeping the studio alive.', motif: 'pixar', published: '2026-09-23T17:00:00Z', date: '23 Sep' },
     { id: '4BjWNPH37vo', label: 'Randall Briggs', topic: 'Who controls the robots', title: 'Who Will Control The Humanoid Robots?', note: 'The fight over who owns the humanoid robots is already underway.', motif: 'humanoids', published: '2026-09-20T17:00:00Z', date: '20 Sep' },
     { id: 'XXf6eMv4rvw', label: 'Scott Walter', topic: 'Figure, 1X, Optimus', title: 'Figure vs 1X vs Tesla Optimus — Who Actually Wins?', note: 'Figure, 1X, and Tesla Optimus. Who is actually ahead.', motif: 'humanoids', published: '2026-09-16T17:00:00Z', date: '16 Sep' },
@@ -118,8 +119,8 @@
       if (known) {
         if (episode.title) known.title = episode.title;
         if (episode.published) known.published = episode.published;
-        known.thumb = episode.thumbnail || known.thumb;
-        known.thumbHq = episode.thumbnail_hq || known.thumbHq;
+        known.thumb = thumb(id);
+        known.thumbHq = thumb(id, 'hqdefault');
         return;
       }
       var title = episode.title || 'Episode';
@@ -131,8 +132,8 @@
         motif: classify(title),
         published: episode.published || ('2099-01-' + String(31 - index).padStart(2, '0')),
         date: formatDate(episode.published),
-        thumb: episode.thumbnail,
-        thumbHq: episode.thumbnail_hq,
+        thumb: thumb(id),
+        thumbHq: thumb(id, 'hqdefault'),
         order: -1 - index
       });
     });
@@ -229,11 +230,11 @@
       link.style.top = point.y + 'px';
       link.setAttribute('aria-label', episode.label + '. ' + episode.title);
       var image = thumb(episode.id);
-      var fallback = episode.thumbHq || thumb(episode.id, 'hqdefault');
+      var fallback = thumb(episode.id, 'hqdefault');
       link.innerHTML =
         '<span class="pin-card">' +
           '<img alt="" ' + (point.index < 2 ? 'fetchpriority="high" ' : 'loading="lazy" ') +
-            'src="' + escapeHtml(episode.thumb || image) + '" data-hq="' + escapeHtml(fallback) + '">' +
+            'src="' + escapeHtml(image) + '" data-hq="' + escapeHtml(fallback) + '">' +
         '</span>' +
         '<span class="pin-node"></span>';
       var img = link.querySelector('img');
