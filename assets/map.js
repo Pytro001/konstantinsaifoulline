@@ -8,6 +8,7 @@
   var PATH_MARGIN = 420;
 
   var CATALOG = [
+    { id: 'uepgLvy9kQk', label: 'Rolf Schrömgens', topic: 'Building trivago', title: 'He Built a $4 Billion Company in Europe', note: 'How the trivago founder built a multi-billion-dollar company, and what he learned doing it.', motif: 'founders', published: '2026-09-27T17:00:31Z', date: '27 Sep' },
     { id: 'KfHJtQuMrN0', label: 'Airsup', topic: 'An AI that debugs a factory', title: 'We Built An AI That Can Debug A Factory', note: 'An AI that can see what is happening inside a factory, and help fix it.', motif: 'machines', published: '2026-09-25T18:00:06Z', date: '25 Sep' },
     { id: 'yCQUzzXxVoM', label: 'Alvy Ray Smith', topic: 'Pixar, Jobs, Disney', title: 'Pixar Founder: Steve Jobs, Disney and the Fight to Stay Alive', note: 'Pixar’s founder on Steve Jobs, Disney, and keeping the studio alive.', motif: 'pixar', published: '2026-09-23T17:00:00Z', date: '23 Sep' },
     { id: '4BjWNPH37vo', label: 'Randall Briggs', topic: 'Who controls the robots', title: 'Who Will Control The Humanoid Robots?', note: 'The fight over who owns the humanoid robots is already underway.', motif: 'humanoids', published: '2026-09-20T17:00:00Z', date: '20 Sep' },

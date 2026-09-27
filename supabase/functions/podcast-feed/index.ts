@@ -16,6 +16,7 @@ const CORS: Record<string, string> = {
 };
 
 const KNOWN_VIDEO_IDS: Record<string, string> = {
+  'he built a 4 billion company in europe trivago founder rolf schromgens': 'uepgLvy9kQk',
   'we built an ai that can debug a factory': 'KfHJtQuMrN0',
   'figure vs 1x vs tesla optimus who actually wins scott walter': 'XXf6eMv4rvw',
   'he co founded apple with steve jobs then weeks later he left ronald wayne': '-TmKc2T6ia8',
