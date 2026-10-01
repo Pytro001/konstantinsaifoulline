@@ -8,6 +8,7 @@
   var PATH_MARGIN = 420;
 
   var CATALOG = [
+    { id: 'vM_-p1_n9uU', label: 'Casey Handmer', topic: 'Fuel from sunlight and air', title: 'The Man Making Oil From Sunlight and Air', note: 'Casey Handmer is building machines that turn sunlight and air into fuel.', motif: 'fuel', published: '2026-10-01T18:00:31Z', date: '01 Oct' },
     { id: 'uepgLvy9kQk', label: 'Rolf Schrömgens', topic: 'Building trivago', title: 'He Built a $4 Billion Company in Europe', note: 'How the trivago founder built a multi-billion-dollar company, and what he learned doing it.', motif: 'founders', published: '2026-09-27T17:00:31Z', date: '27 Sep' },
     { id: 'KfHJtQuMrN0', label: 'Airsup', topic: 'An AI that debugs a factory', title: 'We Built An AI That Can Debug A Factory', note: 'An AI that can see what is happening inside a factory, and help fix it.', motif: 'machines', published: '2026-09-25T18:00:06Z', date: '25 Sep' },
     { id: 'yCQUzzXxVoM', label: 'Alvy Ray Smith', topic: 'Pixar, Jobs, Disney', title: 'Pixar Founder: Steve Jobs, Disney and the Fight to Stay Alive', note: 'Pixar’s founder on Steve Jobs, Disney, and keeping the studio alive.', motif: 'pixar', published: '2026-09-23T17:00:00Z', date: '23 Sep' },
