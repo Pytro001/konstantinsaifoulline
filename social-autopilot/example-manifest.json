@@ -1,10 +1,10 @@
 {
-  "clip_key": "example-001",
-  "source_url": "https://www.youtube.com/watch?v=REPLACE_ME",
-  "start_seconds": 60,
-  "end_seconds": 105,
-  "title": "The physical bottleneck nobody talks about",
-  "caption": "The physical world is still the bottleneck.",
+  "clip_key": "ci-render-smoke-test",
+  "source_url": "https://raw.githubusercontent.com/Pytro001/konstantinsaifoulline/main/bootshaus.mp4",
+  "start_seconds": 0,
+  "end_seconds": 8,
+  "title": "CI Render Smoke Test",
+  "caption": "Render smoke test only. Not for publishing.",
   "platforms": ["instagram", "tiktok", "youtube", "linkedin"],
   "captions": {
     "instagram": "The physical world is still the bottleneck.",
