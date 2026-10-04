@@ -1,0 +1,62 @@
+name: Social Autopilot
+
+on:
+  workflow_dispatch:
+    inputs:
+      manifest_path:
+        description: Path to manifest JSON
+        required: true
+        default: social-autopilot/queue/next.json
+      dry_run:
+        description: Render only, do not publish
+        required: true
+        type: boolean
+        default: true
+  schedule:
+    # Candidate UTC hours for 10/14/18/22 America/Chicago in both CST and CDT.
+    # publish.py gates on the real America/Chicago hour, so DST does not shift slots.
+    - cron: '0 15,16,19,20,23 * * *'
+    - cron: '0 0,3,4 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install media tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade yt-dlp
+
+      - name: Resolve manifest
+        id: manifest
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            P="${{ inputs.manifest_path }}"
+          else
+            P="social-autopilot/queue/next.json"
+          fi
+          if [ ! -f "$P" ]; then
+            echo "No queued manifest at $P; nothing to do."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "path=$P" >> "$GITHUB_OUTPUT"
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Dry-run render
+        if: steps.manifest.outputs.skip != 'true' && github.event_name == 'workflow_dispatch' && inputs.dry_run
+        run: python social-autopilot/publish.py --manifest "${{ steps.manifest.outputs.path }}" --dry-run
+
+      - name: Publish
+        if: steps.manifest.outputs.skip != 'true' && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+        env:
+          BRIGHTBEAN_API_BASE: ${{ secrets.BRIGHTBEAN_API_BASE }}
+          BRIGHTBEAN_API_TOKEN: ${{ secrets.BRIGHTBEAN_API_TOKEN }}
+        run: python social-autopilot/publish.py --manifest "${{ steps.manifest.outputs.path }}" --gate-ct
