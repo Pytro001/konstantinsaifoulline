@@ -1,0 +1,20 @@
+{
+  "clip_key": "example-001",
+  "source_url": "https://www.youtube.com/watch?v=REPLACE_ME",
+  "start_seconds": 60,
+  "end_seconds": 105,
+  "title": "The physical bottleneck nobody talks about",
+  "caption": "The physical world is still the bottleneck.",
+  "platforms": ["instagram", "tiktok", "youtube", "linkedin"],
+  "captions": {
+    "instagram": "The physical world is still the bottleneck.",
+    "tiktok": "The physical world is still the bottleneck.",
+    "youtube": "The physical world is still the bottleneck.",
+    "linkedin": "Software moves fast. Factories still don't. That's the gap we're trying to close."
+  },
+  "titles": {
+    "youtube": "The Physical Bottleneck Nobody Talks About"
+  },
+  "ct_hours": [10, 14, 18, 22],
+  "scheduled_at": "2026-10-05T15:00:00Z"
+}
