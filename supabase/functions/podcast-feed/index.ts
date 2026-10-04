@@ -16,6 +16,8 @@ const CORS: Record<string, string> = {
 };
 
 const KNOWN_VIDEO_IDS: Record<string, string> = {
+  'what the slack polsia and blue bottle founders got right tony conrad true ventures': 'sKq1D59-qHQ',
+  'inside generathon the future of ai video hollywood creative work': 'Qfiz43bfZ6M',
   'the man making oil from sunlight and air casey handmer': 'vM_-p1_n9uU',
   'he built a 4 billion company in europe trivago founder rolf schromgens': 'uepgLvy9kQk',
   'we built an ai that can debug a factory': 'KfHJtQuMrN0',
