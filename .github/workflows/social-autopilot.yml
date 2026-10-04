@@ -1,6 +1,10 @@
 name: Social Autopilot
 
 on:
+  push:
+    paths:
+      - "social-autopilot/**"
+      - ".github/workflows/social-autopilot.yml"
   workflow_dispatch:
     inputs:
       manifest_path:
@@ -39,6 +43,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             P="${{ inputs.manifest_path }}"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            P="social-autopilot/example-manifest.json"
           else
             P="social-autopilot/queue/next.json"
           fi
@@ -51,11 +57,11 @@ jobs:
           fi
 
       - name: Dry-run render
-        if: steps.manifest.outputs.skip != 'true' && github.event_name == 'workflow_dispatch' && inputs.dry_run
+        if: steps.manifest.outputs.skip != 'true' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.dry_run))
         run: python social-autopilot/publish.py --manifest "${{ steps.manifest.outputs.path }}" --dry-run
 
       - name: Publish
-        if: steps.manifest.outputs.skip != 'true' && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+        if: steps.manifest.outputs.skip != 'true' && github.event_name != 'push' && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
         env:
           BRIGHTBEAN_API_BASE: ${{ secrets.BRIGHTBEAN_API_BASE }}
           BRIGHTBEAN_API_TOKEN: ${{ secrets.BRIGHTBEAN_API_TOKEN }}
