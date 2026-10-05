@@ -12,7 +12,7 @@ Edit `6ac12978ee77cfef00498a86` was submitted once through Riverside's planner t
 - YouTube Shorts: https://www.youtube.com/shorts/5ssW66abIrQ
 - Personal LinkedIn: https://www.linkedin.com/feed/update/urn:li:ugcPost:7512863253266489344/
 
-TikTok was not submitted. Its direct publisher opened a Riverside authorization refresh screen for the connected account; user interaction and the pending Music Usage Confirmation decision are required. The four-platform end-to-end test is therefore incomplete.
+TikTok was not submitted. Its Riverside authorization was refreshed by the user. A compatible export is prepared, but the pending Music Usage Confirmation decision is still required. The four-platform end-to-end test is therefore incomplete.
 
 The private persistent ledger is `work/riverside-autopilot.sqlite3` in this chat's workspace. The test clip is reserved and excluded from new slot selection. Do not initialize a replacement ledger or resubmit successful platform deliveries.
 
@@ -22,12 +22,22 @@ The private persistent ledger is `work/riverside-autopilot.sqlite3` in this chat
 - Keep the SQLite state in private persistent storage outside Git. Never recreate it on each scheduled run.
 - Fetch and validate the live Riverside accounts using `validate_accounts` before posting. Only the four explicitly configured personal accounts are permitted. LinkedIn pages are rejected.
 - Import the catalog once. Importing again keeps existing clip reservations and appends new IDs.
-- Run `due` to reserve one clip per slot. A repeated or simultaneous run returns the same reservation. A late wake-up does not publish a backlog.
+- For advance server-side scheduling, run `plan --at TIMESTAMP` with a future timezone-aware timestamp at exactly one of the four Chicago slots. Equivalent timestamps in other timezones reserve the same slot. Run `due` for the current slot only. A repeated or simultaneous run returns the same reservation. A late wake-up does not publish a backlog.
 - Before each external publish, run `begin CLIP_ID PLATFORM`. This commits the `submitting` state before the side effect. If it refuses, reconcile the previous attempt instead of publishing again.
 - Read the clip and final metadata, confirm eligibility, and submit through the authenticated Riverside interface. Preserve each platform's visibility and export requirements.
 - Run `record` with the platform's actual outcome and response. An upload acceptance is `accepted`; a future post is `scheduled`; a timeout is `uncertain`. Those states must never be blindly resubmitted.
 - Record `published` only after an authoritative terminal success/live post readback, with `verified_live: true` and the available post URL or upload ID in the response.
 - Prior to activation, compare the catalog with Riverside's scheduled/published history and exclude previously used edits. The catalog alone is not evidence that every edit is unpublished.
+
+## Scheduled publishing test — October 5, 2026
+
+Factory edit `6ac12980ee77cfef00498a8f` was accepted by Riverside for Instagram, YouTube Shorts and personal LinkedIn at `2026-10-05T16:30:00+02:00`. The UI offers 15-minute scheduling increments, so this was the earliest available time. All three exports finished before the deadline. All three published automatically after the scheduled time, with content and personal identity verified on live destination pages:
+
+- Instagram: https://www.instagram.com/reels/DeHbZn2Ag-2/
+- YouTube: https://www.youtube.com/watch?v=kg0eJ_Xa2Jw
+- Personal LinkedIn: https://www.linkedin.com/feed/update/urn:li:ugcPost:7512881992481296384/
+
+This proves Riverside server-side scheduled delivery for these three accounts. It does not prove a complete four-times-daily queue or TikTok delivery. Both test clips are reserved in the private ledger and must not be resubmitted.
 
 ## Remaining work
 
