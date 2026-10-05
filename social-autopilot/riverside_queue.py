@@ -90,10 +90,24 @@ def validate_accounts(platform_accounts):
             raise ValueError(f"Refusing unexpected {platform} identity")
 
 
+def plan(db, scheduled_for, now=None):
+    """Reserve a future Riverside server-side post at an exact Chicago slot."""
+    if scheduled_for.tzinfo is None:
+        raise ValueError("A timezone-aware scheduled timestamp is required")
+    local = scheduled_for.astimezone(CHICAGO)
+    if local.hour not in HOURS or local.minute or local.second or local.microsecond:
+        raise ValueError("Schedule must be exactly 10:00, 14:00, 18:00 or 22:00 Chicago")
+    if scheduled_for <= (now or datetime.now(CHICAGO)):
+        raise ValueError("Planning requires a future slot")
+    return reserve_key(db, f"{local.date()}-{local.hour:02d}")
+
+
 def reserve(db, now):
     key = slot_key(now)
-    if key is None:
-        return None
+    return reserve_key(db, key) if key else None
+
+
+def reserve_key(db, key):
     db.execute("BEGIN IMMEDIATE")
     try:
         row = db.execute("SELECT clip_id FROM slots WHERE slot=?", (key,)).fetchone()
@@ -151,6 +165,7 @@ def main():
     sub = p.add_subparsers(dest="command", required=True)
     imp = sub.add_parser("import"); imp.add_argument("catalog")
     due = sub.add_parser("due"); due.add_argument("--now")
+    planned = sub.add_parser("plan"); planned.add_argument("--at", required=True)
     start = sub.add_parser("begin"); start.add_argument("clip_id"); start.add_argument("platform")
     result = sub.add_parser("record"); result.add_argument("clip_id"); result.add_argument("platform")
     result.add_argument("state"); result.add_argument("response_file")
@@ -160,6 +175,8 @@ def main():
         import_catalog(db, json.loads(Path(a.catalog).read_text())); output = {"imported": True}
     elif a.command == "due":
         output = reserve(db, datetime.fromisoformat(a.now) if a.now else datetime.now(CHICAGO))
+    elif a.command == "plan":
+        output = plan(db, datetime.fromisoformat(a.at))
     elif a.command == "begin":
         output = begin(db, a.clip_id, a.platform)
     elif a.command == "record":
