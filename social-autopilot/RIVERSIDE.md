@@ -2,7 +2,19 @@
 
 This replaces the source-video selection with the existing edits in Konstantin's Riverside studio. `riverside-catalog.json` contains 30 actual Riverside edit IDs and their canonical editor links. It does not contain downloaded video files or authentication credentials.
 
-`riverside_queue.py` is a durable controller, **not an autonomous publisher**. A supported, authenticated executor is still required. Publishing has not been tested or activated by adding these files. Do not count a prepared payload or an accepted upload as a successful post.
+`riverside_queue.py` is a durable controller, **not an autonomous publisher**. The local Codex heartbeat `riverside-personal-autoposting` is active hourly to reconcile results and maintain a Riverside server-side publishing queue. This is not a GitHub-hosted publisher: queue maintenance requires the Mac and Codex to be available. Do not count a prepared payload or an accepted upload as a successful post.
+
+## Verified live test — October 5, 2026
+
+Edit `6ac12978ee77cfef00498a86` was submitted once through Riverside's planner to only three personal accounts. All three completed, with the content and identity checked on the destination platform:
+
+- Instagram: https://www.instagram.com/reels/DeHS5_nDc9M/
+- YouTube Shorts: https://www.youtube.com/shorts/5ssW66abIrQ
+- Personal LinkedIn: https://www.linkedin.com/feed/update/urn:li:ugcPost:7512863253266489344/
+
+TikTok was not submitted. Its direct publisher opened a Riverside authorization refresh screen for the connected account; user interaction and the pending Music Usage Confirmation decision are required. The four-platform end-to-end test is therefore incomplete.
+
+The private persistent ledger is `work/riverside-autopilot.sqlite3` in this chat's workspace. The test clip is reserved and excluded from new slot selection. Do not initialize a replacement ledger or resubmit successful platform deliveries.
 
 ## Runtime contract
 
@@ -17,10 +29,10 @@ This replaces the source-video selection with the existing edits in Konstantin's
 - Record `published` only after an authoritative terminal success/live post readback, with `verified_live: true` and the available post URL or upload ID in the response.
 - Prior to activation, compare the catalog with Riverside's scheduled/published history and exclude previously used edits. The catalog alone is not evidence that every edit is unpublished.
 
-## Components still needed before activation
+## Remaining work
 
-1. A successful live test through an authenticated publishing executor.
-2. A scheduler that actually invokes that executor, rather than merely generating payloads.
-3. Readback of actual per-platform results and replenishment when the 30-clip queue runs low.
+1. Finish TikTok's authorization and live test, respecting applicable confirmations.
+2. Verify a rolling queue at all four Chicago slots on every eligible personal platform. An active heartbeat alone is not evidence that those scheduled posts exist.
+3. Replenish and reconcile the catalog against scheduled/published history. The 30 edits are not all proven unpublished.
 
 The previous BrightBean worker has not been promoted to a working Riverside integration. GitHub Actions cannot use a desktop connector session by itself.
