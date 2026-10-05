@@ -13,6 +13,7 @@ from zoneinfo import ZoneInfo
 
 CHICAGO = ZoneInfo("America/Chicago")
 HOURS = (10, 14, 18, 22)
+ACTIVE_PLATFORMS = ("Instagram", "TikTok", "YouTube", "LinkedIn")
 STUDIO = "6a6472a78dae1670f790240c"
 ACCOUNTS = {
     "Instagram": {"id": "29614016844852451", "handle": "konstantinsaifo"},
@@ -70,7 +71,8 @@ def slot_key(now):
 
 def validate_accounts(platform_accounts):
     """Fail before submission if an intended channel is absent or mismatched."""
-    for platform, expected in ACCOUNTS.items():
+    for platform in ACTIVE_PLATFORMS:
+        expected = ACCOUNTS[platform]
         matches = [a for a in platform_accounts if a.get("platform") == platform
                    and a.get("platformAccountId") == expected["id"]]
         if len(matches) != 1:
@@ -121,7 +123,7 @@ def reserve_key(db, key):
                 return {"slot": key, "state": "queue_empty"}
             clip_id = clip["id"]
             db.execute("INSERT INTO slots VALUES (?, ?)", (key, clip_id))
-            for platform in ACCOUNTS:
+            for platform in ACTIVE_PLATFORMS:
                 db.execute("INSERT INTO deliveries(clip_id, platform) VALUES (?, ?)", (clip_id, platform))
         content = json.loads(db.execute("SELECT content FROM clips WHERE id=?", (clip_id,)).fetchone()[0])
         deliveries = [dict(r) for r in db.execute("SELECT platform, state FROM deliveries WHERE clip_id=?", (clip_id,))]
@@ -133,8 +135,8 @@ def reserve_key(db, key):
 
 
 def begin(db, clip_id, platform):
-    if platform not in ACCOUNTS:
-        raise ValueError("Platform not allowed")
+    if platform not in ACTIVE_PLATFORMS:
+        raise ValueError("Platform is outside the authorized personal accounts")
     # Commit before the external side effect. A crash stays 'submitting' and
     # requires readback; the next run cannot blindly send the same clip again.
     changed = db.execute("""UPDATE deliveries SET state='submitting', updated_at=CURRENT_TIMESTAMP
