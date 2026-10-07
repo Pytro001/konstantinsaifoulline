@@ -8,6 +8,7 @@
   var PATH_MARGIN = 420;
 
   var CATALOG = [
+    { id: 'CGkC8ukXnfw', label: 'Nick Vasilescu', topic: 'Computers for AI workers', title: '10 Billion AI Workers Will Need Their Own Computers | Nick Vasilescu, Orgo', note: 'Nick Vasilescu of Orgo on why billions of AI workers will each need their own computer.', motif: 'machines', published: '2026-10-07T18:00:27Z', date: '07 Oct' },
     { id: 'sKq1D59-qHQ', label: 'Tony Conrad', topic: 'Slack, Polsia, Blue Bottle', title: 'What The Slack, Polsia And Blue Bottle Founders Got Right', note: 'Tony Conrad on what the founders of Slack, Polsia, and Blue Bottle got right.', motif: 'ventures', published: '2026-10-04T16:00:20Z', date: '04 Oct' },
     { id: 'Qfiz43bfZ6M', label: 'Generathon', topic: 'AI video and Hollywood', title: 'Inside Generathon: The Future of AI Video, Hollywood & Creative Work', note: 'Where AI video is now, and what it means for Hollywood and creative work.', motif: 'video', published: '2026-10-02T17:50:18Z', date: '02 Oct' },
     { id: 'vM_-p1_n9uU', label: 'Casey Handmer', topic: 'Fuel from sunlight and air', title: 'The Man Making Oil From Sunlight and Air', note: 'Casey Handmer is building machines that turn sunlight and air into fuel.', motif: 'fuel', published: '2026-10-01T18:00:31Z', date: '01 Oct' },

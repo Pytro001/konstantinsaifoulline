@@ -16,6 +16,7 @@ const CORS: Record<string, string> = {
 };
 
 const KNOWN_VIDEO_IDS: Record<string, string> = {
+  '10 billion ai workers will need their own computers nick vasilescu orgo': 'CGkC8ukXnfw',
   'what the slack polsia and blue bottle founders got right tony conrad true ventures': 'sKq1D59-qHQ',
   'inside generathon the future of ai video hollywood creative work': 'Qfiz43bfZ6M',
   'the man making oil from sunlight and air casey handmer': 'vM_-p1_n9uU',
