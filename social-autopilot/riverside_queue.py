@@ -13,7 +13,7 @@ from zoneinfo import ZoneInfo
 
 CHICAGO = ZoneInfo("America/Chicago")
 HOURS = (10, 14, 18, 22)
-ACTIVE_PLATFORMS = ("Instagram", "TikTok", "YouTube", "LinkedIn")
+ACTIVE_PLATFORMS = ("TikTok", "YouTube", "LinkedIn")
 STUDIO = "6a6472a78dae1670f790240c"
 ACCOUNTS = {
     "Instagram": {"id": "29614016844852451", "handle": "konstantinsaifo"},
