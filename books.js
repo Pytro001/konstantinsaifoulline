@@ -5,6 +5,8 @@
 //    the card title renders in the same gray as the rest (no special styling).
 //  • The cover lives at assets/books/<id>.jpg.
 const BOOKS = [
+  { id: 'facebook', title: 'Facebook', author: 'Steven Levy', notes: '' },
+  { id: 'in-the-plex', title: 'In The Plex', author: 'Steven Levy', notes: '' },
   { id: 'how-to-develop-the-moon', title: 'How To Develop The Moon', author: 'Ian Long', notes: '' },
   { id: 'the-toyota-way-fieldbook', title: 'The Toyota Way Fieldbook', author: 'Jeffrey K. Liker', notes: '' },
   { id: 'kelly', title: 'Kelly', author: 'Clarence L. Johnson', notes: '' },
