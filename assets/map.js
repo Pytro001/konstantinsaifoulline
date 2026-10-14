@@ -8,6 +8,7 @@
   var PATH_MARGIN = 420;
 
   var CATALOG = [
+    { id: 'lLPcLsDUNlE', label: 'Ben Holfeld', topic: 'Robotics, AI and space', title: 'The Age of Robotics Is Coming: AI, Automation & Space | Ben Holfeld', note: 'Ben Holfeld on physical AI, automation, distribution and building habitats in space.', motif: 'humanoids', published: '2026-10-14T16:00:05Z', date: '14 Oct' },
     { id: '7pODLCXi1vM', label: 'Nat Bullard', topic: 'Power for AI', title: "AI's Biggest Bottleneck Isn't Chips, It's Power | Nat Bullard", note: 'Nat Bullard of Halcyon, formerly BloombergNEF, on why electricity, not chips, limits how fast AI can scale.', motif: 'industry', published: '2026-10-11T16:00:34Z', date: '11 Oct' },
     { id: 'CGkC8ukXnfw', label: 'Nick Vasilescu', topic: 'Computers for AI workers', title: '10 Billion AI Workers Will Need Their Own Computers | Nick Vasilescu, Orgo', note: 'Nick Vasilescu of Orgo on why billions of AI workers will each need their own computer.', motif: 'machines', published: '2026-10-07T18:00:27Z', date: '07 Oct' },
     { id: 'sKq1D59-qHQ', label: 'Tony Conrad', topic: 'Slack, Polsia, Blue Bottle', title: 'What The Slack, Polsia And Blue Bottle Founders Got Right', note: 'Tony Conrad on what the founders of Slack, Polsia, and Blue Bottle got right.', motif: 'ventures', published: '2026-10-04T16:00:20Z', date: '04 Oct' },
