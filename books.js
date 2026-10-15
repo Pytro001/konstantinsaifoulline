@@ -5,6 +5,8 @@
 //    the card title renders in the same gray as the rest (no special styling).
 //  • The cover lives at assets/books/<id>.jpg.
 const BOOKS = [
+  { id: 'the-brain-that-changes-itself', title: 'The Brain That Changes Itself', author: 'Norman Doidge', notes: '' },
+  { id: 'buy-then-build', title: 'Buy Then Build', author: 'Walker Deibel', notes: '' },
   { id: 'facebook', title: 'Facebook', author: 'Steven Levy', notes: '' },
   { id: 'in-the-plex', title: 'In The Plex', author: 'Steven Levy', notes: '' },
   { id: 'how-to-develop-the-moon', title: 'How To Develop The Moon', author: 'Ian Long', notes: '' },
