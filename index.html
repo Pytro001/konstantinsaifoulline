@@ -267,17 +267,14 @@
       <img class="hero-portrait" src="/assets/konstantin-portrait.png" alt="Konstantin Saifoulline" fetchpriority="high">
     </section>
 
-    <section class="map-runway" id="episodes" aria-labelledby="episodesTitle">
-      <h2 class="sr-only" id="episodesTitle">Latest episodes</h2>
-      <div class="map-stage" id="mapStage">
-        <div class="map-viewport" id="mapViewport">
-          <div class="map-world" id="mapWorld"></div>
+    <section class="eps" id="episodes" aria-labelledby="episodesTitle">
+      <div class="eps-inner">
+        <div class="eps-head">
+          <h2 class="eps-title" id="episodesTitle">Episodes</h2>
+          <span class="eps-count" id="epsCount"></span>
         </div>
-        <p class="episode-note" id="episodeNote"></p>
-        <div class="map-focus" id="mapFocus">
-          <p class="map-guest" id="mapGuest"></p>
-        </div>
-        <div class="sr-only" aria-live="polite" id="mapLive"></div>
+        <div id="epsLatest"></div>
+        <div class="eps-grid" id="epsGrid"></div>
       </div>
     </section>
   </main>
