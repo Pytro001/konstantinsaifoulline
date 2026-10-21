@@ -5,6 +5,7 @@
 //    the card title renders in the same gray as the rest (no special styling).
 //  • The cover lives at assets/books/<id>.jpg.
 const BOOKS = [
+  { id: 'the-mom-test', title: 'The Mom Test', author: 'Rob Fitzpatrick', notes: '' },
   { id: 'the-brain-that-changes-itself', title: 'The Brain That Changes Itself', author: 'Norman Doidge', notes: '' },
   { id: 'buy-then-build', title: 'Buy Then Build', author: 'Walker Deibel', notes: '' },
   { id: 'facebook', title: 'Facebook', author: 'Steven Levy', notes: '' },
