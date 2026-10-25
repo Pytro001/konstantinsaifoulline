@@ -2,7 +2,13 @@
   var AIRSUP = 'https://fyxqdwhqposxitexydby.supabase.co';
   var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmeXhxZHdocXBvc3hpdGV4eWRieSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzc2MTc5OTA4LCJleHAiOjIwOTE3NTU5MDh9.cvpnWJvVsQx_qEk4hNDAtJZ_M8qNv4RNnhRJBRgulg8';
 
+  var WORLD_W = 2200;
+  var FIRST_Y = 1900;
+  var STEP = 820;
+  var PATH_MARGIN = 420;
+
   var CATALOG = [
+    { id: 'j6yWBmVGwp0', label: 'Tom Dietterich', topic: 'Where AI still breaks', title: 'ML Pioneer Since 1980: Why AI Still Breaks on Anything New | Tom Dietterich', note: 'Tom Dietterich, in machine learning since the first workshop in 1980, on why AI still breaks on anything new.', motif: 'machines', published: '2026-10-21T19:27:15Z', date: '21 Oct' },
     { id: 'lLPcLsDUNlE', label: 'Ben Holfeld', topic: 'Robotics, AI and space', title: 'The Age of Robotics Is Coming: AI, Automation & Space | Ben Holfeld', note: 'Ben Holfeld on physical AI, automation, distribution and building habitats in space.', motif: 'humanoids', published: '2026-10-14T16:00:05Z', date: '14 Oct' },
     { id: '7pODLCXi1vM', label: 'Nat Bullard', topic: 'Power for AI', title: "AI's Biggest Bottleneck Isn't Chips, It's Power | Nat Bullard", note: 'Nat Bullard of Halcyon, formerly BloombergNEF, on why electricity, not chips, limits how fast AI can scale.', motif: 'industry', published: '2026-10-11T16:00:34Z', date: '11 Oct' },
     { id: 'CGkC8ukXnfw', label: 'Nick Vasilescu', topic: 'Computers for AI workers', title: '10 Billion AI Workers Will Need Their Own Computers | Nick Vasilescu, Orgo', note: 'Nick Vasilescu of Orgo on why billions of AI workers will each need their own computer.', motif: 'machines', published: '2026-10-07T18:00:27Z', date: '07 Oct' },
@@ -27,12 +33,16 @@
     { id: 'CFpKRfGyZWQ', label: 'Aaron Ong', topic: 'Why some move faster', title: 'Why Some People Progress Faster Than Everyone Else', note: 'Why a few people pull ahead while everyone else stays still.', motif: 'people', published: '2026-07-29T22:21:55Z', date: '29 Jul' }
   ];
 
-  var section = document.getElementById('episodes');
-  var latestEl = document.getElementById('epsLatest');
-  var gridEl = document.getElementById('epsGrid');
-  if (!section || !latestEl || !gridEl) return;
+  var runway = document.getElementById('episodes');
+  var stage = document.getElementById('mapStage');
+  var viewport = document.getElementById('mapViewport');
+  var world = document.getElementById('mapWorld');
+  if (!runway || !stage || !viewport || !world) return;
 
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var episodes = CATALOG.map(clone);
+  var layout = null;
+  var currentIndex = -1;
   var ticking = false;
 
   function $(id) { return document.getElementById(id); }
@@ -46,6 +56,10 @@
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
+  }
+
+  function pad(index) {
+    return index < 9 ? '0' + (index + 1) : String(index + 1);
   }
 
   function escapeHtml(value) {
@@ -158,65 +172,330 @@
     return true;
   }
 
-  function image(episode, eager) {
-    return '<span class="ep-frame"><img alt="" ' + (eager ? 'fetchpriority="high" ' : 'loading="lazy" ') +
-      'src="' + escapeHtml(coverOf(episode.id)) + '" data-hq="' + escapeHtml(thumb(episode.id)) + '"></span>';
+  function routePath(points) {
+    if (!points.length) return '';
+    var d = 'M ' + points[0].x + ' ' + points[0].y;
+    for (var i = 1; i < points.length; i++) {
+      var a = points[i - 1];
+      var b = points[i];
+      if (Math.abs(a.x - b.x) < 1) {
+        d += ' L ' + b.x + ' ' + b.y;
+        continue;
+      }
+      var mid = (a.y + b.y) / 2;
+      var dir = b.x > a.x ? 1 : -1;
+      var radius = Math.min(120, Math.abs(b.x - a.x) / 2, Math.max(12, (b.y - a.y) / 2 - 8));
+      d += ' L ' + a.x + ' ' + (mid - radius);
+      d += ' Q ' + a.x + ' ' + mid + ', ' + (a.x + dir * radius) + ' ' + mid;
+      d += ' L ' + (b.x - dir * radius) + ' ' + mid;
+      d += ' Q ' + b.x + ' ' + mid + ', ' + b.x + ' ' + (mid + radius);
+      d += ' L ' + b.x + ' ' + b.y;
+    }
+    return d;
   }
 
-  function card(episode, latest) {
-    var link = document.createElement('a');
-    link.className = latest ? 'ep ep-latest' : 'ep';
-    link.href = watchUrl(episode);
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.setAttribute('aria-label', episode.label + '. ' + episode.title);
-    var meta = [latest ? 'Latest' : '', episode.date || formatDate(episode.published), episode.topic]
-      .filter(Boolean).map(escapeHtml).join(' &middot; ');
-    var text =
-      '<span class="ep-meta">' + meta + '</span>' +
-      '<span class="ep-guest">' + escapeHtml(episode.label) + '</span>' +
-      '<span class="ep-note">' + escapeHtml(episode.note || episode.title) + '</span>';
-    link.innerHTML = latest
-      ? image(episode, true) + '<span class="ep-text">' + text + '<span class="ep-watch">Watch episode <span aria-hidden="true">↗</span></span></span>'
-      : image(episode, false) + text;
-    var img = link.querySelector('img');
-    img.addEventListener('error', function () {
-      var nextSrc = img.getAttribute('data-hq');
-      if (nextSrc && img.src !== nextSrc) img.src = nextSrc;
+  function tracePath(list) {
+    var x = WORLD_W / 2;
+    var heading = 1;
+    var y = FIRST_Y;
+    var previous = null;
+    return list.map(function (episode, index) {
+      var motif = episode.motif || episode.direction || 'episode';
+      var same = previous === motif;
+      if (index > 0 && !same) heading *= -1;
+      if (index > 0) {
+        var step = same ? 70 : 220;
+        var nextX = x + heading * step;
+        if (nextX < PATH_MARGIN || nextX > WORLD_W - PATH_MARGIN) {
+          heading *= -1;
+          nextX = clamp(x + heading * step, PATH_MARGIN, WORLD_W - PATH_MARGIN);
+        }
+        x = nextX;
+      }
+      previous = motif;
+      var point = { x: x, y: y, episode: episode, index: index };
+      y += STEP;
+      return point;
     });
-    return link;
   }
 
-  function render() {
-    latestEl.innerHTML = '';
-    gridEl.innerHTML = '';
-    if (!episodes.length) return;
-    latestEl.appendChild(card(episodes[0], true));
-    episodes.slice(1).forEach(function (episode) {
-      gridEl.appendChild(card(episode, false));
+  function build() {
+    var points = tracePath(episodes);
+    var worldH = (points.length ? points[points.length - 1].y : FIRST_Y) + 760;
+    var routePoints = points.map(function (point) { return { x: point.x, y: point.y }; });
+    if (routePoints.length) {
+      routePoints[0].y -= 190;
+      routePoints[routePoints.length - 1].y -= 190;
+    }
+    var route = routePath(routePoints);
+
+    world.style.width = WORLD_W + 'px';
+    world.style.height = worldH + 'px';
+    world.innerHTML = '';
+
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'map-svg');
+    svg.setAttribute('viewBox', '0 0 ' + WORLD_W + ' ' + worldH);
+    svg.innerHTML =
+      '<path class="route-all" d="' + route + '" />' +
+      '<path class="route-walk" id="mapRouteWalk" d="' + route + '" />' +
+      '<g id="mapTraveler"><circle r="18" fill="#fff"></circle><circle r="7" fill="#111"></circle></g>';
+    world.appendChild(svg);
+
+    points.forEach(function (point) {
+      var episode = point.episode;
+      var link = document.createElement('a');
+      link.className = 'pin is-ahead';
+      link.id = 'ep-' + episode.id;
+      link.href = watchUrl(episode);
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.style.left = point.x + 'px';
+      link.style.top = point.y + 'px';
+      link.setAttribute('aria-label', episode.label + '. ' + episode.title);
+      var image = coverOf(episode.id);
+      var fallback = thumb(episode.id);
+      link.innerHTML =
+        '<span class="pin-card">' +
+          '<img alt="" ' + (point.index < 2 ? 'fetchpriority="high" ' : 'loading="lazy" ') +
+            'src="' + escapeHtml(image) + '" data-hq="' + escapeHtml(fallback) + '">' +
+        '</span>' +
+        '<span class="pin-node"></span>';
+      var img = link.querySelector('img');
+      img.addEventListener('error', function () {
+        var nextSrc = img.getAttribute('data-hq');
+        if (nextSrc && img.src !== nextSrc) img.src = nextSrc;
+      });
+      if (point.index === 0 || point.index === points.length - 1) link.classList.add('is-terminal');
+      world.appendChild(link);
+      point.node = link;
     });
-    var count = document.getElementById('epsCount');
-    if (count) count.textContent = episodes.length + ' episodes';
-    var announcement = document.getElementById('announcementLink');
-    var announcementTitle = document.getElementById('announcementTitle');
-    if (announcement) announcement.href = watchUrl(episodes[0]);
-    if (announcementTitle) announcementTitle.textContent = episodes[0].label;
+
+    var routeEl = svg.querySelector('#mapRouteWalk');
+    var traveler = svg.querySelector('#mapTraveler');
+    var total = routeEl.getTotalLength();
+    var stops = routePoints.map(function (point) { return lengthNear(routeEl, point, total); });
+    for (var s = 1; s < stops.length; s++) {
+      if (stops[s] < stops[s - 1]) stops[s] = stops[s - 1];
+    }
+
+    layout = { points: points, routeEl: routeEl, traveler: traveler, total: total, stops: stops, worldH: worldH };
+    measure();
+    apply();
+  }
+
+  function lengthNear(path, point, total) {
+    var best = 0;
+    var bestDistance = Infinity;
+    var steps = 480;
+    for (var i = 0; i <= steps; i++) {
+      var length = total * i / steps;
+      var spot = path.getPointAtLength(length);
+      var distance = (spot.x - point.x) * (spot.x - point.x) + (spot.y - point.y) * (spot.y - point.y);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        best = length;
+      }
+    }
+    return best;
+  }
+
+  function headerHeight() {
+    var header = document.querySelector('.header');
+    return header ? Math.round(header.getBoundingClientRect().height) : 62;
+  }
+
+  function measure() {
+    if (!layout) return;
+    var headerH = headerHeight();
+    if (reduce) {
+      runway.classList.add('is-static');
+      var scale = runway.clientWidth / WORLD_W;
+      world.style.transform = 'scale(' + scale + ')';
+      stage.style.height = Math.ceil(layout.worldH * scale) + 'px';
+      layout.scale = scale;
+      layout.viewW = WORLD_W;
+      layout.viewH = layout.worldH;
+      layout.travel = 1;
+      layout.stickStart = 0;
+      return;
+    }
+    runway.classList.remove('is-static');
+    stage.style.top = headerH + 'px';
+    var stageH = Math.max(420, window.innerHeight - headerH);
+    stage.style.height = stageH + 'px';
+    layout.compact = stage.clientWidth < 760;
+    var scale = layout.compact
+      ? Math.min((stage.clientWidth * 0.56) / 620, Math.max(160, stageH - 168) / 400)
+      : Math.min(1.45, stage.clientWidth / 1320);
+    var viewW = stage.clientWidth / scale;
+    var viewH = stageH / scale;
+    var steps = Math.max(episodes.length - 1, 1);
+    layout.lead = Math.round(window.innerHeight * 0.34);
+    layout.journey = steps * Math.max(stageH * 0.78, 540);
+    runway.style.height = (stageH + layout.lead + layout.journey) + 'px';
+    layout.scale = scale;
+    layout.viewW = viewW;
+    layout.viewH = viewH;
+    layout.stickStart = runway.offsetTop - headerH;
+    layout.travel = Math.max(1, runway.offsetHeight - stageH);
+  }
+
+  function progress() {
+    if (reduce || !layout) return 0;
+    return clamp((window.scrollY - layout.stickStart) / layout.travel, 0, 1);
+  }
+
+  function scrollToIndex(index, behavior) {
+    if (reduce) {
+      var pin = document.getElementById('ep-' + episodes[index].id);
+      if (pin) pin.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    measure();
+    var t = episodes.length <= 1 ? 0 : index / (episodes.length - 1);
+    var top = layout.stickStart + (layout.lead || 0) + t * (layout.journey || layout.travel);
+    window.scrollTo({ top: top, behavior: behavior || 'smooth' });
+  }
+
+  function openLatest(behavior) {
+    scrollToIndex(0, behavior);
   }
 
   function placeHero() {
     var hero = document.querySelector('.hero');
     if (!hero) return;
-    var fade = clamp(window.scrollY / Math.max(1, section.offsetTop * 0.8), 0, 1);
-    hero.style.visibility = fade >= 1 ? 'hidden' : 'visible';
-    hero.style.opacity = String(1 - fade);
+    var headerH = headerHeight();
+    hero.style.top = headerH + 'px';
+    hero.style.height = Math.max(320, window.innerHeight - headerH) + 'px';
+    var lead = (layout && layout.lead) || window.innerHeight * 0.34;
+    var blend = clamp((window.scrollY - ((layout && layout.stickStart) || 0)) / lead, 0, 1);
+    if (blend >= 1) {
+      hero.style.visibility = 'hidden';
+      return;
+    }
+    hero.style.visibility = 'visible';
+    hero.style.opacity = String(1 - blend);
+    hero.style.transform = 'none';
   }
 
-  function requestPlace() {
+  function apply() {
+    if (!layout) return;
+    placeHero();
+    var span = Math.max(episodes.length - 1, 1);
+    var scrolled = window.scrollY - layout.stickStart;
+    var blend = clamp(scrolled / (layout.lead || 1), 0, 1);
+    var reveal = clamp((blend - 0.74) / 0.26, 0, 1);
+    reveal = reveal * reveal * (3 - 2 * reveal);
+    var journey = clamp((scrolled - (layout.lead || 0)) / (layout.journey || layout.travel), 0, 1);
+    var t = journey * span;
+    var index = clamp(Math.round(t), 0, episodes.length - 1);
+    var segment = clamp(Math.floor(t), 0, Math.max(episodes.length - 2, 0));
+    var local = episodes.length <= 1 ? 0 : t - segment;
+    var length = layout.stops.length
+      ? layout.stops[segment] + (layout.stops[Math.min(segment + 1, layout.stops.length - 1)] - layout.stops[segment]) * local
+      : 0;
+    if (layout.total) {
+      layout.routeEl.style.strokeDasharray = layout.total;
+      layout.routeEl.style.strokeDashoffset = String(layout.total - length);
+      var spot = layout.routeEl.getPointAtLength(clamp(length, 0, layout.total));
+      layout.traveler.setAttribute('transform', 'translate(' + spot.x + ' ' + spot.y + ')');
+    }
+
+    var fromPoint = layout.points[segment];
+    var toPoint = layout.points[Math.min(segment + 1, layout.points.length - 1)];
+    var focusX = fromPoint.x + (toPoint.x - fromPoint.x) * local;
+    var focusY = fromPoint.y + (toPoint.y - fromPoint.y) * local;
+    var maxX = Math.max(0, WORLD_W - layout.viewW);
+    var maxY = Math.max(0, layout.worldH - layout.viewH);
+    var centerShift = Math.max(0, (stage.clientWidth - WORLD_W * layout.scale) / 2);
+    var compact = layout.compact;
+    var noteWidth = compact
+      ? Math.max(0, stage.clientWidth - 44)
+      : Math.min(240, Math.max(160, stage.clientWidth * 0.16));
+    var noteLeft = compact ? 22 : Math.max(16, stage.clientWidth - 72 - noteWidth);
+    var pinHalf = 310 * layout.scale;
+    var desiredCenter = compact ? 16 + pinHalf : noteLeft - 36 - pinHalf;
+    if (!compact) desiredCenter = clamp(desiredCenter, Math.min(stage.clientWidth * 0.34, pinHalf), stage.clientWidth * 0.56);
+    function camFor(worldX) {
+      return clamp(worldX - (desiredCenter - centerShift) / layout.scale, 0, maxX);
+    }
+    var holdA = camFor(fromPoint.x);
+    var holdB = camFor(toPoint.x);
+    var camX = holdA;
+    if (!reduce) {
+      if (local >= 0.58) camX = holdB;
+      else if (local > 0.42) camX = holdA + (holdB - holdA) * ((local - 0.42) / 0.16);
+    } else {
+      camX = clamp(focusX - layout.viewW * 0.5, 0, maxX);
+    }
+    var restY = compact
+      ? focusY - (stage.clientHeight * 0.52) / layout.scale
+      : Math.max(0, focusY - 200 - layout.viewH * 0.5);
+    var camY = reduce ? restY : restY * reveal;
+    if (!reduce) {
+      world.style.transform = 'translate3d(' + (centerShift - camX * layout.scale) + 'px,' + (-camY * layout.scale) + 'px,0) scale(' + layout.scale + ')';
+    }
+
+    layout.points.forEach(function (point) {
+      point.node.classList.remove('is-here', 'is-next', 'is-past', 'is-ahead');
+      if (point.index === index) point.node.classList.add('is-here');
+      else if (point.index === index + 1) point.node.classList.add('is-next');
+      else if (point.index < index) point.node.classList.add('is-past');
+      else point.node.classList.add('is-ahead');
+    });
+
+    var episode = episodes[index];
+    var guest = $('mapGuest');
+    if (guest) guest.textContent = episode.label;
+    var note = $('episodeNote');
+    if (note) {
+      var distance = Math.abs(t - index);
+      var closeness = distance < 0.42 ? 1 : clamp(1 - (distance - 0.42) / 0.28, 0, 1);
+      note.textContent = episode.note || episode.title;
+      note.style.opacity = String(closeness * reveal);
+      var pinBox = layout.points[index].node.getBoundingClientRect();
+      var stageBox = stage.getBoundingClientRect();
+      var left = noteLeft;
+      if (reduce) {
+        left = pinBox.right - stageBox.left + 40;
+        var maxLeft = stageBox.width - noteWidth - 68;
+        if (left > maxLeft) left = maxLeft;
+        if (left < 16) left = 16;
+      }
+      var top = pinBox.top - stageBox.top + Math.max(28, pinBox.height * 0.28);
+      if (compact && !reduce) {
+        var card = layout.points[index].node.querySelector('.pin-card');
+        var cardBox = card ? card.getBoundingClientRect() : pinBox;
+        left = cardBox.right - stageBox.left + 14;
+        noteWidth = Math.max(110, stageBox.width - left - 16);
+        top = cardBox.top - stageBox.top + 4;
+      }
+      note.style.width = noteWidth + 'px';
+      note.style.left = left + 'px';
+      note.style.top = top + 'px';
+    }
+
+    var announcement = $('announcementLink');
+    var announcementTitle = $('announcementTitle');
+    if (announcement && episodes[0]) {
+      announcement.href = watchUrl(episodes[0]);
+      if (announcementTitle) announcementTitle.textContent = episodes[0].label;
+    }
+
+    if (index !== currentIndex) {
+      currentIndex = index;
+      var live = $('mapLive');
+      if (live) live.textContent = episode.label + '. ' + (episode.note || episode.title);
+    }
+  }
+
+  function requestApply() {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(function () {
       ticking = false;
-      placeHero();
+      apply();
     });
   }
 
@@ -233,14 +512,27 @@
         var next = mergeFeed(incoming);
         if (sameLineup(next)) return;
         episodes = next;
-        render();
+        currentIndex = -1;
+        build();
       })
       .catch(function () {});
   }
 
-  render();
+  build();
   loadFeed();
-  placeHero();
-  window.addEventListener('scroll', requestPlace, { passive: true });
-  window.addEventListener('resize', requestPlace);
+
+  var podcastLink = document.querySelector('.nav a[href="#episodes"]');
+  if (podcastLink) {
+    podcastLink.addEventListener('click', function (event) {
+      event.preventDefault();
+      if (location.hash !== '#episodes') history.pushState(null, '', '#episodes');
+      openLatest('smooth');
+    });
+  }
+  if (location.hash === '#episodes') openLatest('auto');
+  window.addEventListener('scroll', requestApply, { passive: true });
+  window.addEventListener('resize', function () {
+    measure();
+    apply();
+  });
 })();

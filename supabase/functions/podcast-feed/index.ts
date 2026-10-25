@@ -16,6 +16,7 @@ const CORS: Record<string, string> = {
 };
 
 const KNOWN_VIDEO_IDS: Record<string, string> = {
+  'ml pioneer since 1980 why ai still breaks on anything new tom dietterich': 'j6yWBmVGwp0',
   'the age of robotics is coming ai automation space ben holfeld': 'lLPcLsDUNlE',
   'ai s biggest bottleneck isn t chips it s power nat bullard': '7pODLCXi1vM',
   '10 billion ai workers will need their own computers nick vasilescu orgo': 'CGkC8ukXnfw',

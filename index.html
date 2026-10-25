@@ -246,9 +246,9 @@
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <a class="announcement" id="announcementLink" href="https://www.youtube.com/watch?v=lLPcLsDUNlE" target="_blank" rel="noopener noreferrer">
+  <a class="announcement" id="announcementLink" href="https://www.youtube.com/watch?v=j6yWBmVGwp0" target="_blank" rel="noopener noreferrer">
     <span>Latest episode:</span>
-    <span class="announcement-title" id="announcementTitle">Ben Holfeld</span>
+    <span class="announcement-title" id="announcementTitle">Tom Dietterich</span>
     <span aria-hidden="true">↗</span>
   </a>
 
@@ -267,14 +267,17 @@
       <img class="hero-portrait" src="/assets/konstantin-portrait.png" alt="Konstantin Saifoulline" fetchpriority="high">
     </section>
 
-    <section class="eps" id="episodes" aria-labelledby="episodesTitle">
-      <div class="eps-inner">
-        <div class="eps-head">
-          <h2 class="eps-title" id="episodesTitle">Episodes</h2>
-          <span class="eps-count" id="epsCount"></span>
+    <section class="map-runway" id="episodes" aria-labelledby="episodesTitle">
+      <h2 class="sr-only" id="episodesTitle">Latest episodes</h2>
+      <div class="map-stage" id="mapStage">
+        <div class="map-viewport" id="mapViewport">
+          <div class="map-world" id="mapWorld"></div>
         </div>
-        <div id="epsLatest"></div>
-        <div class="eps-grid" id="epsGrid"></div>
+        <p class="episode-note" id="episodeNote"></p>
+        <div class="map-focus" id="mapFocus">
+          <p class="map-guest" id="mapGuest"></p>
+        </div>
+        <div class="sr-only" aria-live="polite" id="mapLive"></div>
       </div>
     </section>
   </main>
