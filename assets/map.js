@@ -8,6 +8,7 @@
   var PATH_MARGIN = 420;
 
   var CATALOG = [
+    { id: 'iRUlSGn4qNo', label: 'Pearse Coyle', topic: 'How hardware startups survive', title: 'Most Hardware Startups Die the Same Way | Deep Tech VC Pearse Coyle', note: 'Deep tech investor Pearse Coyle on why hardware startups run out of cash, and how to stretch it with suppliers, grants and the right first investor.', motif: 'ventures', published: '2026-10-28T09:10:36Z', date: '28 Oct' },
     { id: 'j6yWBmVGwp0', label: 'Tom Dietterich', topic: 'Where AI still breaks', title: 'ML Pioneer Since 1980: Why AI Still Breaks on Anything New | Tom Dietterich', note: 'Tom Dietterich, in machine learning since the first workshop in 1980, on why AI still breaks on anything new.', motif: 'machines', published: '2026-10-21T19:27:15Z', date: '21 Oct' },
     { id: 'lLPcLsDUNlE', label: 'Ben Holfeld', topic: 'Robotics, AI and space', title: 'The Age of Robotics Is Coming: AI, Automation & Space | Ben Holfeld', note: 'Ben Holfeld on physical AI, automation, distribution and building habitats in space.', motif: 'humanoids', published: '2026-10-14T16:00:05Z', date: '14 Oct' },
     { id: '7pODLCXi1vM', label: 'Nat Bullard', topic: 'Power for AI', title: "AI's Biggest Bottleneck Isn't Chips, It's Power | Nat Bullard", note: 'Nat Bullard of Halcyon, formerly BloombergNEF, on why electricity, not chips, limits how fast AI can scale.', motif: 'industry', published: '2026-10-11T16:00:34Z', date: '11 Oct' },
