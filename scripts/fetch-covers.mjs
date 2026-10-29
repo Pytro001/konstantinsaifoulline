@@ -11,6 +11,7 @@ const OUT_DIR = path.join(__dirname, '../assets/books');
 const TIMEOUT_MS = 25000;
 
 const SEARCH_OVERRIDES = {
+  '38-letters': { title: '38 Letters from J.D. Rockefeller to his Son', author: 'Rockefeller' },
   'reentry': { title: 'Reentry', author: 'Eric Berger' },
   'our-oriental-heritage': { title: 'The Story of Civilization Volume 1', author: 'Will Durant' },
   'structures': { title: 'Structures', author: 'J E Gordon' },
