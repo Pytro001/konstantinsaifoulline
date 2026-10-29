@@ -11,6 +11,7 @@ const OUT_DIR = path.join(__dirname, '../assets/books');
 const TIMEOUT_MS = 25000;
 
 const SEARCH_OVERRIDES = {
+  'reentry': { title: 'Reentry', author: 'Eric Berger' },
   'our-oriental-heritage': { title: 'The Story of Civilization Volume 1', author: 'Will Durant' },
   'structures': { title: 'Structures', author: 'J E Gordon' },
   'blitzscaling': { title: 'Blitzscaling', author: 'Reid Hoffman' },
