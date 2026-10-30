@@ -17,6 +17,8 @@
   <meta name="twitter:image" content="https://konstantinsaifoulline.com/assets/og-podcast.png">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/favicon.png">
+  <script>document.documentElement.classList.add('is-loading');</script>
+  <link rel="preload" as="image" href="/assets/konstantin-portrait.png" fetchpriority="high">
   <link rel="stylesheet" href="/assets/map.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -237,6 +239,10 @@
       .footer-bottom { flex-direction: column; }
     }
 
+    main { transition: opacity 0.6s ease; }
+    .is-loading main { opacity: 0; animation: page-failsafe 0.6s ease 3s forwards; }
+    @keyframes page-failsafe { to { opacity: 1; } }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition-duration: 0.01ms !important; }
@@ -329,6 +335,17 @@
     window.addEventListener('resize', placeIcons);
     placeIcons();
     $('year').textContent = new Date().getFullYear();
+
+    function reveal() { document.documentElement.classList.remove('is-loading'); }
+    var portrait = document.querySelector('.hero-portrait');
+    var portraitReady = portrait && portrait.decode ? portrait.decode().catch(function () {}) : Promise.resolve();
+    var fontsReady = document.fonts && document.fonts.load
+      ? Promise.all([document.fonts.load('800 1em "Barlow Condensed"'), document.fonts.ready]).catch(function () {})
+      : Promise.resolve();
+    Promise.race([
+      Promise.all([portraitReady, fontsReady]),
+      new Promise(function (resolve) { setTimeout(resolve, 1200); })
+    ]).then(function () { requestAnimationFrame(reveal); });
   })();
   </script>
   <script src="/assets/track.js" data-site="konstantinsaifoulline" defer></script>
